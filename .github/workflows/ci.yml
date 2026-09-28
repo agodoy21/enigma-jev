@@ -35,22 +35,8 @@ jobs:
       - run: pip install -r analysis/requirements.txt -r analysis/requirements-dev.txt
       - run: ruff format --check --config analysis/ruff.toml analysis
       - run: ruff check --config analysis/ruff.toml analysis
-      # Reruns the judge comparison from the committed dataset and fails if any number moved.
+      # Reruns the judge comparison from the committed dataset and fails if a count or score moved.
       - run: |
           cp reports/judge-comparison.json /tmp/before.json
           python analysis/judges.py
-          python - <<'PY'
-          import json
-          def rounded(x):
-              if isinstance(x, float): return round(x, 6)
-              if isinstance(x, dict): return {k: rounded(v) for k, v in x.items()}
-              if isinstance(x, list): return [rounded(v) for v in x]
-              return x
-          def core(p):
-              d = json.load(open(p))
-              d.pop('generatedAt')
-              d['xgboost'].pop('predictMicroseconds'); d['xgboost'].pop('featureMilliseconds')
-              return json.dumps(rounded(d), sort_keys=True)
-          assert core('/tmp/before.json') == core('reports/judge-comparison.json'), 'judge comparison changed'
-          print('judge comparison reproduced exactly')
-          PY
+          python analysis/check_reproduced.py /tmp/before.json reports/judge-comparison.json
