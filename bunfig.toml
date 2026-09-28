@@ -1,0 +1,3 @@
+[test]
+# CI runs `bun test --coverage`; it fails below these shares.
+coverageThreshold = { lines = 0.8, functions = 0.8 }

@@ -1,0 +1,21 @@
+# dependencies and environments
+node_modules/
+.venv/
+__pycache__/
+
+# secrets: never commit a key
+.env
+.env.*
+!.env.example
+
+# internal plans, audits and working notes: local only, never pushed
+docs/internal/
+
+# local tooling and OS files
+.DS_Store
+*.log
+coverage/
+
+# scratch runs (canonical reports in reports/ are committed)
+reports/runs/
+.ruff_cache/

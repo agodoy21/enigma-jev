@@ -1,0 +1,574 @@
+{
+  "meta": {
+    "cases": 9,
+    "tiers": [
+      "verify",
+      "key",
+      "bombe",
+      "climb"
+    ],
+    "jev": null,
+    "jevCalls": 0,
+    "jevTokens": null,
+    "seconds": 151,
+    "seed": 1941,
+    "excluded": {
+      "heer-1941-07-07-nr113": "no published plaintext (the only decryption on file is unverified), and 26 letters is below any attack's reach"
+    }
+  },
+  "summaries": {
+    "historical": {
+      "byTier": {
+        "verify": {
+          "cases": 9,
+          "broken": 9,
+          "jevRight": 0,
+          "jevJudged": 0,
+          "ngramRight": 0,
+          "brier": null,
+          "brierN": 0,
+          "medianMs": 2
+        },
+        "key": {
+          "cases": 9,
+          "broken": 9,
+          "jevRight": 0,
+          "jevJudged": 0,
+          "ngramRight": 7,
+          "brier": null,
+          "brierN": 0,
+          "medianMs": 78
+        },
+        "bombe": {
+          "cases": 9,
+          "broken": 0,
+          "jevRight": 0,
+          "jevJudged": 0,
+          "ngramRight": 9,
+          "brier": null,
+          "brierN": 0,
+          "medianMs": 29977
+        },
+        "climb": {
+          "cases": 9,
+          "broken": 0,
+          "jevRight": 0,
+          "jevJudged": 0,
+          "ngramRight": 4,
+          "brier": null,
+          "brierN": 0,
+          "medianMs": 1451
+        }
+      },
+      "crib": {
+        "withTrueCrib": 4,
+        "jevMeanRank": null,
+        "staticMeanRank": 6.5,
+        "jevTop1": 0,
+        "staticTop1": 0
+      }
+    }
+  },
+  "rows": [
+    {
+      "id": "heer-1930-manual",
+      "title": "Enigma I instruction manual test message (Schlüsselanleitung zur Chiffriermaschine Enigma I)",
+      "kind": "historical",
+      "machine": "I",
+      "service": "Heer",
+      "letters": 90,
+      "plugs": 6,
+      "trueCrib": "FEINDLIQE",
+      "cribRankJev": null,
+      "cribRankStatic": 3,
+      "cribSource": "static",
+      "tiers": [
+        {
+          "tier": "verify",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.8220886173998343,
+          "ms": 2,
+          "bestKey": "II-I-III rings XMV start ABL plugs AM FI NV PS TU WZ"
+        },
+        {
+          "tier": "key",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.8220886173998343,
+          "ms": 58,
+          "bestKey": "II-I-III rings XMV start ABL plugs AM FI NV PS TU WZ",
+          "ngramRight": true
+        },
+        {
+          "tier": "bombe",
+          "broken": false,
+          "accuracy": 0.044444444444444446,
+          "germanness": 0.4423598011033258,
+          "ms": 82247,
+          "cribsTried": [
+            "FUEHRERHAUPTQUARTIER",
+            "BEFEHL",
+            "FEINDLIQE",
+            "FUEHRERHAUPTQUARTIER (all turnovers)"
+          ],
+          "bestKey": "IV-II-III rings AAA start GBX plugs DQ EZ HY IS LM OT PV RW",
+          "ngramRight": true
+        },
+        {
+          "tier": "climb",
+          "broken": false,
+          "accuracy": 0.07777777777777778,
+          "germanness": 0.4926628512460376,
+          "ms": 2274,
+          "bestKey": "III-V-I rings AAL start KWE plugs BG CI EJ FS HQ KO NY PU WZ",
+          "ngramRight": true
+        }
+      ]
+    },
+    {
+      "id": "barbarossa-1941-part1",
+      "title": "Operation Barbarossa, SS-Totenkopf Division to LVI A.K., part 1 of 2",
+      "kind": "historical",
+      "machine": "I",
+      "service": "Heer",
+      "letters": 174,
+      "plugs": 10,
+      "trueCrib": "AUFKLX",
+      "cribRankJev": null,
+      "cribRankStatic": 6,
+      "cribSource": "static",
+      "tiers": [
+        {
+          "tier": "verify",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.5825444413793399,
+          "ms": 2,
+          "bestKey": "II-IV-V rings BUL start BLA plugs AV BS CG DL FU HZ IN KM OW RX"
+        },
+        {
+          "tier": "key",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.5825444413793399,
+          "ms": 78,
+          "bestKey": "II-IV-V rings BUL start BLA plugs AV BS CG DL FU HZ IN KM OW RX",
+          "ngramRight": true
+        },
+        {
+          "tier": "bombe",
+          "broken": false,
+          "accuracy": 0.06321839080459771,
+          "germanness": 0.3030334710432248,
+          "ms": 47137,
+          "cribsTried": [
+            "OBERKOMMANDODERWEHRMACHT",
+            "WETTERMELDUNG",
+            "WETTERBERICHT",
+            "OBERKOMMANDODERWEHRMACHT (all turnovers)"
+          ],
+          "bestKey": "III-I-IV rings AAB start SUR plugs BC FP GL HR IS JW MN",
+          "ngramRight": true
+        },
+        {
+          "tier": "climb",
+          "broken": false,
+          "accuracy": 0.05172413793103448,
+          "germanness": 0.3271340238606915,
+          "ms": 5139,
+          "bestKey": "IV-V-I rings AAT start TBH plugs BV CG DX FQ HY IT KZ NW OP",
+          "ngramRight": true
+        }
+      ]
+    },
+    {
+      "id": "barbarossa-1941-part2",
+      "title": "Operation Barbarossa, SS-Totenkopf Division to LVI A.K., part 2 of 2",
+      "kind": "historical",
+      "machine": "I",
+      "service": "Heer",
+      "letters": 135,
+      "plugs": 10,
+      "trueCrib": null,
+      "cribRankJev": null,
+      "cribRankStatic": null,
+      "cribSource": "static",
+      "tiers": [
+        {
+          "tier": "verify",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.7039235887688585,
+          "ms": 1,
+          "bestKey": "II-IV-V rings BUL start LSD plugs AV BS CG DL FU HZ IN KM OW RX"
+        },
+        {
+          "tier": "key",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.7039235887688585,
+          "ms": 73,
+          "bestKey": "II-IV-V rings BUL start LSD plugs AV BS CG DL FU HZ IN KM OW RX",
+          "ngramRight": true
+        },
+        {
+          "tier": "bombe",
+          "broken": false,
+          "accuracy": 0.044444444444444446,
+          "germanness": 0.3250424871065874,
+          "ms": 78508,
+          "cribsTried": [
+            "OBERKOMMANDODERWEHRMACHT",
+            "WETTERVORHERSAGE",
+            "WETTERMELDUNG",
+            "OBERKOMMANDODERWEHRMACHT (all turnovers)"
+          ],
+          "bestKey": "III-I-V rings AAD start KVH plugs BW CK DY EZ GP HJ MT UX",
+          "ngramRight": true
+        },
+        {
+          "tier": "climb",
+          "broken": false,
+          "accuracy": 0.02962962962962963,
+          "germanness": 0.39244155888755866,
+          "ms": 3924,
+          "bestKey": "II-V-III rings AAW start AYW plugs AG BF CK ES LV NP TZ",
+          "ngramRight": true
+        }
+      ]
+    },
+    {
+      "id": "scharnhorst-1943",
+      "title": "Scharnhorst's last message (Konteradmiral Bey), Duke of York intercept",
+      "kind": "historical",
+      "machine": "M3",
+      "service": "Kriegsmarine",
+      "letters": 80,
+      "plugs": 10,
+      "trueCrib": null,
+      "cribRankJev": null,
+      "cribRankStatic": null,
+      "cribSource": "static",
+      "tiers": [
+        {
+          "tier": "verify",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.5441160003027885,
+          "ms": 2,
+          "bestKey": "III-VI-VIII rings AHM start UZV plugs AN EZ HK IJ LR MQ OT PV SW UX"
+        },
+        {
+          "tier": "key",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.5441160003027885,
+          "ms": 46,
+          "bestKey": "III-VI-VIII rings AHM start VAV plugs AN EZ HK IJ LR MQ OT PV SW UX",
+          "ngramRight": true
+        },
+        {
+          "tier": "bombe",
+          "broken": false,
+          "accuracy": 0.05,
+          "germanness": 0.46338233636470616,
+          "ms": 29977,
+          "cribsTried": [
+            "KEINEBESONDERENEREIGNISSE",
+            "WETTERVORHERSAGE",
+            "WETTERMELDUNG"
+          ],
+          "bestKey": "III-VIII-I rings AFD start OWW plugs AV BC FR GS JK MU NO PX QY TW",
+          "ngramRight": true
+        },
+        {
+          "tier": "climb",
+          "broken": false,
+          "accuracy": 0.05,
+          "germanness": 0.5230965253779919,
+          "ms": 3720,
+          "bestKey": "VII-III-I rings ADC start DSV plugs CN EM JR LY QW TV XZ",
+          "ngramRight": false
+        }
+      ]
+    },
+    {
+      "id": "m4-project-1-looks-u264",
+      "title": "M4 Message Breaking Project, 1st break: Hartwig Looks, U-264 (HMS Hurricane intercept)",
+      "kind": "historical",
+      "machine": "M4",
+      "service": "Kriegsmarine",
+      "letters": 232,
+      "plugs": 10,
+      "trueCrib": "VONVON",
+      "cribRankJev": null,
+      "cribRankStatic": 8,
+      "cribSource": "static",
+      "tiers": [
+        {
+          "tier": "verify",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.4885663506415251,
+          "ms": 6,
+          "bestKey": "Beta-II-IV-I rings AAAV start VJNA plugs AT BL DF GJ HM NW OP QY RZ VX"
+        },
+        {
+          "tier": "key",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.4885663506415251,
+          "ms": 916,
+          "bestKey": "Beta-II-IV-I rings AAAV start VJNA plugs AT BL DF GJ HM NW OP QY RZ VX",
+          "ngramRight": false
+        },
+        {
+          "tier": "bombe",
+          "broken": false,
+          "accuracy": 0.034482758620689655,
+          "germanness": 0.26207251551439953,
+          "ms": 19243,
+          "cribsTried": [
+            "WETTERVORHERSAGE",
+            "WETTERMELDUNG",
+            "WETTERBERICHT",
+            "WETTERVORHERSAGE (all turnovers)"
+          ],
+          "bestKey": "Beta-II-IV-I rings AAQA start QCAZ plugs AF BC DV EO GI KY MZ NT QW SX",
+          "ngramRight": true
+        },
+        {
+          "tier": "climb",
+          "broken": false,
+          "accuracy": 0,
+          "germanness": 0,
+          "ms": 0,
+          "note": "ciphertext-only M4 (2 greek × 2 reflectors × 336 orders × 26⁴ positions) is out of reach on one machine"
+        }
+      ]
+    },
+    {
+      "id": "m4-project-2-schroeder-u623",
+      "title": "M4 Message Breaking Project, 2nd break: Hermann Schroeder, U-623 (HMS Hurricane intercept)",
+      "kind": "historical",
+      "machine": "M4",
+      "service": "Kriegsmarine",
+      "letters": 200,
+      "plugs": 10,
+      "trueCrib": null,
+      "cribRankJev": null,
+      "cribRankStatic": null,
+      "cribSource": "static",
+      "tiers": [
+        {
+          "tier": "verify",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.5148129735279917,
+          "ms": 2,
+          "bestKey": "Beta-II-IV-I rings AANV start MCSF plugs AT CL DH EP FG IO JN KQ MU RX"
+        },
+        {
+          "tier": "key",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.5148129735279917,
+          "ms": 741,
+          "bestKey": "Beta-II-IV-I rings AANV start MCSF plugs AT CL DH EP FG IO JN KQ MU RX",
+          "ngramRight": true
+        },
+        {
+          "tier": "bombe",
+          "broken": false,
+          "accuracy": 0.06,
+          "germanness": 0.24591048169240395,
+          "ms": 19262,
+          "cribsTried": [
+            "KEINEBESONDERENEREIGNISSE",
+            "WETTERVORHERSAGE",
+            "WETTERMELDUNG",
+            "KEINEBESONDERENEREIGNISSE (all turnovers)"
+          ],
+          "bestKey": "Beta-II-IV-I rings AAAA start WLDA plugs AY BH CK ES FO GN IZ LR PU",
+          "ngramRight": true
+        },
+        {
+          "tier": "climb",
+          "broken": false,
+          "accuracy": 0,
+          "germanness": 0,
+          "ms": 0,
+          "note": "ciphertext-only M4 (2 greek × 2 reflectors × 336 orders × 26⁴ positions) is out of reach on one machine"
+        }
+      ]
+    },
+    {
+      "id": "m4-project-3-rasch-u106",
+      "title": "M4 Project 'third message': Hermann Rasch, U-106 (HMS Hurricane intercept), broken 2013 by Dan Girard with Michael Hoerenberg",
+      "kind": "historical",
+      "machine": "M4",
+      "service": "Kriegsmarine",
+      "letters": 196,
+      "plugs": 10,
+      "trueCrib": null,
+      "cribRankJev": null,
+      "cribRankStatic": null,
+      "cribSource": "static",
+      "tiers": [
+        {
+          "tier": "verify",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.43666519552358934,
+          "ms": 2,
+          "bestKey": "Beta-VI-I-III rings ZZDG start NAQL plugs BQ CR DI EJ KW MT OS PX UZ GH"
+        },
+        {
+          "tier": "key",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.43666519552358934,
+          "ms": 780,
+          "bestKey": "Beta-VI-I-III rings AZDG start OBRL plugs BQ CR DI EJ GH KW MT OS PX UZ",
+          "ngramRight": false
+        },
+        {
+          "tier": "bombe",
+          "broken": false,
+          "accuracy": 0.05102040816326531,
+          "germanness": 0.264010888696091,
+          "ms": 16328,
+          "cribsTried": [
+            "WETTERVORHERSAGE",
+            "WETTERBERICHT",
+            "FUNKSPRUCH",
+            "WETTERVORHERSAGE (all turnovers)"
+          ],
+          "bestKey": "Beta-VI-I-III rings AAAJ start XEWV plugs AU BT CW EZ FG HP JY KS NX QR",
+          "ngramRight": true
+        },
+        {
+          "tier": "climb",
+          "broken": false,
+          "accuracy": 0,
+          "germanness": 0,
+          "ms": 0,
+          "note": "ciphertext-only M4 (2 greek × 2 reflectors × 336 orders × 26⁴ positions) is out of reach on one machine"
+        }
+      ]
+    },
+    {
+      "id": "u534-doenitz-p1030681",
+      "title": "Doenitz succession message recovered from U-534 (message P1030681), broken 2012 by Michael Hoerenberg",
+      "kind": "historical",
+      "machine": "M4",
+      "service": "Kriegsmarine",
+      "letters": 372,
+      "plugs": 10,
+      "trueCrib": "KRKR",
+      "cribRankJev": null,
+      "cribRankStatic": 9,
+      "cribSource": "static",
+      "tiers": [
+        {
+          "tier": "verify",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.7126091031644146,
+          "ms": 1,
+          "bestKey": "Beta-V-VI-VIII rings EPEL start CDSZ plugs AE BF CM DQ HU JN LX PR SZ VW"
+        },
+        {
+          "tier": "key",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.7126091031644146,
+          "ms": 1194,
+          "bestKey": "Beta-V-VI-VIII rings APEL start YDSZ plugs AE BF CM DQ HU JN LX PR SZ VW",
+          "ngramRight": true
+        },
+        {
+          "tier": "bombe",
+          "broken": false,
+          "accuracy": 0.043010752688172046,
+          "germanness": 0.18861939794201593,
+          "ms": 24611,
+          "cribsTried": [
+            "WETTERMELDUNG",
+            "WETTERBERICHT",
+            "SPRUCHNUMMER",
+            "WETTERMELDUNG (all turnovers)"
+          ],
+          "bestKey": "Beta-V-VI-VIII rings AABD start LBWM plugs AP BG CJ DL EI FT HX MQ NY WZ",
+          "ngramRight": true
+        },
+        {
+          "tier": "climb",
+          "broken": false,
+          "accuracy": 0,
+          "germanness": 0,
+          "ms": 0,
+          "note": "ciphertext-only M4 (2 greek × 2 reflectors × 336 orders × 26⁴ positions) is out of reach on one machine"
+        }
+      ]
+    },
+    {
+      "id": "dewiki-example-aachen",
+      "title": "German Wikipedia worked example (Enigma (Maschine), 'Aachen ist gerettet')",
+      "kind": "historical",
+      "machine": "I",
+      "service": "Heer",
+      "letters": 162,
+      "plugs": 10,
+      "notes": "textbook example, not a real intercept (control)",
+      "trueCrib": null,
+      "cribRankJev": null,
+      "cribRankStatic": null,
+      "cribSource": "static",
+      "tiers": [
+        {
+          "tier": "verify",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.7831649954875194,
+          "ms": 1,
+          "bestKey": "I-IV-III rings PZH start RTZ plugs AD CN ET FL GI JV KZ PU QY WX"
+        },
+        {
+          "tier": "key",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.7831649954875194,
+          "ms": 45,
+          "bestKey": "I-IV-III rings PZH start RTZ plugs AD CN ET FL GI JV KZ PU QY WX",
+          "ngramRight": true
+        },
+        {
+          "tier": "bombe",
+          "broken": false,
+          "accuracy": 0.04938271604938271,
+          "germanness": 0.3419195227887861,
+          "ms": 132145,
+          "cribsTried": [
+            "FUNKSPRUCH",
+            "SPRUCHNUMMER",
+            "BEFEHL",
+            "FUNKSPRUCH (all turnovers)"
+          ],
+          "bestKey": "III-V-I rings AAZ start UGF plugs AF BP CZ DU ET HI KQ",
+          "ngramRight": true
+        },
+        {
+          "tier": "climb",
+          "broken": false,
+          "accuracy": 0.07407407407407407,
+          "germanness": 0.3554795023135605,
+          "ms": 1451,
+          "bestKey": "III-IV-II rings AAA start MBB plugs AI BH CX DR GV MQ",
+          "ngramRight": true
+        }
+      ]
+    }
+  ]
+}

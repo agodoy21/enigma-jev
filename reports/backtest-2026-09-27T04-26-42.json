@@ -1,0 +1,2321 @@
+{
+  "meta": {
+    "cases": 16,
+    "tiers": [
+      "verify",
+      "key",
+      "crib",
+      "bombe",
+      "climb"
+    ],
+    "jev": "jev-1.13.0",
+    "jevCalls": 80,
+    "jevTokens": {
+      "input": 84767,
+      "output": 8122
+    },
+    "seconds": 976,
+    "seed": 2024,
+    "excluded": {
+      "heer-1941-07-07-nr113": "no published plaintext (the only decryption on file is unverified), and 26 letters is below any attack's reach"
+    }
+  },
+  "summaries": {
+    "synthetic": {
+      "byTier": {
+        "verify": {
+          "cases": 16,
+          "broken": 16,
+          "jevRight": 0,
+          "jevArgmaxRight": 0,
+          "jevJudged": 0,
+          "ngramRight": 0,
+          "brier": null,
+          "brierN": 0,
+          "medianMs": 2
+        },
+        "key": {
+          "cases": 16,
+          "broken": 16,
+          "jevRight": 16,
+          "jevArgmaxRight": 16,
+          "jevJudged": 16,
+          "ngramRight": 16,
+          "brier": 0.021979166666666664,
+          "brierN": 48,
+          "medianMs": 171
+        },
+        "crib": {
+          "cases": 16,
+          "broken": 12,
+          "jevRight": 16,
+          "jevArgmaxRight": 14,
+          "jevJudged": 16,
+          "ngramRight": 13,
+          "brier": 0.027583333333333324,
+          "brierN": 48,
+          "medianMs": 13467
+        },
+        "bombe": {
+          "cases": 16,
+          "broken": 1,
+          "jevRight": 16,
+          "jevArgmaxRight": 13,
+          "jevJudged": 16,
+          "ngramRight": 13,
+          "brier": 0.03924375,
+          "brierN": 48,
+          "medianMs": 131983
+        },
+        "climb": {
+          "cases": 16,
+          "broken": 0,
+          "jevRight": 16,
+          "jevArgmaxRight": 14,
+          "jevJudged": 16,
+          "ngramRight": 12,
+          "brier": 0.07633333333333335,
+          "brierN": 48,
+          "medianMs": 9959
+        }
+      },
+      "crib": {
+        "withTrueCrib": 5,
+        "jevMeanRank": 8.6,
+        "staticMeanRank": 6.8,
+        "jevTop1": 0,
+        "staticTop1": 0
+      }
+    }
+  },
+  "rows": [
+    {
+      "id": "synthetic-01",
+      "title": "Feindliche Panzer vor dem Brückenkopf. Erbitten ",
+      "kind": "synthetic",
+      "machine": "I",
+      "service": "Heer",
+      "letters": 67,
+      "plugs": 10,
+      "trueCrib": "FEINDLIQE",
+      "cribRankJev": 8,
+      "cribRankStatic": 8,
+      "cribSource": "jev",
+      "tiers": [
+        {
+          "tier": "verify",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.9255001416446822,
+          "ms": 1,
+          "bestKey": "V-IV-III rings CQR start TID plugs LX EF ZI MT OS WG AC UQ HB YV"
+        },
+        {
+          "tier": "key",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.9255001416446822,
+          "ms": 38,
+          "bestKey": "V-IV-III rings CQR start TID plugs AC BH EF GW IZ LX MT OS QU VY",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": 0,
+            "pick": 0,
+            "pickProbability": 0.82,
+            "none": 0.15,
+            "readable": [
+              0.71,
+              0.03,
+              0.03
+            ],
+            "shownAccuracy": [
+              1,
+              0.05970149253731343,
+              0
+            ]
+          }
+        },
+        {
+          "tier": "crib",
+          "broken": false,
+          "accuracy": 0.08955223880597014,
+          "germanness": 0.5413284694962299,
+          "ms": 4424,
+          "cribsTried": [
+            "FEINDLIQEPANZE"
+          ],
+          "bestKey": "II-III-V rings AAT start YNK plugs BE CH GR IM JO KU LQ SV WZ",
+          "ngramRight": false,
+          "jev": {
+            "right": true,
+            "rightArgmax": false,
+            "accepted": -1,
+            "pick": 2,
+            "pickProbability": 0.36,
+            "none": 0.28,
+            "readable": [
+              0.2,
+              0.1,
+              0.39
+            ],
+            "shownAccuracy": [
+              0.08955223880597014,
+              0.08955223880597014,
+              0.14925373134328357
+            ]
+          }
+        },
+        {
+          "tier": "bombe",
+          "broken": false,
+          "accuracy": 0.014925373134328358,
+          "germanness": 0.5511615013303999,
+          "ms": 12364,
+          "cribsTried": [
+            "KEINEBESONDERENEREIGNISSE",
+            "TAGESMELDUNG"
+          ],
+          "bestKey": "III-I-IV rings AAT start HFO plugs BM CW DV EZ FU GI KS LT NO PQ",
+          "ngramRight": false,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": -1,
+            "pick": -1,
+            "pickProbability": 0.44,
+            "none": 0.44,
+            "readable": [
+              0.32,
+              0.08,
+              0.14
+            ],
+            "shownAccuracy": [
+              0.014925373134328358,
+              0.04477611940298507,
+              0.04477611940298507
+            ]
+          }
+        },
+        {
+          "tier": "climb",
+          "broken": false,
+          "accuracy": 0.08955223880597014,
+          "germanness": 0.5754638119490575,
+          "ms": 4774,
+          "bestKey": "III-IV-I rings AAA start ZEU plugs AY BJ CF ET HM KV LU NZ PQ RX",
+          "ngramRight": false,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": -1,
+            "pick": -1,
+            "pickProbability": 0.32,
+            "none": 0.32,
+            "readable": [
+              0.36,
+              0.34,
+              0.27
+            ],
+            "shownAccuracy": [
+              0.08955223880597014,
+              0.11940298507462686,
+              0.1044776119402985
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "synthetic-02",
+      "title": "Munition für leichte Feldhaubitzen dringend benö",
+      "kind": "synthetic",
+      "machine": "I",
+      "service": "Heer",
+      "letters": 78,
+      "plugs": 10,
+      "trueCrib": null,
+      "cribRankJev": null,
+      "cribRankStatic": null,
+      "cribSource": "jev",
+      "tiers": [
+        {
+          "tier": "verify",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.7773210253101043,
+          "ms": 2,
+          "bestKey": "II-IV-III rings RIT start JPU plugs XG SO PN AF DJ ZV TC UM BQ IH"
+        },
+        {
+          "tier": "key",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.7773210253101043,
+          "ms": 39,
+          "bestKey": "II-IV-III rings RIT start JPU plugs AF BQ CT DJ GX HI MU NP OS VZ",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": 0,
+            "pick": 0,
+            "pickProbability": 0.86,
+            "none": 0.1,
+            "readable": [
+              0.72,
+              0.02,
+              0.07
+            ],
+            "shownAccuracy": [
+              1,
+              0.038461538461538464,
+              0.07692307692307693
+            ]
+          }
+        },
+        {
+          "tier": "crib",
+          "broken": false,
+          "accuracy": 0.1282051282051282,
+          "germanness": 0.5733245342963804,
+          "ms": 3403,
+          "cribsTried": [
+            "MUNITIONFUERLE"
+          ],
+          "bestKey": "III-I-II rings AAF start YTJ plugs AF BC GJ HL MX NZ PY QU SW",
+          "ngramRight": false,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": -1,
+            "pick": -1,
+            "pickProbability": 0.4,
+            "none": 0.4,
+            "readable": [
+              0.14,
+              0.23,
+              0.12
+            ],
+            "shownAccuracy": [
+              0.1282051282051282,
+              0.08974358974358974,
+              0.08974358974358974
+            ]
+          }
+        },
+        {
+          "tier": "bombe",
+          "broken": false,
+          "accuracy": 0.05128205128205128,
+          "germanness": 0.45186384676272784,
+          "ms": 32405,
+          "cribsTried": [
+            "KEINEBESONDERENEREIGNISSE",
+            "TAGESMELDUNG"
+          ],
+          "bestKey": "V-IV-III rings AAM start RPK plugs CE DY GH JM NX RS VW",
+          "ngramRight": false,
+          "jev": {
+            "right": true,
+            "rightArgmax": false,
+            "accepted": -1,
+            "pick": 1,
+            "pickProbability": 0.36,
+            "none": 0.31,
+            "readable": [
+              0.18,
+              0.32,
+              0.17
+            ],
+            "shownAccuracy": [
+              0.05128205128205128,
+              0.02564102564102564,
+              0.07692307692307693
+            ]
+          }
+        },
+        {
+          "tier": "climb",
+          "broken": false,
+          "accuracy": 0.0641025641025641,
+          "germanness": 0.5292311916931136,
+          "ms": 4765,
+          "bestKey": "IV-V-III rings AAG start CBT plugs AD BP EH FL GM IW KZ OX",
+          "ngramRight": false,
+          "jev": {
+            "right": true,
+            "rightArgmax": false,
+            "accepted": -1,
+            "pick": 2,
+            "pickProbability": 0.3,
+            "none": 0.25,
+            "readable": [
+              0.16,
+              0.39,
+              0.47
+            ],
+            "shownAccuracy": [
+              0.0641025641025641,
+              0.08974358974358974,
+              0.0641025641025641
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "synthetic-03",
+      "title": "Nachtjäger melden starke Bomberverbände im Anflu",
+      "kind": "synthetic",
+      "machine": "I",
+      "service": "Luftwaffe",
+      "letters": 111,
+      "plugs": 10,
+      "trueCrib": null,
+      "cribRankJev": null,
+      "cribRankStatic": null,
+      "cribSource": "jev",
+      "tiers": [
+        {
+          "tier": "verify",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.9876454593473509,
+          "ms": 2,
+          "bestKey": "II-I-IV rings XTV start PQJ plugs WU GP RM AS YH XJ BE KL CQ ZT"
+        },
+        {
+          "tier": "key",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.9876454593473509,
+          "ms": 106,
+          "bestKey": "II-I-IV rings XTV start PQJ plugs AS BE CQ GP HY JX KL MR TZ UW",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": 0,
+            "pick": 0,
+            "pickProbability": 0.85,
+            "none": 0.12,
+            "readable": [
+              0.75,
+              0.02,
+              0.03
+            ],
+            "shownAccuracy": [
+              1,
+              0.05405405405405406,
+              0.05405405405405406
+            ]
+          }
+        },
+        {
+          "tier": "crib",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.9860073762927988,
+          "ms": 4502,
+          "cribsTried": [
+            "NACHTJAEGERXME"
+          ],
+          "bestKey": "II-I-IV rings AAV start TXJ plugs AS BE CQ GP HY JX KL MR TZ UW",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": 0,
+            "pick": 0,
+            "pickProbability": 0.91,
+            "none": 0.09,
+            "readable": [
+              0.78,
+              0.01,
+              0.02
+            ],
+            "shownAccuracy": [
+              1,
+              0.15315315315315314,
+              0.12612612612612611
+            ]
+          }
+        },
+        {
+          "tier": "bombe",
+          "broken": false,
+          "accuracy": 0.04504504504504504,
+          "germanness": 0.3206957078775592,
+          "ms": 262614,
+          "cribsTried": [
+            "WETTERBERICHT",
+            "WETTERMELDUNG",
+            "LUFTFLOTTE",
+            "WETTERBERICHT (all turnovers)"
+          ],
+          "bestKey": "I-IV-II rings AAA start EYT plugs BM CH LP OW QS RV TY",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": false,
+            "accepted": -1,
+            "pick": 0,
+            "pickProbability": 0.44,
+            "none": 0.44,
+            "readable": [
+              0.37,
+              0.05,
+              0.13
+            ],
+            "shownAccuracy": [
+              0.04504504504504504,
+              0.036036036036036036,
+              0.08108108108108109
+            ]
+          }
+        },
+        {
+          "tier": "climb",
+          "broken": false,
+          "accuracy": 0.12612612612612611,
+          "germanness": 0.4381034906979308,
+          "ms": 7820,
+          "bestKey": "I-V-III rings ACD start DVR plugs AS BV CH DE GY JN KT UW",
+          "ngramRight": false,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": -1,
+            "pick": -1,
+            "pickProbability": 0.42,
+            "none": 0.42,
+            "readable": [
+              0.3,
+              0.37,
+              0.23
+            ],
+            "shownAccuracy": [
+              0.12612612612612611,
+              0.04504504504504504,
+              0.11711711711711711
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "synthetic-04",
+      "title": "Boot hat zwei Dampfer versenkt, zusammen zwölfta",
+      "kind": "synthetic",
+      "machine": "M3",
+      "service": "Kriegsmarine",
+      "letters": 196,
+      "plugs": 6,
+      "trueCrib": null,
+      "cribRankJev": null,
+      "cribRankStatic": null,
+      "cribSource": "jev",
+      "tiers": [
+        {
+          "tier": "verify",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.9226176708462869,
+          "ms": 2,
+          "bestKey": "V-I-III rings GCT start VEF plugs LF WH BP SZ UM AQ"
+        },
+        {
+          "tier": "key",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.9226176708462869,
+          "ms": 71,
+          "bestKey": "V-I-III rings GCT start VEF plugs AQ BP FL HW MU SZ",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": 0,
+            "pick": 0,
+            "pickProbability": 0.89,
+            "none": 0.08,
+            "readable": [
+              0.76,
+              0.02,
+              0.03
+            ],
+            "shownAccuracy": [
+              1,
+              0.24489795918367346,
+              0.05102040816326531
+            ]
+          }
+        },
+        {
+          "tier": "crib",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.9193993857229366,
+          "ms": 12094,
+          "cribsTried": [
+            "BOOTJHATJZWOJD"
+          ],
+          "bestKey": "V-I-III rings AAT start PCF plugs AQ BP FL HW MU SZ",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": 0,
+            "pick": 0,
+            "pickProbability": 0.93,
+            "none": 0.07,
+            "readable": [
+              0.77,
+              0.01,
+              0.02
+            ],
+            "shownAccuracy": [
+              1,
+              0.09183673469387756,
+              0.09693877551020408
+            ]
+          }
+        },
+        {
+          "tier": "bombe",
+          "broken": false,
+          "accuracy": 0.05102040816326531,
+          "germanness": 0.30621200144854327,
+          "ms": 131983,
+          "cribsTried": [
+            "SPRUCHNUMMER",
+            "KRKR",
+            "GELEITZUG"
+          ],
+          "bestKey": "I-VI-IV rings AIS start VNR plugs AN BH CI DT ES FU JP KX QZ",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": -1,
+            "pick": -1,
+            "pickProbability": 0.5,
+            "none": 0.5,
+            "readable": [
+              0.37,
+              0.08,
+              0.16
+            ],
+            "shownAccuracy": [
+              0.05102040816326531,
+              0.061224489795918366,
+              0.07142857142857142
+            ]
+          }
+        },
+        {
+          "tier": "climb",
+          "broken": false,
+          "accuracy": 0.07142857142857142,
+          "germanness": 0.348517902910827,
+          "ms": 19523,
+          "bestKey": "III-VI-VIII rings AKB start GNU plugs AS BZ CW EI HX JM PY",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": -1,
+            "pick": -1,
+            "pickProbability": 0.44,
+            "none": 0.44,
+            "readable": [
+              0.15,
+              0.29,
+              0.3
+            ],
+            "shownAccuracy": [
+              0.07142857142857142,
+              0.0663265306122449,
+              0.08163265306122448
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "synthetic-05",
+      "title": "Das zweite Bataillon meldet: Ortschaft am Flussk",
+      "kind": "synthetic",
+      "machine": "I",
+      "service": "Heer",
+      "letters": 194,
+      "plugs": 10,
+      "trueCrib": null,
+      "cribRankJev": null,
+      "cribRankStatic": null,
+      "cribSource": "jev",
+      "tiers": [
+        {
+          "tier": "verify",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.8396286874943865,
+          "ms": 4,
+          "bestKey": "IV-II-V rings JSQ start KOX plugs BI VO JE UW MP NL QS GC HR DX"
+        },
+        {
+          "tier": "key",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.8396286874943865,
+          "ms": 135,
+          "bestKey": "IV-II-V rings JSQ start KOX plugs BI CG DX EJ HR LN MP OV QS UW",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": 0,
+            "pick": 0,
+            "pickProbability": 0.9,
+            "none": 0.08,
+            "readable": [
+              0.73,
+              0.02,
+              0.01
+            ],
+            "shownAccuracy": [
+              1,
+              0.03608247422680412,
+              0.030927835051546393
+            ]
+          }
+        },
+        {
+          "tier": "crib",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.8340871863846354,
+          "ms": 64417,
+          "cribsTried": [
+            "DASZWOTEBATAIL"
+          ],
+          "bestKey": "IV-II-V rings AJQ start BFX plugs BI CG DX EJ HR LN MP OV QS UW",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": 0,
+            "pick": 0,
+            "pickProbability": 0.92,
+            "none": 0.08,
+            "readable": [
+              0.73,
+              0.01,
+              0.02
+            ],
+            "shownAccuracy": [
+              1,
+              0.1134020618556701,
+              0.12886597938144329
+            ]
+          }
+        },
+        {
+          "tier": "bombe",
+          "broken": false,
+          "accuracy": 0.02577319587628866,
+          "germanness": 0.3083688323076576,
+          "ms": 246500,
+          "cribsTried": [
+            "TAGESMELDUNG",
+            "OBERKOMMANDODERWEHRMACHT",
+            "FUNKSPRUCH",
+            "TAGESMELDUNG (all turnovers)"
+          ],
+          "bestKey": "II-I-V rings AIF start EIP plugs AS BF CY ER JO LW PZ QT",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": -1,
+            "pick": -1,
+            "pickProbability": 0.5599999999999999,
+            "none": 0.5599999999999999,
+            "readable": [
+              0.23,
+              0.07,
+              0.1
+            ],
+            "shownAccuracy": [
+              0.02577319587628866,
+              0.06701030927835051,
+              0.07731958762886598
+            ]
+          }
+        },
+        {
+          "tier": "climb",
+          "broken": false,
+          "accuracy": 0.07731958762886598,
+          "germanness": 0.3514750299136121,
+          "ms": 9430,
+          "bestKey": "III-IV-II rings AAB start HKT plugs AC BZ DH EV GP NX SU",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": -1,
+            "pick": -1,
+            "pickProbability": 0.49,
+            "none": 0.49,
+            "readable": [
+              0.21,
+              0.27,
+              0.23
+            ],
+            "shownAccuracy": [
+              0.07731958762886598,
+              0.07731958762886598,
+              0.05670103092783505
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "synthetic-06",
+      "title": "Wettermeldung Flughafen. Nebel seit vier Uhr, Si",
+      "kind": "synthetic",
+      "machine": "I",
+      "service": "Luftwaffe",
+      "letters": 227,
+      "plugs": 10,
+      "trueCrib": "WETTERMELDUNG",
+      "cribRankJev": 2,
+      "cribRankStatic": 3,
+      "cribSource": "jev",
+      "tiers": [
+        {
+          "tier": "verify",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.9854607706960303,
+          "ms": 6,
+          "bestKey": "III-II-V rings OAQ start KIG plugs NS IG ER LF BU KH YT XP QM OD"
+        },
+        {
+          "tier": "key",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.9854607706960303,
+          "ms": 177,
+          "bestKey": "III-II-V rings OAQ start KIG plugs BU DO ER FL GI HK MQ NS PX TY",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": 0,
+            "pick": 0,
+            "pickProbability": 0.87,
+            "none": 0.11,
+            "readable": [
+              0.74,
+              0.01,
+              0.01
+            ],
+            "shownAccuracy": [
+              1,
+              0.022026431718061675,
+              0.02643171806167401
+            ]
+          }
+        },
+        {
+          "tier": "crib",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.9831389675131381,
+          "ms": 5868,
+          "cribsTried": [
+            "WETTERMELDUNGX"
+          ],
+          "bestKey": "III-II-V rings AAQ start WIG plugs BU DO ER FL GI HK MQ NS PX TY",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": 0,
+            "pick": 0,
+            "pickProbability": 0.87,
+            "none": 0.12,
+            "readable": [
+              0.68,
+              0.01,
+              0.03
+            ],
+            "shownAccuracy": [
+              1,
+              0.07488986784140969,
+              0.06607929515418502
+            ]
+          }
+        },
+        {
+          "tier": "bombe",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.9829324761523779,
+          "ms": 32008,
+          "cribsTried": [
+            "WETTERBERICHT",
+            "WETTERMELDUNG"
+          ],
+          "bestKey": "III-II-V rings AAQ start WIG plugs BU DO ER FL GI HK MQ NS PX TY",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": 0,
+            "pick": 0,
+            "pickProbability": 0.9,
+            "none": 0.1,
+            "readable": [
+              0.69,
+              0.01,
+              0.02
+            ],
+            "shownAccuracy": [
+              1,
+              0.07488986784140969,
+              0.08370044052863436
+            ]
+          }
+        },
+        {
+          "tier": "climb",
+          "broken": false,
+          "accuracy": 0.07488986784140969,
+          "germanness": 0.2926122961488199,
+          "ms": 18092,
+          "bestKey": "II-IV-V rings AEV start MBE plugs AS BW CQ FZ HL IV JK OT PR",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": -1,
+            "pick": -1,
+            "pickProbability": 0.43,
+            "none": 0.43,
+            "readable": [
+              0.09,
+              0.3,
+              0.33
+            ],
+            "shownAccuracy": [
+              0.07488986784140969,
+              0.06607929515418502,
+              0.05286343612334802
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "synthetic-07",
+      "title": "Vom Heeresgruppenkommando. Die Umgruppierung der",
+      "kind": "synthetic",
+      "machine": "I",
+      "service": "Heer",
+      "letters": 312,
+      "plugs": 10,
+      "trueCrib": null,
+      "cribRankJev": null,
+      "cribRankStatic": null,
+      "cribSource": "jev",
+      "tiers": [
+        {
+          "tier": "verify",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.8524383924655529,
+          "ms": 22,
+          "bestKey": "I-IV-III rings HDR start PWW plugs QH XF UD BT CG SV JR NA IZ PM"
+        },
+        {
+          "tier": "key",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.8524383924655529,
+          "ms": 257,
+          "bestKey": "I-IV-III rings HDR start PWW plugs AN BT CG DU FX HQ IZ JR MP SV",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": 0,
+            "pick": 0,
+            "pickProbability": 0.89,
+            "none": 0.09,
+            "readable": [
+              0.74,
+              0.02,
+              0.02
+            ],
+            "shownAccuracy": [
+              1,
+              0.04807692307692308,
+              0.041666666666666664
+            ]
+          }
+        },
+        {
+          "tier": "crib",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.8636144097363936,
+          "ms": 4354,
+          "cribsTried": [
+            "VOMHEERESGRUPP"
+          ],
+          "bestKey": "I-IV-III rings AAR start ITW plugs AN BT CG DU FX HQ IZ JR MP SV",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": 0,
+            "pick": 0,
+            "pickProbability": 0.92,
+            "none": 0.08,
+            "readable": [
+              0.77,
+              0.01,
+              0.03
+            ],
+            "shownAccuracy": [
+              1,
+              0.0673076923076923,
+              0.07051282051282051
+            ]
+          }
+        },
+        {
+          "tier": "bombe",
+          "broken": false,
+          "accuracy": 0.035256410256410256,
+          "germanness": 0.22477310190665906,
+          "ms": 390048,
+          "cribsTried": [
+            "KEINEBESONDERENEREIGNISSE",
+            "TAGESMELDUNG",
+            "LAGEBERICHT",
+            "KEINEBESONDERENEREIGNISSE (all turnovers)"
+          ],
+          "bestKey": "III-II-I rings AAP start KRZ plugs CN DI EZ FV GS HY LQ TU",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": -1,
+            "pick": -1,
+            "pickProbability": 0.47,
+            "none": 0.47,
+            "readable": [
+              0.34,
+              0.08,
+              0.14
+            ],
+            "shownAccuracy": [
+              0.035256410256410256,
+              0.038461538461538464,
+              0.041666666666666664
+            ]
+          }
+        },
+        {
+          "tier": "climb",
+          "broken": false,
+          "accuracy": 0.038461538461538464,
+          "germanness": 0.24663444318685532,
+          "ms": 12860,
+          "bestKey": "I-III-IV rings AIU start EKS plugs AN BC DU FO GX IM LQ RY SW",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": -1,
+            "pick": -1,
+            "pickProbability": 0.65,
+            "none": 0.65,
+            "readable": [
+              0.12,
+              0.16,
+              0.14
+            ],
+            "shownAccuracy": [
+              0.038461538461538464,
+              0.060897435897435896,
+              0.04807692307692308
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "synthetic-08",
+      "title": "Hafenkommandant an Seekriegsleitung. Luftangriff",
+      "kind": "synthetic",
+      "machine": "M3",
+      "service": "Kriegsmarine",
+      "letters": 294,
+      "plugs": 6,
+      "trueCrib": null,
+      "cribRankJev": null,
+      "cribRankStatic": null,
+      "cribSource": "jev",
+      "tiers": [
+        {
+          "tier": "verify",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.9446201011335169,
+          "ms": 23,
+          "bestKey": "V-II-III rings BMF start EPV plugs TB WX FO AE HD NK"
+        },
+        {
+          "tier": "key",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.9446201011335169,
+          "ms": 227,
+          "bestKey": "V-II-III rings BMF start EPV plugs AE BT DH FO KN WX",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": 0,
+            "pick": 0,
+            "pickProbability": 0.95,
+            "none": 0.05,
+            "readable": [
+              0.8,
+              0.01,
+              0.01
+            ],
+            "shownAccuracy": [
+              1,
+              0.034013605442176874,
+              0.04081632653061224
+            ]
+          }
+        },
+        {
+          "tier": "crib",
+          "broken": true,
+          "accuracy": 0.9625850340136054,
+          "germanness": 0.8415598933204776,
+          "ms": 13467,
+          "cribsTried": [
+            "HAFENKOMMANDAN"
+          ],
+          "bestKey": "V-II-III rings ABG start DFW plugs AE BT DH FO KN WX",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": 0,
+            "pick": 0,
+            "pickProbability": 0.92,
+            "none": 0.08,
+            "readable": [
+              0.71,
+              0.01,
+              0.02
+            ],
+            "shownAccuracy": [
+              0.9625850340136054,
+              0.05442176870748299,
+              0.04421768707482993
+            ]
+          }
+        },
+        {
+          "tier": "bombe",
+          "broken": false,
+          "accuracy": 0.06462585034013606,
+          "germanness": 0.2399175419084398,
+          "ms": 697759,
+          "cribsTried": [
+            "KEINEBESONDERENEREIGNISSE",
+            "BEFEHLSHABERDERUBOOTE",
+            "KRKR"
+          ],
+          "bestKey": "VIII-II-IV rings AAW start UQE plugs AH FY GS KP MQ NX OT",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": -1,
+            "pick": -1,
+            "pickProbability": 0.51,
+            "none": 0.51,
+            "readable": [
+              0.25,
+              0.11,
+              0.29
+            ],
+            "shownAccuracy": [
+              0.06462585034013606,
+              0.05442176870748299,
+              0.027210884353741496
+            ]
+          }
+        },
+        {
+          "tier": "climb",
+          "broken": false,
+          "accuracy": 0.030612244897959183,
+          "germanness": 0.2456610998568553,
+          "ms": 12369,
+          "bestKey": "V-VIII-II rings AAY start RDU plugs AG DQ EY FR HZ JL KX OU PW",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": -1,
+            "pick": -1,
+            "pickProbability": 0.44,
+            "none": 0.44,
+            "readable": [
+              0.33,
+              0.23,
+              0.26
+            ],
+            "shownAccuracy": [
+              0.030612244897959183,
+              0.08503401360544217,
+              0.047619047619047616
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "synthetic-09",
+      "title": "Der Gegner hat in den Morgenstunden nach heftige",
+      "kind": "synthetic",
+      "machine": "I",
+      "service": "Heer",
+      "letters": 532,
+      "plugs": 10,
+      "trueCrib": null,
+      "cribRankJev": null,
+      "cribRankStatic": null,
+      "cribSource": "jev",
+      "tiers": [
+        {
+          "tier": "verify",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.8664175703198697,
+          "ms": 1,
+          "bestKey": "III-I-IV rings ABB start YHT plugs PI SD GZ XN UC TK EJ YL HQ AO"
+        },
+        {
+          "tier": "key",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.8664175703198697,
+          "ms": 235,
+          "bestKey": "III-I-IV rings ABB start YHT plugs AO CU DS EJ GZ HQ IP KT LY NX",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": 0,
+            "pick": 0,
+            "pickProbability": 0.94,
+            "none": 0.06,
+            "readable": [
+              0.81,
+              0.01,
+              0.03
+            ],
+            "shownAccuracy": [
+              1,
+              0.039473684210526314,
+              0.03759398496240601
+            ]
+          }
+        },
+        {
+          "tier": "crib",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.8643861195691304,
+          "ms": 4599,
+          "cribsTried": [
+            "DERGEGNERHATIN"
+          ],
+          "bestKey": "III-I-IV rings ABB start YHT plugs AO CU DS EJ GZ HQ IP KT LY NX",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": 0,
+            "pick": 0,
+            "pickProbability": 0.93,
+            "none": 0.07,
+            "readable": [
+              0.78,
+              0,
+              0.02
+            ],
+            "shownAccuracy": [
+              1,
+              0.05639097744360902,
+              0.05451127819548872
+            ]
+          }
+        },
+        {
+          "tier": "bombe",
+          "broken": false,
+          "accuracy": 0.06015037593984962,
+          "germanness": 0.1819194919709316,
+          "ms": 473029,
+          "cribsTried": [
+            "KEINEBESONDERENEREIGNISSE",
+            "AUFKLX",
+            "FEINDLIQE",
+            "KEINEBESONDERENEREIGNISSE (all turnovers)"
+          ],
+          "bestKey": "II-III-I rings AFX start LKW plugs BM DG EO FX HU JY KP LZ NT QV",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": -1,
+            "pick": -1,
+            "pickProbability": 0.64,
+            "none": 0.64,
+            "readable": [
+              0.1,
+              0.06,
+              0.15
+            ],
+            "shownAccuracy": [
+              0.06015037593984962,
+              0.04887218045112782,
+              0.05639097744360902
+            ]
+          }
+        },
+        {
+          "tier": "climb",
+          "broken": false,
+          "accuracy": 0.04887218045112782,
+          "germanness": 0.18344479913057385,
+          "ms": 28897,
+          "bestKey": "I-V-IV rings AVY start KTF plugs AE BY IS JM KU NP",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": -1,
+            "pick": -1,
+            "pickProbability": 0.36,
+            "none": 0.36,
+            "readable": [
+              0.24,
+              0.04,
+              0.42
+            ],
+            "shownAccuracy": [
+              0.04887218045112782,
+              0.041353383458646614,
+              0.043233082706766915
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "synthetic-10",
+      "title": "Geleitzugmeldung. Um vierzehn Uhr dreißig Rauchf",
+      "kind": "synthetic",
+      "machine": "M3",
+      "service": "Kriegsmarine",
+      "letters": 432,
+      "plugs": 10,
+      "trueCrib": "GELEITZUG",
+      "cribRankJev": 11,
+      "cribRankStatic": 10,
+      "cribSource": "jev",
+      "tiers": [
+        {
+          "tier": "verify",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.894631349331675,
+          "ms": 3,
+          "bestKey": "VIII-VII-VI rings HGA start JBT plugs TY WV ON PK MZ CB RE QI XF AS"
+        },
+        {
+          "tier": "key",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.894631349331675,
+          "ms": 1117,
+          "bestKey": "VIII-VII-VI rings HGA start JBT plugs AS BC ER FX IQ KP MZ NO TY VW",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": 0,
+            "pick": 0,
+            "pickProbability": 0.96,
+            "none": 0.04,
+            "readable": [
+              0.81,
+              0.01,
+              0.02
+            ],
+            "shownAccuracy": [
+              1,
+              0.05092592592592592,
+              0.03935185185185185
+            ]
+          }
+        },
+        {
+          "tier": "crib",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.894767835590169,
+          "ms": 812128,
+          "cribsTried": [
+            "GELEITZUGMELDU"
+          ],
+          "bestKey": "VIII-VII-VI rings AGA start CBT plugs AS BC ER FX IQ KP MZ NO TY VW",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": 0,
+            "pick": 0,
+            "pickProbability": 0.96,
+            "none": 0.04,
+            "readable": [
+              0.84,
+              0.01,
+              0.02
+            ],
+            "shownAccuracy": [
+              1,
+              0.08333333333333333,
+              0.06712962962962964
+            ]
+          }
+        },
+        {
+          "tier": "bombe",
+          "broken": false,
+          "accuracy": 0.034722222222222224,
+          "germanness": 0.18653865251679524,
+          "ms": 122568,
+          "cribsTried": [
+            "KEINEBESONDERENEREIGNISSE",
+            "BEFEHLSHABERDERUBOOTE",
+            "VONVON"
+          ],
+          "bestKey": "III-IV-VIII rings AVI start TNT plugs BO CS DF EX GH IT JU KP LY NV",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": -1,
+            "pick": -1,
+            "pickProbability": 0.39,
+            "none": 0.39,
+            "readable": [
+              0.22,
+              0.28,
+              0.05
+            ],
+            "shownAccuracy": [
+              0.034722222222222224,
+              0.04861111111111111,
+              0.032407407407407406
+            ]
+          }
+        },
+        {
+          "tier": "climb",
+          "broken": false,
+          "accuracy": 0.07175925925925926,
+          "germanness": 0.21056573397270043,
+          "ms": 17673,
+          "bestKey": "V-III-VIII rings AHA start MQW plugs AX BQ CE FW GJ HI KL MU SY",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": -1,
+            "pick": -1,
+            "pickProbability": 0.45,
+            "none": 0.45,
+            "readable": [
+              0.18,
+              0.2,
+              0.31
+            ],
+            "shownAccuracy": [
+              0.07175925925925926,
+              0.04398148148148148,
+              0.05092592592592592
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "synthetic-11",
+      "title": "An den Kommandeur des Pionierbataillons. Der Brü",
+      "kind": "synthetic",
+      "machine": "I",
+      "service": "Heer",
+      "letters": 426,
+      "plugs": 10,
+      "trueCrib": null,
+      "cribRankJev": null,
+      "cribRankStatic": null,
+      "cribSource": "jev",
+      "tiers": [
+        {
+          "tier": "verify",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.8933145913639295,
+          "ms": 1,
+          "bestKey": "I-IV-III rings XIE start CVU plugs AX DM NV GB ZC YT LU IO EF WJ"
+        },
+        {
+          "tier": "key",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.8933145913639295,
+          "ms": 171,
+          "bestKey": "I-IV-III rings XIE start CVU plugs AX BG CZ DM EF IO JW LU NV TY",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": 0,
+            "pick": 0,
+            "pickProbability": 0.92,
+            "none": 0.07,
+            "readable": [
+              0.79,
+              0.01,
+              0.02
+            ],
+            "shownAccuracy": [
+              1,
+              0.04225352112676056,
+              0.04929577464788732
+            ]
+          }
+        },
+        {
+          "tier": "crib",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.8953462198126597,
+          "ms": 245692,
+          "cribsTried": [
+            "ANDENKOMMANDEU"
+          ],
+          "bestKey": "I-IV-III rings AIE start FVU plugs AX BG CZ DM EF IO JW LU NV TY",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": 0,
+            "pick": 0,
+            "pickProbability": 0.96,
+            "none": 0.04,
+            "readable": [
+              0.81,
+              0.01,
+              0.02
+            ],
+            "shownAccuracy": [
+              1,
+              0.06338028169014084,
+              0.046948356807511735
+            ]
+          }
+        },
+        {
+          "tier": "bombe",
+          "broken": false,
+          "accuracy": 0.051643192488262914,
+          "germanness": 0.18405683345507654,
+          "ms": 131149,
+          "cribsTried": [
+            "KEINEBESONDERENEREIGNISSE",
+            "SPRUCHNUMMER",
+            "FUEHRERHAUPTQUARTIER",
+            "KEINEBESONDERENEREIGNISSE (all turnovers)"
+          ],
+          "bestKey": "V-III-IV rings AAY start LIY plugs AZ BO CF DK GH IR LU QV",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": -1,
+            "pick": -1,
+            "pickProbability": 0.43,
+            "none": 0.43,
+            "readable": [
+              0.33,
+              0.07,
+              0.14
+            ],
+            "shownAccuracy": [
+              0.051643192488262914,
+              0.03286384976525822,
+              0.04225352112676056
+            ]
+          }
+        },
+        {
+          "tier": "climb",
+          "broken": false,
+          "accuracy": 0.046948356807511735,
+          "germanness": 0.2197823636031133,
+          "ms": 9959,
+          "bestKey": "I-IV-II rings APZ start BKC plugs AH BP CX EJ LR MY QZ TU",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": -1,
+            "pick": -1,
+            "pickProbability": 0.53,
+            "none": 0.53,
+            "readable": [
+              0.31,
+              0.13,
+              0.24
+            ],
+            "shownAccuracy": [
+              0.046948356807511735,
+              0.0539906103286385,
+              0.056338028169014086
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "synthetic-12",
+      "title": "Aufklärung meldet Bereitstellung feindlicher Krä",
+      "kind": "synthetic",
+      "machine": "I",
+      "service": "Heer",
+      "letters": 112,
+      "plugs": 6,
+      "trueCrib": "AUFKLAERUNG",
+      "cribRankJev": 13,
+      "cribRankStatic": 10,
+      "cribSource": "jev",
+      "tiers": [
+        {
+          "tier": "verify",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.841588821516351,
+          "ms": 1,
+          "bestKey": "I-IV-III rings VDF start AEA plugs LT AZ KE DY HM NW"
+        },
+        {
+          "tier": "key",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.841588821516351,
+          "ms": 179,
+          "bestKey": "I-IV-III rings VDF start AEA plugs AZ DY EK HM LT NW",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": 0,
+            "pick": 0,
+            "pickProbability": 0.88,
+            "none": 0.1,
+            "readable": [
+              0.72,
+              0.01,
+              0.04
+            ],
+            "shownAccuracy": [
+              1,
+              0.017857142857142856,
+              0.03571428571428571
+            ]
+          }
+        },
+        {
+          "tier": "crib",
+          "broken": false,
+          "accuracy": 0.0625,
+          "germanness": 0.4087463711454382,
+          "ms": 8587,
+          "cribsTried": [
+            "AUFKLAERUNGMEL"
+          ],
+          "bestKey": "V-I-IV rings AAI start JPV plugs AD BY CO EX FS GP IL JT MV NQ",
+          "ngramRight": false,
+          "jev": {
+            "right": true,
+            "rightArgmax": false,
+            "accepted": -1,
+            "pick": 0,
+            "pickProbability": 0.51,
+            "none": 0.29,
+            "readable": [
+              0.39,
+              0.09,
+              0.2
+            ],
+            "shownAccuracy": [
+              0.0625,
+              0.08035714285714286,
+              0.07142857142857142
+            ]
+          }
+        },
+        {
+          "tier": "bombe",
+          "broken": false,
+          "accuracy": 0.09821428571428571,
+          "germanness": 0.4223761887803321,
+          "ms": 9254,
+          "cribsTried": [
+            "KEINEBESONDERENEREIGNISSE",
+            "TAGESMELDUNG"
+          ],
+          "bestKey": "II-V-III rings ALO start CVI plugs BV CJ DK GH IO RY TZ",
+          "ngramRight": false,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": -1,
+            "pick": -1,
+            "pickProbability": 0.38,
+            "none": 0.38,
+            "readable": [
+              0.23,
+              0.16,
+              0.14
+            ],
+            "shownAccuracy": [
+              0.09821428571428571,
+              0.03571428571428571,
+              0.05357142857142857
+            ]
+          }
+        },
+        {
+          "tier": "climb",
+          "broken": false,
+          "accuracy": 0.08928571428571429,
+          "germanness": 0.4883730847143048,
+          "ms": 3490,
+          "bestKey": "IV-V-III rings AMB start KWK plugs CZ DW ER FQ IK JU NS TV XY",
+          "ngramRight": false,
+          "jev": {
+            "right": true,
+            "rightArgmax": false,
+            "accepted": -1,
+            "pick": 0,
+            "pickProbability": 0.3,
+            "none": 0.23,
+            "readable": [
+              0.39,
+              0.3,
+              0.4
+            ],
+            "shownAccuracy": [
+              0.08928571428571429,
+              0.4017857142857143,
+              0.017857142857142856
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "synthetic-13",
+      "title": "Eigener Stoßtrupp hat in der Nacht das feindlich",
+      "kind": "synthetic",
+      "machine": "I",
+      "service": "Heer",
+      "letters": 317,
+      "plugs": 10,
+      "trueCrib": null,
+      "cribRankJev": null,
+      "cribRankStatic": null,
+      "cribSource": "jev",
+      "tiers": [
+        {
+          "tier": "verify",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.9080196114115016,
+          "ms": 0,
+          "bestKey": "V-II-IV rings OOU start NMH plugs OR NJ QE GU PT AF DI KX SW MB"
+        },
+        {
+          "tier": "key",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.9080196114115016,
+          "ms": 86,
+          "bestKey": "V-II-IV rings OOU start NMH plugs AF BM DI EQ GU JN KX OR PT SW",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": 0,
+            "pick": 0,
+            "pickProbability": 0.89,
+            "none": 0.1,
+            "readable": [
+              0.77,
+              0.01,
+              0.04
+            ],
+            "shownAccuracy": [
+              1,
+              0.03470031545741325,
+              0.04100946372239748
+            ]
+          }
+        },
+        {
+          "tier": "crib",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.9052613790399483,
+          "ms": 213478,
+          "cribsTried": [
+            "EIGENERSTOSSTR"
+          ],
+          "bestKey": "V-II-IV rings AHU start ZFH plugs AF BM DI EQ GU JN KX OR PT SW",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": 0,
+            "pick": 0,
+            "pickProbability": 0.96,
+            "none": 0.04,
+            "readable": [
+              0.76,
+              0.01,
+              0.02
+            ],
+            "shownAccuracy": [
+              1,
+              0.07886435331230283,
+              0.08201892744479496
+            ]
+          }
+        },
+        {
+          "tier": "bombe",
+          "broken": false,
+          "accuracy": 0.0473186119873817,
+          "germanness": 0.2088990697488423,
+          "ms": 191047,
+          "cribsTried": [
+            "TAGESMELDUNG",
+            "FUNKSPRUCH",
+            "OBERKOMMANDODERWEHRMACHT",
+            "TAGESMELDUNG (all turnovers)"
+          ],
+          "bestKey": "I-II-III rings AAC start DMD plugs BN CG DZ EO FV HS JP KT RY UW",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": -1,
+            "pick": -1,
+            "pickProbability": 0.51,
+            "none": 0.51,
+            "readable": [
+              0.24,
+              0.15,
+              0.08
+            ],
+            "shownAccuracy": [
+              0.0473186119873817,
+              0.04100946372239748,
+              0.0473186119873817
+            ]
+          }
+        },
+        {
+          "tier": "climb",
+          "broken": false,
+          "accuracy": 0.03470031545741325,
+          "germanness": 0.2809446878018032,
+          "ms": 3318,
+          "bestKey": "V-III-IV rings AMW start PKT plugs AM BO CS DK EF GI HW",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": -1,
+            "pick": -1,
+            "pickProbability": 0.51,
+            "none": 0.51,
+            "readable": [
+              0.27,
+              0.26,
+              0.22
+            ],
+            "shownAccuracy": [
+              0.03470031545741325,
+              0.056782334384858045,
+              0.028391167192429023
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "synthetic-14",
+      "title": "Befehl an alle Kampfgeschwader. Der für morgen b",
+      "kind": "synthetic",
+      "machine": "I",
+      "service": "Luftwaffe",
+      "letters": 394,
+      "plugs": 10,
+      "trueCrib": "BEFEHL",
+      "cribRankJev": 9,
+      "cribRankStatic": 3,
+      "cribSource": "jev",
+      "tiers": [
+        {
+          "tier": "verify",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.9984553863592573,
+          "ms": 1,
+          "bestKey": "IV-I-V rings GME start CAP plugs RB TS VN YX KG HL EA IU ZD CQ"
+        },
+        {
+          "tier": "key",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.9984553863592573,
+          "ms": 153,
+          "bestKey": "IV-I-V rings GME start CAP plugs AE BR CQ DZ GK HL IU NV ST XY",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": 0,
+            "pick": 0,
+            "pickProbability": 0.87,
+            "none": 0.11,
+            "readable": [
+              0.74,
+              0.02,
+              0.04
+            ],
+            "shownAccuracy": [
+              1,
+              0.04568527918781726,
+              0.05583756345177665
+            ]
+          }
+        },
+        {
+          "tier": "crib",
+          "broken": false,
+          "accuracy": 0.07868020304568528,
+          "germanness": 0.13301369122034878,
+          "ms": 68561,
+          "cribsTried": [
+            "BEFEHLXANXALLE"
+          ],
+          "bestKey": "IV-II-V rings AAJ start KIW plugs CS EV GM HY IT JZ KL OX QU",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": -1,
+            "pick": -1,
+            "pickProbability": 0.44,
+            "none": 0.44,
+            "readable": [
+              0.27,
+              0.07,
+              0.22
+            ],
+            "shownAccuracy": [
+              0.07868020304568528,
+              0.07360406091370558,
+              0.06345177664974619
+            ]
+          }
+        },
+        {
+          "tier": "bombe",
+          "broken": false,
+          "accuracy": 0.050761421319796954,
+          "germanness": 0.18965972712684637,
+          "ms": 89662,
+          "cribsTried": [
+            "TAGESMELDUNG",
+            "LUFTFLOTTE",
+            "FUNKSPRUCH",
+            "TAGESMELDUNG (all turnovers)"
+          ],
+          "bestKey": "III-II-IV rings AAT start FLX plugs AD BC EY FU GI HL KV NQ PW TZ",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": -1,
+            "pick": -1,
+            "pickProbability": 0.58,
+            "none": 0.58,
+            "readable": [
+              0.16,
+              0.09,
+              0.14
+            ],
+            "shownAccuracy": [
+              0.050761421319796954,
+              0.06852791878172589,
+              0.0532994923857868
+            ]
+          }
+        },
+        {
+          "tier": "climb",
+          "broken": false,
+          "accuracy": 0.050761421319796954,
+          "germanness": 0.21780216024208032,
+          "ms": 8914,
+          "bestKey": "III-V-I rings AZB start JYA plugs AK CD FN JO LX MQ RT SZ VY",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": -1,
+            "pick": -1,
+            "pickProbability": 0.52,
+            "none": 0.52,
+            "readable": [
+              0.21,
+              0.1,
+              0.4
+            ],
+            "shownAccuracy": [
+              0.050761421319796954,
+              0.05583756345177665,
+              0.05583756345177665
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "synthetic-15",
+      "title": "Versorgungsbericht der Armee für die vergangene ",
+      "kind": "synthetic",
+      "machine": "I",
+      "service": "Heer",
+      "letters": 493,
+      "plugs": 10,
+      "trueCrib": null,
+      "cribRankJev": null,
+      "cribRankStatic": null,
+      "cribSource": "jev",
+      "tiers": [
+        {
+          "tier": "verify",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.8135792964036915,
+          "ms": 1,
+          "bestKey": "III-I-IV rings ANF start YKD plugs TC HA KW EX MB QI YS PJ LU RO"
+        },
+        {
+          "tier": "key",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.8135792964036915,
+          "ms": 204,
+          "bestKey": "III-I-IV rings ANF start YKD plugs AH BM CT EX IQ JP KW LU OR SY",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": 0,
+            "pick": 0,
+            "pickProbability": 0.76,
+            "none": 0.2,
+            "readable": [
+              0.66,
+              0.03,
+              0.02
+            ],
+            "shownAccuracy": [
+              1,
+              0.04665314401622718,
+              0.05070993914807302
+            ]
+          }
+        },
+        {
+          "tier": "crib",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.8124330271976341,
+          "ms": 92082,
+          "cribsTried": [
+            "VERSORGUNGSBER"
+          ],
+          "bestKey": "III-I-IV rings ANF start YKD plugs AH BM CT EX IQ JP KW LU OR SY",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": 0,
+            "pick": 0,
+            "pickProbability": 0.92,
+            "none": 0.08,
+            "readable": [
+              0.71,
+              0.01,
+              0.01
+            ],
+            "shownAccuracy": [
+              1,
+              0.06288032454361055,
+              0.05273833671399594
+            ]
+          }
+        },
+        {
+          "tier": "bombe",
+          "broken": false,
+          "accuracy": 0.036511156186612576,
+          "germanness": 0.17291893854904572,
+          "ms": 77567,
+          "cribsTried": [
+            "WETTERVORHERSAGE",
+            "WETTERBERICHT",
+            "WETTERMELDUNG",
+            "WETTERVORHERSAGE (all turnovers)"
+          ],
+          "bestKey": "I-III-II rings AXK start TJI plugs AH BG FK NU OZ QS RW TY",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": -1,
+            "pick": -1,
+            "pickProbability": 0.4,
+            "none": 0.4,
+            "readable": [
+              0.13,
+              0.24,
+              0.14
+            ],
+            "shownAccuracy": [
+              0.036511156186612576,
+              0.05273833671399594,
+              0.034482758620689655
+            ]
+          }
+        },
+        {
+          "tier": "climb",
+          "broken": false,
+          "accuracy": 0.032454361054766734,
+          "germanness": 0.20770246723446598,
+          "ms": 5398,
+          "bestKey": "III-V-II rings AJI start PLP plugs BH CL DS EF JU MZ NO TW",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": -1,
+            "pick": -1,
+            "pickProbability": 0.38,
+            "none": 0.38,
+            "readable": [
+              0.28,
+              0.16,
+              0.33
+            ],
+            "shownAccuracy": [
+              0.032454361054766734,
+              0.04665314401622718,
+              0.058823529411764705
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "synthetic-16",
+      "title": "Zerstörerflottille läuft heute Abend aus, um das",
+      "kind": "synthetic",
+      "machine": "M3",
+      "service": "Kriegsmarine",
+      "letters": 143,
+      "plugs": 6,
+      "trueCrib": null,
+      "cribRankJev": null,
+      "cribRankStatic": null,
+      "cribSource": "jev",
+      "tiers": [
+        {
+          "tier": "verify",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.9516372240336056,
+          "ms": 1,
+          "bestKey": "I-II-V rings VCK start GVN plugs KU AY XO IJ LZ TR"
+        },
+        {
+          "tier": "key",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.9516372240336056,
+          "ms": 125,
+          "bestKey": "I-II-V rings VCK start GVN plugs AY IJ KU LZ OX RT",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": 0,
+            "pick": 0,
+            "pickProbability": 0.87,
+            "none": 0.11,
+            "readable": [
+              0.73,
+              0.01,
+              0.02
+            ],
+            "shownAccuracy": [
+              1,
+              0.055944055944055944,
+              0.04195804195804196
+            ]
+          }
+        },
+        {
+          "tier": "crib",
+          "broken": true,
+          "accuracy": 1,
+          "germanness": 0.9672848335963463,
+          "ms": 248881,
+          "cribsTried": [
+            "ZERSTOERERFLOT"
+          ],
+          "bestKey": "I-II-V rings AAK start LTN plugs AY IJ KU LZ OX RT",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": 0,
+            "pick": 0,
+            "pickProbability": 0.94,
+            "none": 0.05,
+            "readable": [
+              0.81,
+              0.03,
+              0.01
+            ],
+            "shownAccuracy": [
+              1,
+              0.09090909090909091,
+              0.11188811188811189
+            ]
+          }
+        },
+        {
+          "tier": "bombe",
+          "broken": false,
+          "accuracy": 0.06993006993006994,
+          "germanness": 0.3589353988512663,
+          "ms": 181750,
+          "cribsTried": [
+            "BEFEHLSHABERDERUBOOTE",
+            "KRKR",
+            "WETTERMELDUNG"
+          ],
+          "bestKey": "VIII-I-II rings AHE start JLV plugs CJ FP GL HU KV NY",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": false,
+            "accepted": -1,
+            "pick": 0,
+            "pickProbability": 0.42,
+            "none": 0.39,
+            "readable": [
+              0.37,
+              0.12,
+              0.14
+            ],
+            "shownAccuracy": [
+              0.06993006993006994,
+              0.04895104895104895,
+              0.06993006993006994
+            ]
+          }
+        },
+        {
+          "tier": "climb",
+          "broken": false,
+          "accuracy": 0.04895104895104895,
+          "germanness": 0.39960001221422536,
+          "ms": 22264,
+          "bestKey": "III-VIII-IV rings ABR start QUO plugs AF BM CH EV GO JK LR WZ",
+          "ngramRight": true,
+          "jev": {
+            "right": true,
+            "rightArgmax": true,
+            "accepted": -1,
+            "pick": -1,
+            "pickProbability": 0.43,
+            "none": 0.43,
+            "readable": [
+              0.13,
+              0.27,
+              0.35
+            ],
+            "shownAccuracy": [
+              0.04895104895104895,
+              0.04195804195804196,
+              0.06993006993006994
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

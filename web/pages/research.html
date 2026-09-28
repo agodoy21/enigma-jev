@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Enigma × Jev · Research</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles/tokens.css" />
+  <link rel="stylesheet" href="../styles/base.css" />
+  <link rel="stylesheet" href="../styles/paper.css" />
+</head>
+<body class="research">
+  <div class="read-progress" aria-hidden="true"><i id="readProgress"></i></div>
+  <header class="top">
+    <div>
+      <h1><a class="home" href="/">Enigma <span class="x">×</span> Jev</a></h1>
+      <p class="lede">Research: the history behind the machine, how this system was built, and how well it works.</p>
+    </div>
+    <nav class="topright pagenav" aria-label="Pages"><a class="annexlink" href="/">Machine</a><a class="annexlink here" href="/research" aria-current="page">Research &amp; history</a><a class="annexlink" href="/jev">Jev performance</a></nav>
+  </header>
+  <!-- Research: history, method and evaluation -->
+  <div class="paper">
+    <aside class="rail" aria-label="Contents">
+      <button type="button" class="toc-toggle" id="tocToggle" aria-expanded="false" aria-controls="toc">Contents</button>
+      <nav id="toc" class="toc-rail"></nav>
+    </aside>
+  <article class="annex" id="annex">
+    <header class="annex-head">
+      <p class="kicker">Research</p>
+      <h2>Enigma, the Bombe, and a probabilistic analyst</h2>
+      <p class="subtitle">Historical context, method of construction, and evaluation of the <a href="/">Enigma × Jev</a> system</p>
+      <p class="abstract"><b>Abstract.</b> The German Enigma was not broken by brute force. It was broken by structural observations about the machine, by exploiting how operators actually used it, and by pairing electromechanical search with human judgement about probable plaintext. This paper reviews that history from the Polish Cipher Bureau (1932–39) through Bletchley Park and the naval four-rotor problem, and summarises the modern computational literature. It then documents how the present system rebuilds the codebreakers' pipeline in software: a verified machine simulator; a Turing–Welchman Bombe with the diagonal board; a Gillogly and Weierud–Sullivan ciphertext-only hill-climber; and German <i>n</i>-gram statistics. Here a language model with typed probabilistic outputs (Jev) makes the two judgements a Hut 6 analyst made: which crib to try, and whether a trial decryption is German. We describe two algorithmic refinements that proved necessary, a ring-independent ranking of Bombe stops and a ring-aware reconstruction of message settings. Its test register reproduces, within their confidence intervals, the stop counts Weinbaum (2025) published for one- and two-loop menus. We report a tiered backtest on nine historical intercepts with published keys and on synthetic traffic, and state the threats to its validity.</p>
+      <p class="meta" id="paperMeta">Research note · Enigma × Jev</p>
+      <section class="glance" id="glance" aria-label="At a glance">
+        <div class="tile"><span class="big">2<sup>76.5</sup></span><span class="lbl">key space of the wartime Enigma I</span><span class="sub">but a Bombe searched only 1,054,560 rotor settings</span></div>
+        <div class="tile" data-k="key"><span class="big">–</span><span class="lbl">message keys recovered from the daily key</span><span class="sub">historical + synthetic, main run</span></div>
+        <div class="tile" data-k="crib"><span class="big">–</span><span class="lbl">broken by the Bombe from a 14-letter crib</span><span class="sub">known-plaintext tier, main run</span></div>
+        <div class="tile jev" data-k="jev"><span class="big">–</span><span class="lbl">Jev verdicts right under the decision rule</span><span class="sub">all judged tiers, main + holdout</span></div>
+        <div class="tile" data-k="climb"><span class="big">–</span><span class="lbl">broken from ciphertext alone</span><span class="sub">10-plug traffic needs cribs, as in 1940</span></div>
+      </section>
+    </header>
+
+    <section id="a1">
+      <h3>A. Historical and technical context</h3>
+      <p>This section draws in places on a documentary filmed at Bletchley Park and The National Museum of Computing, with Sir Dermot Turing and the running rebuild of the Bombe (Veritasium n.d.). Where the documentary simplifies, the text says so; its numbers are recomputed on this project's simulator.</p>
+
+      <figure class="figure">
+        <ol class="chrono" aria-label="Timeline of Enigma and its cryptanalysis">
+          <li><span class="yr">1918</span><span class="era">machine</span><p>Scherbius patents a rotor cipher machine and sells it to banks and businesses.</p></li>
+          <li><span class="yr">1926–30</span><span class="era">machine</span><p>Navy (1926) and Army (1928) adopt Enigma with rewired rotors; the Army's Enigma I adds the plugboard (1930).</p></li>
+          <li><span class="yr">1931</span><span class="era">Poland</span><p>Hans-Thilo Schmidt sells documents to French intelligence, which passes them to Warsaw.</p></li>
+          <li><span class="yr">1932</span><span class="era">Poland</span><p>Rejewski recovers the rotor wiring with permutation theory.</p></li>
+          <li><span class="yr">1938</span><span class="era">Poland</span><p>Bomba and Zygalski sheets; in December rotors IV and V make 60 rotor orders.</p></li>
+          <li><span class="yr">Jul 1939</span><span class="era">Poland</span><p>At Pyry the Poles hand methods and replicas to Britain and France.</p></li>
+          <li><span class="yr">1940</span><span class="era">Bletchley</span><p>Turing's Bombe (March); indicators no longer doubled (May); Herivel tip and cillies; the diagonal board (August).</p></li>
+          <li><span class="yr">1941</span><span class="era">naval</span><p>Captures from <i>München</i> and <i>U-110</i>; Banburismus reads naval traffic.</p></li>
+          <li><span class="yr">1942</span><span class="era">naval</span><p>U-boats move to the four-rotor M4 (February); Shark is read again from December.</p></li>
+          <li><span class="yr">1943–44</span><span class="era">naval</span><p>US Navy four-rotor Bombes take on Shark; Colossus attacks the Lorenz cipher, which was not Enigma.</p></li>
+          <li><span class="yr">1995–2017</span><span class="era">modern</span><p>Gillogly; Weierud and Sullivan; the M4 Project; Ostwald and Weierud.</p></li>
+        </ol>
+        <figcaption><b>Figure 1.</b> From patent to computational cryptanalysis. Era labels mark who carried the work.</figcaption>
+      </figure>
+
+      <h4>A.1 The machine</h4>
+      <p>Arthur Scherbius patented a rotor cipher machine in 1918 and sold it openly to banks and businesses; Poland and Britain, among others, simply bought one. A commercial Enigma was of little use against the military version, however. The German Navy adopted the machine in 1926 and the Army in 1928, each with rotors <em>rewired</em> in secret. In 1930 the Army introduced <i>Enigma I</i> with a plugboard (<i>Steckerbrett</i>), the component on which most of the machine's combinatorial strength rests (Kahn 1991; Bauer 2007). Without the new wirings no amount of ingenuity about settings could help, which is why Britain, which read unplugged commercial variants, had made almost no progress against the military machine by the summer of 1939 (Veritasium n.d.).</p>
+      <p>A key press sends current through the plugboard, the three rotors from right to left, a fixed reflector (<i>Umkehrwalze</i>), the rotors back again and the plugboard once more. At any rotor position the whole path is therefore a product <i>P</i>·<i>S</i>·<i>P</i>. Here <i>P</i> is the plugboard involution and <i>S</i> = <i>R</i><sup>−1</sup><i>U R</i> is a fixed-point-free involution. Two consequences followed, and both mattered to the codebreakers. First, the machine is <em>self-reciprocal</em>: if E enciphers to K, then at the same setting K enciphers to E, so the same setting enciphers and deciphers. Second, <em>no letter is ever enciphered to itself</em>. Hold down L and every lamp but L can light. That lets an analyst rule out a guessed plaintext at any alignment where a letter would coincide with its cipher letter, the “crib dragging” of Figure 6 and of the Break step on the <a href="/">machine page</a>.</p>
+      <figure class="figure">
+        <svg class="diagram" viewBox="0 0 760 210" role="img" aria-labelledby="sigTitle">
+          <title id="sigTitle">Signal path of one key press: keyboard, plugboard, right, middle and left rotors, reflector, then back through the rotors and plugboard to a lamp</title>
+          <defs>
+            <marker id="arrIn" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="ah-in"/></marker>
+            <marker id="arrOut" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="ah-out"/></marker>
+          </defs>
+          <rect class="box" x="16" y="48" width="96" height="44" rx="6"/><text class="lbl" x="64" y="75" text-anchor="middle">key A</text>
+          <rect class="box" x="16" y="118" width="96" height="44" rx="6"/><text class="lbl" x="64" y="145" text-anchor="middle">lamp</text>
+          <rect class="part" x="150" y="36" width="64" height="140" rx="6"/><text class="lbl" x="182" y="196" text-anchor="middle">plugboard</text><text class="sym" x="182" y="112" text-anchor="middle">P</text>
+          <rect class="part" x="252" y="36" width="64" height="140" rx="6"/><text class="lbl" x="284" y="196" text-anchor="middle">right</text><text class="sym" x="284" y="112" text-anchor="middle">R</text>
+          <rect class="part" x="354" y="36" width="64" height="140" rx="6"/><text class="lbl" x="386" y="196" text-anchor="middle">middle</text><text class="sym" x="386" y="112" text-anchor="middle">M</text>
+          <rect class="part" x="456" y="36" width="64" height="140" rx="6"/><text class="lbl" x="488" y="196" text-anchor="middle">left</text><text class="sym" x="488" y="112" text-anchor="middle">L</text>
+          <path class="part" d="M580 36 h40 a14 14 0 0 1 14 14 v112 a14 14 0 0 1 -14 14 h-40 z"/><text class="lbl" x="606" y="196" text-anchor="middle">reflector</text><text class="sym" x="604" y="112" text-anchor="middle">U</text>
+          <path class="in" d="M112 70 H596 V140"/>
+          <path class="in" d="M180 70 H232" marker-end="url(#arrIn)"/>
+          <path class="out" d="M596 140 H116" marker-end="url(#arrOut)"/>
+          <text class="note in-t" x="660" y="74">in</text>
+          <text class="note out-t" x="660" y="144">out</text>
+          <text class="note" x="640" y="110">no fixed point:</text><text class="note" x="640" y="124">A never → A</text>
+        </svg>
+        <figcaption><b>Figure 2.</b> One key press. The current passes <i>P</i>, <i>R</i>, <i>M</i>, <i>L</i>, is turned back by the reflector <i>U</i>, and returns through <i>L</i>, <i>M</i>, <i>R</i>, <i>P</i>. The whole path is an involution without fixed points, so the machine deciphers what it enciphers, and never enciphers a letter to itself.</figcaption>
+      </figure>
+      <p>What set Enigma apart from the Caesar shift and every fixed substitution before it is that the substitution changes with every letter. In the video's demonstration, L lights Y, and L pressed again lights H. Behind the rotors sit three spring-loaded pawls, one per rotor, and all three push on every key press. Only the right rotor's pawl always engages. The others drop into a <em>notch</em> on the rotor to their right only when that rotor reaches its turnover letter, so the middle rotor advances once per 26 letters and the left rotor very rarely. When the middle rotor reaches its own notch, the left pawl drops in and pushes the left rotor and, through that notch, the middle rotor as well, so the middle rotor steps twice in succession (the <em>double step</em>) and the period is 26·25·26 = 16,900 rather than 26³.</p>
+      <p>Undo a small clip and the lettered ring turns against the wiring core; this is the ring setting (<i>Ringstellung</i>). If the core carries contact 1 to contact 4 (A to D), moving the ring by one makes the same wire carry B to E. The substitution depends only on the difference between window letter and ring, while the moment of turnover depends on the window letter alone. Many ring/position pairs are therefore cryptographically equivalent over a message, which is why the recovered key on the machine page can differ from the sender's letters yet decrypt identically.</p>
+      <aside class="callout"><span class="callout-k">A common simplification</span><p>Popular accounts, including the video this section draws on, say that turning the ring “changes where turnover occurs”. The notch is fixed to the lettered ring, so turnover always happens at the same <em>window letter</em> (Q→R for rotor I). What the ring moves is the turnover relative to the <em>wiring</em>: the same letter now falls at a different point of the scrambling sequence. For an attacker that is the relevant sense, and it is why the Bombe had to allow a middle-rotor step anywhere inside a crib (B.5).</p></aside>
+
+      <h4>A.2 The size of the key space, and why it was not the security</h4>
+      <figure class="figure">
+        <div class="ladder" id="ladder" role="img" aria-label="Key space as each German modification was added, on a logarithmic scale"></div>
+        <figcaption><b>Figure 3.</b> The key space as each German modification was added, on a logarithmic scale (each gridline is a factor of 10⁴). Hover a bar for the factor it contributed. The short blue bar is what a Bombe actually had to search: 60 wheel orders × 17,576 positions. Figures are computed; the 1939 total is <span class="fig" id="ladderRatio">15,015</span> times the 1930 total.</figcaption>
+      </figure>
+      <table class="atable">
+        <caption>Table A1. Key space of the wartime Enigma I and its naval successors (computed; the left ring is omitted because it never influences stepping)</caption>
+        <thead><tr><th>Component</th><th>Choices</th><th>≈ bits</th></tr></thead>
+        <tbody>
+          <tr><td>Rotor order, 3 of 5 (Enigma I from Dec 1938)</td><td class="fig">60</td><td class="fig">5.9</td></tr>
+          <tr><td>Start positions, 26³</td><td class="fig">17,576</td><td class="fig">14.1</td></tr>
+          <tr><td>Effective ring settings (middle and right), 26²</td><td class="fig">676</td><td class="fig">9.4</td></tr>
+          <tr><td>Plugboard, 10 pairs: 26! / (6!·10!·2¹⁰)</td><td class="fig">150,738,274,937,250</td><td class="fig">47.1</td></tr>
+          <tr class="total"><td>Enigma I, 3 of 5 rotors, 10 plugs (7–10 pairs from 1 January 1939; ten in wartime)</td><td class="fig">1.07 × 10²³</td><td class="fig">76.5</td></tr>
+          <tr><td>Enigma I, 3 of 5 rotors, 6 plugs (December 1938)</td><td class="fig">7.16 × 10¹⁹</td><td class="fig">66.0</td></tr>
+          <tr><td>Enigma I, 3 rotors, 6 plugs (the 1930 configuration)</td><td class="fig">7.16 × 10¹⁸</td><td class="fig">62.6</td></tr>
+          <tr><td>Commercial Enigma: rotor order and positions only</td><td class="fig">105,456</td><td class="fig">16.7</td></tr>
+          <tr><td>Naval M3, 3 of 8 rotors (336 orders; see below)</td><td class="fig">6.02 × 10²³</td><td class="fig">79.0</td></tr>
+          <tr><td>Naval M4, + greek wheel (2 × 26) and 2 thin reflectors</td><td class="fig">6.26 × 10²⁵</td><td class="fig">85.7</td></tr>
+        </tbody>
+      </table>
+      <p>An earlier version of this table gave the 1930 configuration as 7.16 × 10¹⁹. That figure silently assumed the five-rotor box of 1938. The 1930 machine had three rotors and six orders, so the correct figure is 7.16 × 10¹⁸, agreeing with the “over seven times ten to the eighteen” of the popular account (Veritasium n.d.). Two further rotors (×10) and four more plug pairs (×1,501.5) then multiplied it by 15,015 by the outbreak of war.</p>
+      <p>The plugboard contributes most of the bits, but it barely hindered the attacks that succeeded. The plugboard acts on the scrambler by conjugation, so it leaves invariant any property that depends only on cycle structure. Rejewski exploited exactly that (Figure 4), and a Bombe tests plugboard hypotheses by <em>implication</em>, not enumeration (Figure 7). Neither approach pays for the 10¹⁴ plugboards. The search that mattered to a Bombe was the 60 × 17,576 = 1,054,560 rotor settings, and for the naval M3 5,905,536. The number of plugboards is largest at eleven pairs; the Germans used ten.</p>
+      <p>Weinbaum (2025), following Hosgood, counts only 276 naval wheel orders, on a procedural rule that one of the three wheels must be a naval wheel (VI–VIII). The rule did not always hold. The three M4 Project messages of November 1942 in this project's ground truth use wheels II, IV and I. The Bombe and the backtest therefore search all 336.</p>
+      <aside class="callout"><span class="callout-k">Key idea</span><p>The 10²³ keys were never searched. Every successful attack found a property the plugboard cannot disturb: cycle structure for Rejewski, menu loops for Turing. That cut the problem to the 1,054,560 rotor settings a machine could test in hours, and this software tests in seconds.</p></aside>
+      <p>Shannon's unicity distance <i>U</i> = <i>H</i>(<i>K</i>)/<i>D</i> gives the ciphertext length beyond which the key is, in principle, uniquely determined (Shannon 1949). Take <i>H</i>(<i>K</i>) ≈ 76.5 bits, and a redundancy of German of <i>D</i> ≈ 3.2–3.7 bits per letter (log₂26 ≈ 4.70 minus an entropy rate of roughly 1.0–1.5 bits; Shannon 1951). That gives <i>U</i> ≈ 21–24 letters. Almost every intercept therefore contained enough information to determine its key. The obstacle was always computational, and the history below is the history of closing that gap. It is also why the machine page will not claim to have broken a message much shorter than this.</p>
+
+      <h4>A.3 Poland, 1932–1939: permutation theory</h4>
+      <p>On 8 November 1931 Hans-Thilo Schmidt (“Asché”), an employee of the German Army's cipher office, let French intelligence photograph the Enigma operating instructions and keying procedure for 10,000 marks. The French could not use them and passed them to their Polish allies (Kozaczuk 1984). Through Schmidt the head of the Polish Cipher Bureau, Gwido Langer, eventually held 38 months of daily keys. Expecting that source to vanish in a war, he withheld all but two months of them from his own cryptanalysts, so that they would have to learn to recover keys without them (Weinbaum 2025). The Polish Cipher Bureau (<i>Biuro Szyfrów</i>) had recruited mathematics students from Poznań University, among them Marian Rejewski, Jerzy Różycki and Henryk Zygalski.</p>
+      <p>The weakness Rejewski attacked lay in the procedure, not the machine. Before each message the operator chose a three-letter <em>message key</em>, say GEX. He enciphered it <em>twice</em> at the day's common setting, a precaution against radio garbles, and sent the six cipher letters first. Letters 1 and 4 therefore encipher the same unknown letter, as do 2 and 5, and 3 and 6. Let <i>A</i>, …, <i>F</i> be the enciphering permutations at the six positions. Then the products <i>AD</i>, <i>BE</i> and <i>CF</i> can be read off a day's traffic once about eighty indicators are collected. Their cycle structure (the day's “characteristic”) is independent of the plugboard, because conjugate permutations share a cycle type (Rejewski 1980). With Schmidt's keys, Rejewski set up and solved systems of permutation equations and recovered the rotor wirings by the end of 1932, without ever having seen a military machine (Rejewski 1981).</p>
+      <figure class="figure">
+        <div class="lab" id="rejLab"></div>
+        <figcaption><b>Figure 4.</b> Rejewski's invariant, computed on this project's simulator. The permutations <i>AD</i>, <i>BE</i> and <i>CF</i> for one day's key are drawn as their cycle lengths. Change the plugboard and every letter in every cycle changes, but the lengths do not; change the rotor order or start and they do. A catalogue of cycle lengths for all 105,456 rotor orders and positions, compiled with the <em>cyclometer</em>, therefore identified the day's setting without touching the plugboard. The readout also counts, for the rotor order shown, the start positions at which a 1–4 female is possible: the holes of a Zygalski sheet.</figcaption>
+      </figure>
+      <p>Tools followed. The <em>grill</em> method recovered a day's right rotor by sliding precomputed permutations under the day's six, and worked while only six letters were plugged. The cyclometer produced the catalogue of characteristics, 6 × 26³ = 105,456 entries, and cut the recovery of a day's setting to about fifteen minutes (Rejewski 1981). On 15 September 1938 the operator began choosing and sending his own indicator setting, which made the catalogue useless. Two attacks then used <em>females</em>, the same letter at positions 1 and 4, 2 and 5, or 3 and 6 of an indicator.</p>
+      <ul class="tight">
+        <li><b>The bomba.</b> Each bomba (1938) held three pairs of Enigma equivalents set three steps apart, and stopped where all three pairs produced their female. Six were built, one per rotor order. They relied on the repeated letter being unplugged, a fair bet with five to eight plugs but only 6 in 26 once ten were used, and a day's key took up to about two hours (Kozaczuk 1984).</li>
+        <li><b>Zygalski sheets.</b> A setting can produce a 1–4 female exactly when <i>AD</i> has a fixed point, a property the plugboard cannot change. So a perforated sheet per left-rotor position and order recorded, hole by hole, where a female was possible, and stacking the sheets for a day's females left light through only the consistent ring settings. Weinbaum (2025) puts the chance that a random setting can produce a female at 0.405. Measured on this simulator over all 60 orders and 17,576 positions, it is 0.406, from 0.375 to 0.433 across orders (Table B1). On his own formula about seven sheets leave a single hole among the 676 on a sheet, not the twelve or thirteen his text states. Bletchley cut the full set for 60 orders and sent it to Warsaw (Rejewski 1981).</li>
+      </ul>
+      <p>Meanwhile the Germans turned the screw. Rotor orders had changed quarterly before 1936, then monthly, daily, and eventually every eight hours. From 1 January 1939 seven to ten plugs were used, and in December 1938 two further rotors multiplied the rotor orders tenfold, from 6 to 60, beyond Polish resources. In late July 1939, at Pyry near Warsaw, the Poles gave their methods and replica machines to French and British cryptanalysts. It was one of the decisive transfers of the war (Hinsley and Stripp 1993; Sebag-Montefiore 2000). The name <i>bomba</i> is disputed: a noisy machine, an ice-cream dessert eaten while it was conceived, or, in Rejewski's account, nothing at all (Weinbaum 2025). Five weeks later Germany invaded Poland; the cryptanalysts escaped, the bomby were destroyed, and the work passed to Britain.</p>
+
+      <h4>A.4 The operator as the weak link: indicators, cillies and the Herivel tip</h4>
+      <p>From September 1938 each operator chose the starting position for his indicator himself and sent it in clear. On 1 May 1940 the Army and Air Force stopped doubling the message key, which removed Rejewski's and Zygalski's footholds. The procedure then became the two-stage exchange of Figure 5: a clear <i>Grundstellung</i> (VER), and a message key (ITA) enciphered once from it. A receiver undoes the two checkpoints in turn. The procedure was sound. Its operators were not, because people are poor sources of randomness (Welchman 1982; Veritasium n.d.).</p>
+      <ul class="tight">
+        <li><b>Cillies.</b> The habit was older than Bletchley. The Poles had exploited stations that reused keys such as AAA or keyboard runs such as ASD and PYX, some of which were forbidden from 1933 (Kozaczuk 1984). Operators chose keys they could type without thinking: three letters of a girlfriend's name (a “Cillie” gave the habit its name), keyboard runs such as QWE or diagonals down the QWERTZU layout, or the continuation of the clear setting. Clear BER invites the key LIN. An analyst who guesses the key knows three plaintext letters at a known setting: a three-letter crib.</li>
+        <li><b>The Herivel tip.</b> John Herivel reasoned that an operator setting the day's rings with the rotors already in the machine would leave the ring letters showing in the windows, and would choose his first clear setting of the day within a letter or two of them. Plotted across the network, the first clear settings of the morning therefore <em>cluster around the day's ring settings</em>. That removed the 676 ring choices that made the Bombe's problem hard. The tip was noted in February 1940 and produced breaks from May 1940, in time for the fall of France, chiefly on the Luftwaffe's general key, the “Red” network (Welchman 1982).</li>
+        <li><b>Parkerismus.</b> Reg Parker noticed that the officials who compiled key sheets sometimes reused whole columns from earlier months. Once one setting was recognised in a filed key, the rest of its column could be predicted; Welchman recalled a month of the keys Rommel's army would use in Africa worked out this way (Welchman 1982).</li>
+      </ul>
+      <figure class="figure">
+        <div class="lab" id="herLab"></div>
+        <figcaption><b>Figure 5.</b> Left: the two indicator procedures, enciphered live on the simulator under one daily key. The doubled key of 1930–40 puts the same letter under two cipher letters, three positions apart (brass). Right: the Herivel tip, simulated. Each morning's first clear settings are drawn for 60 operators, most of whom move each rotor a step or two from the ring letters they have just set. The tallest bar on each wheel reads off the rings. This is a simulation of the reasoning, not wartime data: the share of lazy operators is a slider.</figcaption>
+      </figure>
+
+      <h4>A.5 Bletchley Park: the crib, the menu and the diagonal board</h4>
+      <p>The Government Code and Cypher School recruited from Oxford and Cambridge, from the chess and crossword worlds, and in its thousands from the Women's Royal Naval Service, whose members ran the Bombes. Perhaps 150 people worked there in 1939. At the peak there were some 9,000, bound by rules so strict that staff were told not to talk even by their own fireside. Army and Air Force Enigma went to Hut 6 under Gordon Welchman and naval Enigma to Hut 8 under Alan Turing. Their cribbing rooms kept files of what each station habitually said.</p>
+      <p>Turing's Bombe did not depend on indicator repetition, which the Germans could abolish and did. It depended on the <em>crib</em>, a guess at plaintext and its position (Turing c.1940; Copeland 2004). A weather ship in the Bay of Biscay sending at six every morning will, sooner or later, spell out <span class="mono">WETTERVORHERSAGEBISKAYA</span>. Because no letter enciphers to itself, the analyst slides that guess along the intercept and discards every alignment at which a letter lands on itself (Figure 6). The example is historical. On D-Day a Biscay weather intercept of 28 letters admitted the crib at only one of its six alignments (Weinbaum 2025), and Figure 6 can switch to that intercept.</p>
+      <figure class="figure">
+        <div class="lab" id="dragLab"></div>
+        <figcaption><b>Figure 6.</b> Crib dragging on a real ciphertext. The default intercept is a Biscay weather report enciphered on this project's simulator under a ten-plug key; the second is the D-Day intercept. Drag the crib; red marks a letter that would have to encipher to itself, which is impossible. About two alignments in five survive, so dragging narrows the search but never proves the crib: that is the Bombe's job.</figcaption>
+      </figure>
+      <p>Each surviving alignment pairs crib and cipher letters through the unknown scrambler at that position. The pairs form a graph, the <em>menu</em>, and closed loops in the menu are consistency conditions that no plugboard can hide. Write the machine at position <i>i</i> as <i>P S<sub>i</sub> P</i>. If the loop runs <i>x</i>₁ → <i>x</i>₂ → … → <i>x</i>₁ through positions <i>i</i>₁, …, <i>i<sub>k</sub></i>, then each plugboard on the way out meets the next on the way in and cancels, leaving</p>
+      <p class="eq"><i>P</i>(<i>x</i>₁) = <i>S</i><sub><i>i<sub>k</sub></i></sub> ⋯ <i>S</i><sub><i>i</i>₂</sub> <i>S</i><sub><i>i</i>₁</sub> <i>P</i>(<i>x</i>₁):</p>
+      <p>the plugboard partner of <i>x</i>₁ is a fixed point of a product of <em>unplugged</em> scramblers. Turing turned that into a circuit. Assume a partner for one menu letter, the <em>test register</em>, and set that wire live. Current flows around every loop and sets live each wire the assumption implies. If all 26 wires light, every possible partner has been contradicted and the rotor position is impossible. If 25 light, the dark wire is the only partner left. Either way one guess, right or wrong, disposes of a whole rotor position at the speed of electricity (Turing c.1940). A position that is not refuted is a <em>stop</em>.</p>
+      <figure class="figure">
+        <div class="lab" id="bombeLab"></div>
+        <figcaption><b>Figure 7.</b> Turing's test, live. The menu is built from the crib at its true alignment in Figure 6, and the loops are marked in brass. Run the machine and it tests all 17,576 start positions of the true wheel order, halting like a real Bombe whenever a wire stays dark. Shorten the crib or remove Welchman's diagonal board and the false stops multiply. For clarity the rings are taken as known; the software Bombe of B.5 also searches the unknown rings, the hard part of the real problem.</figcaption>
+      </figure>
+      <p>Turing's design needed rich menus, for a reason Weinbaum (2025) makes exact. Each scrambler is a product of 13 transpositions, an odd permutation, so a loop of even length composes to an even permutation, and a 26-cycle is odd. A single even loop therefore never lights all 26 wires: without the diagonal board it stops at every one of the 17,576 positions. An odd loop is refuted at only about 1 position in 13. Turing estimated 26<sup>4−<i>c</i></sup> stops for a menu with <i>c</i> closures, and before the diagonal board a menu typically needed three. Weinbaum's simulations put three closures at about 30 stops, against Turing's 26, and one closure at about 17,000 against 17,576. This project's register reproduces his one- and two-loop figures (B.5, Table B1). Welchman's <em>diagonal board</em> (1940) added the fact that a plugboard is symmetric: if A is plugged to B then B is plugged to A. That multiplied the implications of every hypothesis and made short or loop-poor menus usable (Welchman 1982). Figure 7 reproduces the effect quantitatively. At a stop the Bombe offers <em>an</em> answer, not <em>the</em> answer, and each stop had to be tried on an Enigma analogue. Checking took of the order of a quarter of an hour, so a hundred stops were more than a day's work, longer than the key would live. By cutting stops to a handful the diagonal board turned a demonstration into a production line (Veritasium n.d.). Two refinements cut them further. Air Force key sheets never plugged a letter to its alphabetical neighbour, and a <em>consecutive stecker knock-out</em> switch let the Bombe discard any stop that implied one. On the “Jumbo” Bombes a <em>machine gun</em> of uniselectors swept the diagonal board at each stop for two deductions that shared a letter (Weinbaum 2025).</p>
+      <p>The first Bombe, <i>Victory</i>, arrived in March 1940, six months into the war, engineered by Harold “Doc” Keen at the British Tabulating Machine Company in Letchworth. <i>Agnus</i>, with the diagonal board, followed in August. A Bombe carried 36 Enigma equivalents in three banks of twelve, and its <em>indicator drums</em> counted backwards from ZZZ so that, at a stop, they showed the ring setting directly. It ran through the 17,576 positions of one wheel order in about a quarter of an hour, twenty minutes in the best case (Weinbaum 2025), so a full 60-order run was a matter of Bombe-hours and wheel orders were rationed by rule and intuition. About two hundred were built by the end of the war. This is precisely the stop → verify → accept pipeline the machine page animates, with Jev in the role of the checker.</p>
+      <p>Cribs came from routine and from operator habit. Weather reports, <i>keine besonderen Ereignisse</i> (“nothing to report”), standard addresses and signatures, and messages re-sent in a broken key (“kisses”) all supplied them. So did minelaying to provoke predictable warnings (“gardening”), and the cillies and Herivel tips of A.4. Procedure helped too. A continuation began <span class="mono">FORT</span> and repeated the time of the first part in top-row letters (Q = 1, W = 2, … P = 0), so a follow-up to a message of 23:30 opened <span class="mono">FORTYWEEPYWEEPY</span> (Weinbaum 2025). The crib list used by this system (<code>src/jev/cribs.ts</code>) is drawn from these categories.</p>
+
+      <h4>A.6 Naval Enigma, Banburismus, and the weight of evidence</h4>
+      <p>The Kriegsmarine chose three rotors from eight, including three with two notches, and enciphered indicators through bigram tables. It resisted until material was captured. These were the “pinches”: the trawler <i>Polares</i> off Narvik on 26 April 1940; the armed trawler <i>Krebs</i> on 4 March 1941; the weather ship <i>München</i> on 7 May; <i>U-110</i> on 9 May, with a machine and bigram tables; and the weather ship <i>Lauenburg</i> on 28 June (Kahn 1991; Weinbaum 2025). Turing's <em>Banburismus</em> set messages side by side in depth and scored their coincidences sequentially in <em>bans</em> and <em>decibans</em>, logarithmic units of odds. It narrowed the wheel orders a Bombe had to try. Two naval messages whose message keys differ only in the last letter are in depth at one unknown offset. There, a letter repeats with probability about 1/17, against 1/26 at random, and each observed repeat count was scored from printed sheets in half-decibans, called <em>hubdubs</em>. Six repeats in 52 letters, for example, is worth about 13.6 hubdubs, odds of roughly five to one for depth. A bigram counted for about three single repeats. A typical day meant some 400 messages and 6,000 comparisons, and Joan Clarke was among its best practitioners (Weinbaum 2025). Nearly nine naval messages in ten contained <span class="mono">EINS</span>, so an EINS catalogue then fixed the rings. It is one of the first sustained applications of Bayesian sequential inference, later documented by his assistant I. J. Good (Good 1979).</p>
+      <p>On 1 February 1942 the U-boat network moved to the four-rotor M4 (“Shark”). Its extra, non-stepping <em>greek</em> wheel occupied the space of a thinner reflector, so that with the greek wheel at A an M4 behaved exactly like a three-rotor machine and could still talk to one. That backward compatibility is one of this project's own regression tests (B.2), and it limited how far the Germans could change the machine without replacing it. As one historian in the video puts it, Turing's attack was so fundamental that only a new machine, or no traffic at all, would have defeated it. Shark was unreadable for most of 1942. Then in October 1942 Lieutenant Anthony Fasson and Able Seaman Colin Grazier boarded the sinking <i>U-559</i> and passed out the short-signal and weather code books before drowning with the boat. With them Hut 8 read Shark again from December. Four-rotor Bombes built for the US Navy by the National Cash Register Company in Dayton, more than a hundred of them, carried much of the load from 1943 (Budiansky 2000; Erskine and Smith 2011).</p>
+      <p>Two threads from this history shape the present design. Evidence should be expressed as calibrated probability, and it should be scored with a proper scoring rule: Jev's judgements are probabilities, evaluated here with the Brier score. Brier devised it in 1950 for weather forecasts, fittingly the richest source of Enigma cribs (Brier 1950).</p>
+      <aside class="callout jev"><span class="callout-k">Then and now</span><p>Turing scored evidence in decibans, ten times the base-10 logarithm of the odds, and the Banburists in half-decibans. Jev's “more likely than not” acceptance bar is 0 dB, and a verdict of P = 0.99 is +20 dB, or 40 hubdubs. The analyst's question is unchanged: <em>how much should this evidence move me?</em></p></aside>
+
+      <h4>A.7 What it changed, and the machine that was not Enigma</h4>
+      <p>By the end of 1941 Army and Air Force Enigma was read routinely. Decrypts showed Rommel's army critically short of fuel before the Second Battle of El Alamein (1942). When Shark was mastered in 1943, convoy losses fell and U-boat losses rose; Dermot Turing, interviewed in the video, calls it the turning point after which Germany began to lose the war, while stressing that battles are won by the people at the sharp end. F. H. Hinsley, the official historian of British intelligence and a Bletchley veteran, judged that Ultra shortened the war by perhaps two years (Hinsley and Stripp 1993). Such counterfactuals are contested, and the claimed influence on the Battle of Britain in particular is weaker than that on North Africa and the Atlantic.</p>
+      <p>The German high command's most secret teleprinter traffic did not go by Enigma at all but by the Lorenz SZ40/42 (“Tunny”). Bill Tutte deduced its structure in 1942 from a single depth, without ever seeing the machine. To read it in time, Tommy Flowers built Colossus, an electronic, programmable machine, in service from early 1944. Colossus decrypts helped confirm, before D-Day, that the deception about the landing site was believed (Copeland 2006). Colossus remained secret for decades after the Bombe was acknowledged.</p>
+      <p>Turing's life after the war is often read backwards from its end: his prosecution for homosexuality in 1952 and his death in 1954. His nephew, Sir Dermot Turing, argues against making him a martyr. From 1945 to 1950 Turing designed the ACE, programmed the Manchester computer and wrote on machine intelligence, often impatient that the machines were not built fast enough (Turing 2015). This project, in which a machine judges whether another machine's output is language, is a small descendant of that 1950 question.</p>
+
+      <h4>A.8 Modern computational cryptanalysis</h4>
+      <p>Friedman's index of coincidence measures the probability that two letters drawn from a text coincide (Friedman 1922). For German it is about 0.076, against 1/26 ≈ 0.0385 for random text, a normalised ratio near 2. The held-out German used in this project measured 1.98. Naval traffic, full of numbers and abbreviations, was leaner: Bletchley scored it at a repeat rate of 1/17, a normalised 1.53 (Weinbaum 2025). That is one reason the naval messages in this study read as the least German (C.4). Gillogly showed that Enigma can be attacked from ciphertext alone. He scored every rotor order and position by the index of coincidence of the trial decryption, then recovered the plugboard by trigram hill-climbing, which is effective for long messages (Gillogly 1995). Weierud and Sullivan refined hill-climbing and read several hundred German Army messages of 1941 without cribs (Weierud and Sullivan 2005). In 2006 Stefan Krah's distributed M4 Project broke naval M4 intercepts from November 1942 that had never been read. Ostwald and Weierud consolidated modern methods and their limits for short messages (Ostwald and Weierud 2017). The present system reuses several of these messages as ground truth. Some wartime intercepts remain unread today; they are short, naval, and without cribs, the very conditions under which this system also fails (C.4).</p>
+    </section>
+
+    <section id="b1">
+      <h3>B. How this system was built</h3>
+
+      <h4>B.1 Division of labour</h4>
+      <p>Jev is served through TypeSafe's <i>System One</i> endpoint. It is given a textual <em>state</em> and a set of typed questions. It returns a probability (<code>noul</code>), a distribution over named options (<code>choice</code>), or a position on an ordered scale (<code>score</code>), and never prose. Distributions are validated to cover every option and to sum to one within 10⁻⁵, and the model revision is pinned (<code>jev-1.13.0</code>). Jev therefore <em>cannot</em> emit a key or a plaintext. All cryptanalysis is algorithmic and locally verifiable. Jev is asked only the two questions that required an analyst's judgement in Hut 6:</p>
+      <ol class="tight">
+        <li><b>Prior: which crib?</b> A <code>choice</code> over the listed phrases that survive crib dragging at the start of the message, plus “none”. The state carries the traffic type, date, length and the surviving and eliminated cribs.</li>
+        <li><b>Posterior: is it German?</b> A <code>choice</code> among up to three distinct candidate decryptions, plus “none”, and a <code>noul</code> P(correct) for each candidate. The state withholds the search's own <i>n</i>-gram scores and marks the letters that were assumed as a crib, so the judgement is independent of the search and is not flattered by the crib.</li>
+      </ol>
+      <figure class="figure">
+        <ol class="pipeline" aria-label="The break pipeline">
+          <li><span class="n">1</span><b>Intercept</b><small>ciphertext and traffic type</small></li>
+          <li><span class="n">2</span><b>Crib dragging</b><small>rule out phrases where a letter would meet itself</small></li>
+          <li class="jev"><span class="n">3</span><b>Jev: which crib?</b><small><code>choice</code> over the survivors</small></li>
+          <li><span class="n">4</span><b>Bombe</b><small>60 rotor orders × 17,576 positions, 8 workers</small></li>
+          <li><span class="n">5</span><b>Rank stops</b><small>trigram score over all 26 right-ring choices at once</small></li>
+          <li><span class="n">6</span><b>Plugboard climb</b><small>menu pairs locked, then ring refinement</small></li>
+          <li class="jev"><span class="n">7</span><b>Jev: is it German?</b><small><code>choice</code> + P(correct); accept at ≥ 0.5 on both</small></li>
+        </ol>
+        <p class="loop">Not accepted → the next crib in Jev's order (step 4); then every crib again with the middle rotor stepping inside it; last, the ciphertext-only climb.</p>
+        <figcaption><b>Figure 8.</b> The pipeline on the codebreaker page. Algorithmic steps are in brass, Jev's judgements in blue. Every step Jev takes is a typed question; every step that can be computed is computed.</figcaption>
+      </figure>
+
+      <h4>B.2 Machine simulator and its verification</h4>
+      <p><code>src/enigma/</code> implements rotors I–VIII, the Beta and Gamma greek wheels, reflectors A, B, C, B-thin and C-thin, rings, plugboard and the double step. It is verified against:</p>
+      <ul class="tight">
+        <li>the textbook vector (I-II-III, UKW B, rings AAA, start AAA: <code>AAAAA → BDZGO</code>);</li>
+        <li>tests of involution and no self-encipherment;</li>
+        <li>an explicit double-step sequence (ADU → ADV → AEW → BFX);</li>
+        <li>the identity between an M4 with Beta at A and B-thin, and an M3 with UKW B;</li>
+        <li>the exact reproduction of all ten historical plaintexts from their published keys.</li>
+      </ul>
+
+      <h4>B.3 German language model</h4>
+      <p>An interpolated trigram model (<code>src/lang/</code>) is trained on about 13,000 letters of German composed for the project: military reports and general prose. Each paragraph is rendered in four operator conventions (words run together; X between words; X with Q for CH; J between words), giving 53,728 training letters. The conditional probability is</p>
+      <p class="eq"><i>P</i>(<i>c</i> | <i>ab</i>) = <i>w</i> <i>P</i>₃(<i>c</i> | <i>ab</i>) + (1 − <i>w</i>) [0.85 <i>P</i>₂(<i>c</i> | <i>b</i>) + 0.15 <i>P</i>₁(<i>c</i>)],  <i>w</i> = <i>n</i><sub><i>ab</i></sub> / (<i>n</i><sub><i>ab</i></sub> + 4),</p>
+      <p>so an unseen context backs off smoothly. A normalised <em>German-ness</em> <i>g</i> = (<i>s</i> − <i>s</i><sub>rand</sub>) / (<i>s</i><sub>German</sub> − <i>s</i><sub>rand</sub>) maps mean log-probability to 0 for uniform random letters and 1 for typical German. Held-out German scores 0.78–0.93; random letters score about 0.</p>
+
+      <h4>B.4 Ciphertext-only search, and why it is not enough</h4>
+      <p><code>src/break/climb.ts</code> follows Gillogly and Weierud–Sullivan. It scans 60 × 17,576 settings by index of coincidence, finds ring turnovers for the survivors, then hill-climbs the plugboard, first on coincidence and then on trigrams, using four move types. We measured why this fails on wartime keys. On a 532-letter message with ten plug pairs, the true rotor setting decrypted without the plugboard has a normalised coincidence of 1.04, against 1.08 for the best of the random settings: the signal is buried. With six pairs and the correct rings it rises to 1.27, and the method succeeds, recovering such a message completely in about eleven seconds. Ten-pair traffic needs cribs, as it did in 1940.</p>
+
+      <h4>B.5 A software Turing–Welchman Bombe</h4>
+      <p><code>src/break/bombe.ts</code> implements the constraint <i>P</i>(<i>C<sub>j</sub></i>) = <i>S<sub>j</sub></i>(<i>P</i>(<i>P<sub>j</sub></i>)) for each crib position <i>j</i>, where <i>P<sub>j</sub></i> is the crib letter, <i>C<sub>j</sub></i> the cipher letter, <i>P</i> the plugboard and <i>S<sub>j</sub></i> the scrambler. For each rotor setting it assumes a partner for the busiest menu letter and propagates depth-first. Every implied pair is also imposed in reverse, as with the diagonal board, and a contradiction rejects the hypothesis. A consistent hypothesis is a stop and carries the plugboard pairs it implies. The test is stricter than the electrical Bombe's. That machine held one hypothesis and stopped whenever a wire stayed dark, Turing's “spider”. The software tries all 26 partners and rejects a partner at the first contradiction of any kind, including a letter implied to have two partners, the check the machine gun later automated. Its stop counts are therefore consistent hypotheses, Turing's “normal stops” summed over hypotheses and turnover variants, not positions. Four refinements proved necessary. Each was found by a failure in testing and is covered by a regression test.</p>
+      <ol class="tight">
+        <li><b>Turnover inside the crib.</b> Rings are unknown, so the middle rotor may step within the crib. A first pass assumes it does not. A second pass lets it step before crib letter <i>t</i> for every <i>t</i>. For two-notch rotors (VI–VIII) steps recur every <i>P</i> = 13 letters, and a variant is admissible only if exactly one step falls inside the crib (<i>t</i> − <i>P</i> &lt; 1 and <i>t</i> + <i>P</i> ≥ <i>n</i>). This is why the web page cuts cribs to 14 letters: a 25-letter crib almost surely contains a step and needs 24 variants.</li>
+        <li><b>Ring-independent ranking of stops.</b> A loop-poor menu yields thousands of stops, which must be ranked by how German their full decryption reads. That decryption depends on the unknown right ring. The ring enters only through the residue <i>d</i> (mod <i>P</i>) at which the middle rotor steps. For a letter at crib-relative index <i>u</i> = <i>qP</i> + <i>r</i> ≥ 0, the middle offset is <i>s<sub>m</sub></i> + <i>q</i> + [1 ≤ <i>d</i> ≤ <i>r</i>], and symmetrically for <i>u</i> &lt; 0. Each letter is decrypted under both offsets, and its trigram gain Δ is filed under its threshold <i>R</i>. Then
+          <span class="eq inline">score(<i>d</i>) = <i>T</i>₀ + Σ<sub><i>R</i> ≥ <i>d</i></sub> Δ<sub><i>R</i></sub></span>
+          scores all 26 rings in <i>O</i>(<i>N</i> + <i>P</i>). Before this change the true stop of the 1930 manual message ranked 5,258th of 6,957.</li>
+        <li><b>Ring-aware reconstruction.</b> Turning a stop back into message-start settings must also search the middle ring. Taking it as A made the 1930 message's middle rotor meet its own notch and double-step where the true key does not, so no reconstruction existed.</li>
+        <li><b>Completion and acceptance.</b> The plugboard is completed by hill-climbing with the menu's pairs <em>locked</em>, followed by a ring refinement. Acceptance scores only the letters outside the crib: the crib is German by construction and would otherwise flatter a wrong key.</li>
+      </ol>
+
+      <p><b>Validation of the test register.</b> Figure 7 and the tests in <code>test/register.test.ts</code> use the spider logic itself (<code>src/break/register.ts</code>). To check it independently, <code>src/analysis/bombe-stops.ts</code> builds random menus of one or two closed loops of given lengths. It runs each over all 17,576 positions of a random Enigma I wheel order, without the diagonal board, and compares mean stops with the figures Weinbaum (2025) published from his and Bouchaudy's simulations. It also measures the share of settings that can produce a female (A.3).</p>
+      <div id="stopsVal" class="results"><p class="fine">Loading the stop-count validation…</p></div>
+
+      <h4>B.6 Jev's decision rule</h4>
+      <p>In the first backtest, Jev's distribution over all-garbage candidate sets was flat, and its most probable option often fell on a garbage candidate at low confidence. A candidate is therefore <em>accepted</em> only if Jev's pick has <i>P</i>(pick) ≥ 0.5 <em>and</em> <i>P</i>(correct) ≥ 0.5: more likely than not on both questions. This mirrors Hut 6's rule of confirming a stop before committing to it. The threshold was chosen after inspecting that first run, a limitation discussed in C.4.</p>
+
+      <h4>B.7 The web system</h4>
+      <p>A Bun server (<code>src/web/server.ts</code>) keeps the TypeSafe key server-side and streams the break to the page as server-sent events. Each Bombe or ciphertext-only run is split by wheel order across a pool of eight worker threads. The crib plan runs your own crib first, then Jev's ranking, each cut to 14 letters. Every crib gets a no-turnover pass, then an every-turnover pass. Jev reads each run's best candidates, and the search stops at the first acceptance. The ciphertext-only climb is the last resort. The plugboard climb of the accepted stop is replayed step by step, so the text is seen to resolve.</p>
+    </section>
+
+    <section id="c1">
+      <h3>C. Evaluation</h3>
+
+      <h4>C.1 Data</h4>
+      <p><b>Historical.</b> Ten intercepts with published keys and plaintexts were collected, with sources and exclusions recorded in <code>data/historical/messages.json</code>:</p>
+      <ul class="tight">
+        <li>the 1930 instruction-manual example (UKW A);</li>
+        <li>both parts of an Army message of 7 July 1941 from the Barbarossa campaign;</li>
+        <li><i>Scharnhorst</i>, December 1943 (M3);</li>
+        <li>the three M4 Project messages of November 1942 (Looks, Schroeder, Rasch);</li>
+        <li>a U-534 message of 1 May 1945 (M4, C-thin);</li>
+        <li>a short Army message, excluded from scoring because no plaintext has been published;</li>
+        <li>a textbook example, kept as a control.</li>
+      </ul>
+      <p>Every entry decrypts exactly on this simulator. <b>Synthetic.</b> Sixteen German messages (67–493 letters) were written for the project and held out of the language model. Each is enciphered under a seeded random key: Enigma I for Heer and Luftwaffe traffic, M3 with rotors I–VIII for the Kriegsmarine, ten plug pairs, and six pairs for every fourth message.</p>
+
+      <h4>C.2 Protocol</h4>
+      <p>Every message passes through tiers of decreasing prior knowledge:</p>
+      <ul class="tight">
+        <li><b>verify</b>: the full key is known;</li>
+        <li><b>key</b>: the daily key is known and the message key is sought;</li>
+        <li><b>crib</b>: the true first 14 letters are known plaintext, measuring the Bombe separately from crib choice;</li>
+        <li><b>bombe</b>: cribs are chosen in Jev's order from the fixed list;</li>
+        <li><b>climb</b>: ciphertext only.</li>
+      </ul>
+      <p>For M4 messages both Bombe tiers are given the wheel order and greek wheel; a full four-rotor search is beyond one machine, as it was for Bletchley without the US Navy's Bombes. A tier <em>breaks</em> a message when its best candidate matches at least 90% of the published plaintext. Jev's verdict is <em>right</em> when it accepts such a candidate, or accepts none when none was shown. The <i>n</i>-gram baseline applies the same rule with German-ness ≥ 0.4. Jev's per-candidate probabilities are scored by the Brier score.</p>
+
+      <h4>C.3 Results</h4>
+      <div id="annexResults" class="results"><p class="fine">Loading the latest backtest report…</p></div>
+
+      <h4>C.4 Discussion and threats to validity</h4>
+      <p><b>Findings.</b></p>
+      <ul class="tight">
+        <li><b>Machine and message keys.</b> The simulator and the message-key search are exact on every case.</li>
+        <li><b>The Bombe on real traffic.</b> Given a 14-letter known crib, it recovers most historical and synthetic messages in seconds to minutes, including the M3 and M4 messages where the wheel order is given.</li>
+        <li><b>Ciphertext only.</b> The climb fails on ten-plug traffic of these lengths, consistent with the literature and with the measurement in B.4.</li>
+        <li><b>Jev as judge.</b> Under the decision rule, in the main run Jev never rejected a correct decryption. It accepted exactly one candidate below the 90% bar: the <i>Scharnhorst</i> decryption from the known-crib tier, with 89% of its letters right. Its raw top pick would have landed on twelve candidates below the bar. On the holdout run, with fresh keys, the rule was right in all 64 judged cases, against 57 for the raw top pick.</li>
+        <li><b>Jev against the standard judges.</b> On the same candidates, the <a href="/jev#s4">Jev paper (§4.8)</a> runs the codebreakers' <i>n</i>-gram fitness scores, a Kneser–Ney 5-gram model, logistic regression and XGBoost (Chen and Guestrin 2016), all cross-validated leave-one-text-out. Trained on the same kind of traffic, quadgram fitness and XGBoost match recalibrated Jev. Trained on the synthetic messages and tested on the real intercepts, XGBoost rejected 15 of 16 correct decryptions, while zero-shot Jev decided 31 of 32 calls correctly. The zero-shot judge is the one that transfers.</li>
+        <li><b>Jev as crib selector.</b> Its ranking beat the static list on the historical openers (mean rank 4.0 against 6.5, <i>n</i> = 4). It did not on the synthetic set (6.6 against 6.4, <i>n</i> = 5) or on the holdout (8.6 against 6.8, <i>n</i> = 5). With samples this small the evidence does not support an advantage. Asked only for the traffic type, date and length, Jev's prior over openers is weakly informative. That is the component most in need of richer context, such as the time of transmission, the call signs and the preceding traffic, which is what Hut 6's crib-writers actually used.</li>
+      </ul>
+      <p><b>Threats to validity.</b></p>
+      <ol class="tight">
+        <li><b>Crib list.</b> It was fixed before any backtest, but by an author who knew several historical openers. Its coverage of historical messages may be optimistic.</li>
+        <li><b>Decision rule.</b> Jev's acceptance threshold was set after inspecting the first run. The holdout run supports it out of sample in one respect only: it draws new keys but reuses the sixteen synthetic plaintexts, so it is not an independent test set for text.</li>
+        <li><b>One author.</b> The same author wrote the training corpus and the synthetic messages. Stylistic homogeneity may overstate the language model's fit relative to genuine traffic, whose abbreviations and garbles lowered German-ness to 0.44–0.54 for naval messages.</li>
+        <li><b>Small historical set.</b> Nine scored messages, several from one day or one source, give wide uncertainty on every rate.</li>
+        <li><b>Two crib strategies.</b> The <code>bombe</code> backtest tier tries Jev's top three cribs at full length. The web page cuts cribs to 14 letters and tries every fitting crib with both passes, so the tier understates what the page achieves.</li>
+        <li><b>Dependence on the service.</b> Jev's outputs are a model's judgements under a pinned revision. They may shift if the revision changes, and are recorded verbatim in <code>~/.enigma-jev/jev-calls.jsonl</code> for audit.</li>
+      </ol>
+      <p><b>Reproducibility.</b> <code>bun test</code> runs the unit and regression suite. <code>bun run backtest all</code> reproduces the main run with seed 1941, and <code>… backtest synthetic --seed 2024</code> the holdout. Reports are written to <code>reports/</code>, and the table above is read from the newest of them.</p>
+    </section>
+
+    <section id="refs" class="refs">
+      <h3>D. References</h3>
+      <ul>
+        <li>Bauer, F. L. (2007) <i>Decrypted Secrets: Methods and Maxims of Cryptology</i>. 4th edn. Berlin: Springer.</li>
+        <li>Brier, G. W. (1950) ‘Verification of forecasts expressed in terms of probability’, <i>Monthly Weather Review</i>, 78(1), pp. 1–3.</li>
+        <li>Budiansky, S. (2000) <i>Battle of Wits: The Complete Story of Codebreaking in World War II</i>. New York: Free Press.</li>
+        <li>Chen, T. and Guestrin, C. (2016) ‘XGBoost: A scalable tree boosting system’, <i>Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining</i>, pp. 785–794.</li>
+        <li>Copeland, B. J. (ed.) (2004) <i>The Essential Turing</i>. Oxford: Oxford University Press.</li>
+        <li>Copeland, B. J. (ed.) (2006) <i>Colossus: The Secrets of Bletchley Park's Codebreaking Computers</i>. Oxford: Oxford University Press.</li>
+        <li>Erskine, R. and Smith, M. (eds) (2011) <i>The Bletchley Park Codebreakers</i>. London: Biteback.</li>
+        <li>Friedman, W. F. (1922) <i>The Index of Coincidence and Its Applications in Cryptography</i>. Riverbank Publication No. 22. Geneva, IL: Riverbank Laboratories.</li>
+        <li>Gillogly, J. J. (1995) ‘Ciphertext-only cryptanalysis of Enigma’, <i>Cryptologia</i>, 19(4), pp. 405–413.</li>
+        <li>Good, I. J. (1979) ‘Studies in the history of probability and statistics XXXVII: A. M. Turing's statistical work in World War II’, <i>Biometrika</i>, 66(2), pp. 393–396.</li>
+        <li>Hinsley, F. H. and Stripp, A. (eds) (1993) <i>Codebreakers: The Inside Story of Bletchley Park</i>. Oxford: Oxford University Press.</li>
+        <li>Hodges, A. (1983) <i>Alan Turing: The Enigma</i>. London: Burnett Books.</li>
+        <li>Kahn, D. (1991) <i>Seizing the Enigma: The Race to Break the German U-Boat Codes, 1939–1943</i>. Boston: Houghton Mifflin.</li>
+        <li>Kozaczuk, W. (1984) <i>Enigma: How the German Machine Cipher Was Broken, and How It Was Read by the Allies in World War Two</i>. Ed. and trans. C. Kasparek. Frederick, MD: University Publications of America.</li>
+        <li>Ostwald, O. and Weierud, F. (2017) ‘Modern breaking of Enigma ciphertexts’, <i>Cryptologia</i>, 41(5), pp. 395–421.</li>
+        <li>Rejewski, M. (1980) ‘An application of the theory of permutations in breaking the Enigma cipher’, <i>Applicationes Mathematicae</i>, 16(4), pp. 543–559.</li>
+        <li>Rejewski, M. (1981) ‘How Polish mathematicians deciphered the Enigma’, <i>Annals of the History of Computing</i>, 3(3), pp. 213–234.</li>
+        <li>Sebag-Montefiore, H. (2000) <i>Enigma: The Battle for the Code</i>. London: Weidenfeld &amp; Nicolson.</li>
+        <li>Shannon, C. E. (1949) ‘Communication theory of secrecy systems’, <i>Bell System Technical Journal</i>, 28(4), pp. 656–715.</li>
+        <li>Shannon, C. E. (1951) ‘Prediction and entropy of printed English’, <i>Bell System Technical Journal</i>, 30(1), pp. 50–64.</li>
+        <li>Turing, A. M. (c.1940) <i>Treatise on the Enigma</i> (“Prof's Book”). Kew: The National Archives, HW 25/3.</li>
+        <li>Turing, D. (2015) <i>Prof: Alan Turing Decoded</i>. Stroud: The History Press.</li>
+        <li>Veritasium (n.d.) [Documentary on the breaking of Enigma, with Sir Dermot Turing and Jonah Weinbaum, filmed at Bletchley Park and The National Museum of Computing]. YouTube. Transcript consulted 27 September 2026.</li>
+        <li>Weierud, F. and Sullivan, G. (2005) ‘Breaking German Army ciphers’, <i>Cryptologia</i>, 29(3), pp. 193–232.</li>
+        <li>Weinbaum, J. (2025) <i>Action This Day: The Mathematics and Machinations that Bested the German Enigma</i>. MS thesis. Dartmouth College. Available at: https://digitalcommons.dartmouth.edu/masters_theses/247.</li>
+        <li>Welchman, G. (1982) <i>The Hut Six Story: Breaking the Enigma Codes</i>. New York: McGraw-Hill.</li>
+      </ul>
+      <p class="fine">Message sources: F. Weierud, <i>CryptoCellar</i> (cryptocellar.org); M4 Project pages, bytereef.org; Crypto Museum (cryptomuseum.com); Enigma-Hörenberg (enigma.hoerenberg.com); Franklin Heath Enigma wiki; <i>Enigma (Maschine)</i>, German Wikipedia (textbook example).</p>
+    </section>
+  </article>
+  </div>
+  <footer class="fine research-foot"><a class="annexlink" href="/">← Send a message and watch it broken</a> · <a class="annexlink" href="/jev">Jev performance</a><p class="indep">An independent open-source project (MIT), not affiliated with or endorsed by TypeSafe.</p></footer>
+  <script type="module" src="../research/main.ts"></script>
+</body>
+</html>

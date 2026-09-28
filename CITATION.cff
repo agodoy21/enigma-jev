@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: If you use this software or its results, please cite it as below.
+type: software
+title: 'enigma-jev: a software Turing–Welchman Bombe with a probabilistic analyst'
+abstract: >-
+  A verified Enigma I, M3 and M4 simulator, crib dragging, a Turing–Welchman
+  Bombe with the diagonal board and a ciphertext-only hill-climber. Jev, a model
+  with typed probabilistic outputs, chooses cribs and judges trial decryptions.
+  The software ships with a tiered backtest on historical intercepts, a
+  validation of Bombe stop counts against Weinbaum (2025), and a comparison of
+  Jev with n-gram judges and XGBoost. It includes two research notes: "Enigma,
+  the Bombe, and a probabilistic analyst" and "A probabilistic analyst on trial".
+authors:
+  - given-names: Andres
+    family-names: Godoy
+version: 1.0.0
+date-released: '2026-09-28'
+license: MIT
+repository-code: 'https://github.com/agodoy21/enigma-jev'
+keywords:
+  - enigma
+  - bombe
+  - cryptanalysis
+  - history of cryptography
+  - calibration
+  - classifier evaluation

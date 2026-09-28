@@ -1,0 +1,358 @@
+/* The Bletchley stage on the machine page: crib dragging, Jev cards, the Bombe, the replay. */
+/* Codebreaker */
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+.stage {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--brass-dim);
+  border-radius: 10px;
+  padding: 12px 14px;
+  animation: rise 0.3s ease-out;
+  min-width: 0;
+}
+.stage.jev {
+  border-left-color: var(--jev);
+}
+.stage.win-stage {
+  border-left-color: var(--good);
+}
+.stage.fail {
+  border-left-color: var(--bad);
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.stage h4 {
+  margin: 0 0 8px;
+  font-size: 13.5px;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: baseline;
+}
+.stage h4 .tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 400;
+}
+.stage h4 .tag.jev {
+  color: var(--jev);
+}
+.groups {
+  font-family: var(--mono);
+  letter-spacing: 0.08em;
+  word-spacing: 0.3em;
+  line-height: 1.7;
+  font-size: 13.5px;
+  word-break: break-word;
+}
+
+.drag {
+  display: grid;
+  gap: 3px;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  overflow-x: auto;
+}
+.drag .row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  white-space: nowrap;
+}
+.drag .row .letters span {
+  display: inline-block;
+  width: 1.05em;
+  text-align: center;
+}
+.drag .row .letters .clash {
+  color: #1b0f0b;
+  background: var(--bad);
+  border-radius: 3px;
+}
+.drag .row.out {
+  opacity: 0.45;
+}
+.drag .ctline {
+  color: var(--brass);
+}
+.drag .badge {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.bars {
+  display: grid;
+  gap: 5px;
+}
+.bar {
+  display: grid;
+  grid-template-columns: minmax(120px, 230px) 1fr 44px;
+  gap: 8px;
+  align-items: center;
+  font-size: 12.5px;
+}
+.bar .name {
+  font-family: var(--mono);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.bar .track {
+  height: 10px;
+  background: var(--bg);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.bar .fill {
+  height: 100%;
+  width: 0;
+  background: var(--jev);
+  border-radius: 99px;
+  transition: width 0.6s ease-out;
+}
+.bar .val {
+  font-family: var(--mono);
+  text-align: right;
+  color: var(--muted);
+}
+.bar.picked .name {
+  color: var(--jev);
+  font-weight: 600;
+}
+
+.bombe {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 14px;
+  align-items: start;
+}
+@media (max-width: 600px) {
+  .bombe {
+    grid-template-columns: 1fr;
+  }
+}
+.menu svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.menu text {
+  font-family: var(--mono);
+  font-size: 11px;
+  fill: var(--ink);
+}
+.menu .edge {
+  stroke: var(--muted);
+  stroke-width: 1.2;
+}
+.menu .edge.loop {
+  stroke: var(--brass);
+  stroke-width: 2;
+}
+.menu .node {
+  fill: var(--bg);
+  stroke: var(--line);
+}
+.menu .node.crib {
+  stroke: var(--brass);
+}
+.drums {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.drum {
+  width: 44px;
+  height: 50px;
+  border-radius: 50% / 18%;
+  background: linear-gradient(90deg, #3a2f22, #6b5a40 50%, #3a2f22);
+  display: grid;
+  place-items: center;
+  font-family: var(--mono);
+  font-weight: 600;
+  font-size: 18px;
+  color: #f3e6c8;
+  border: 1px solid #0006;
+}
+.bombeInfo {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+.progress {
+  height: 6px;
+  background: var(--bg);
+  border-radius: 99px;
+  overflow: hidden;
+  margin: 6px 0;
+}
+.progress div {
+  height: 100%;
+  width: 0;
+  background: var(--brass);
+  transition: width 0.15s linear;
+}
+.found {
+  color: var(--good);
+}
+.missed {
+  color: var(--bad);
+}
+
+.plugboard {
+  display: grid;
+  grid-template-columns: repeat(13, 1fr);
+  gap: 4px;
+  margin: 8px 0;
+}
+.socket {
+  font-family: var(--mono);
+  font-size: 12px;
+  text-align: center;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 3px 0;
+  background: var(--bg);
+  color: var(--muted);
+  transition: all 0.2s;
+}
+.socket b {
+  display: block;
+  font-size: 10.5px;
+  min-height: 13px;
+  color: var(--brass);
+}
+.socket.on {
+  border-color: var(--brass);
+  color: var(--ink);
+}
+.socket.locked {
+  border-color: var(--good);
+}
+.socket.locked b {
+  color: var(--good);
+}
+.resolve {
+  font-family: var(--mono);
+  letter-spacing: 0.06em;
+  word-spacing: 0.3em;
+  line-height: 1.7;
+  font-size: 13.5px;
+  word-break: break-word;
+}
+.resolve .chg {
+  color: var(--lamp);
+}
+
+.cands {
+  display: grid;
+  gap: 8px;
+}
+.cand {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 10px;
+  background: var(--bg);
+}
+.cand.pick {
+  border-color: var(--jev);
+  box-shadow: 0 0 0 1px var(--jev) inset;
+}
+.cand .ctext {
+  font-family: var(--mono);
+  font-size: 12px;
+  word-break: break-all;
+  margin: 4px 0;
+}
+.cand .meta {
+  display: flex;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--muted);
+  flex-wrap: wrap;
+  align-items: center;
+}
+.pbar {
+  display: inline-block;
+  width: 90px;
+  height: 7px;
+  background: var(--card);
+  border-radius: 99px;
+  overflow: hidden;
+  vertical-align: middle;
+}
+.pbar i {
+  display: block;
+  height: 100%;
+  background: var(--jev);
+  width: 0;
+  transition: width 0.6s;
+}
+.verdict {
+  margin-top: 8px;
+  font-weight: 600;
+}
+
+table.keycmp {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin: 6px 0 10px;
+}
+.keycmp th,
+.keycmp td {
+  text-align: left;
+  padding: 5px 6px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+.keycmp th {
+  color: var(--muted);
+  font-weight: 500;
+  font-size: 12px;
+}
+.keycmp td.mono {
+  letter-spacing: 0.04em;
+}
+.ok {
+  color: var(--good);
+}
+.no {
+  color: var(--bad);
+}
+.eq {
+  color: var(--brass);
+}
+.final {
+  font-family: var(--mono);
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  line-height: 1.7;
+  word-break: break-word;
+}
+.reading {
+  margin-top: 6px;
+  font-size: 14px;
+  color: var(--muted);
+  font-style: italic;
+}
+footer {
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: 0 28px 28px;
+}

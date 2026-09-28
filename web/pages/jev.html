@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Enigma × Jev · Jev performance</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles/tokens.css" />
+  <link rel="stylesheet" href="../styles/base.css" />
+  <link rel="stylesheet" href="../styles/paper.css" />
+</head>
+<body class="research jevpage">
+  <div class="read-progress" aria-hidden="true"><i id="readProgress"></i></div>
+  <header class="top">
+    <div>
+      <h1><a class="home" href="/">Enigma <span class="x">×</span> Jev</a></h1>
+      <p class="lede">Jev performance: how the analyst works, how it compares, and every result.</p>
+    </div>
+    <nav class="topright pagenav" aria-label="Pages"><a class="annexlink" href="/">Machine</a><a class="annexlink" href="/research">Research &amp; history</a><a class="annexlink here" href="/jev" aria-current="page">Jev performance</a></nav>
+  </header>
+
+  <div class="paper">
+    <aside class="rail" aria-label="Contents">
+      <button type="button" class="toc-toggle" id="tocToggle" aria-expanded="false" aria-controls="toc">Contents</button>
+      <nav id="toc" class="toc-rail"></nav>
+    </aside>
+
+  <article class="annex" id="annex">
+    <header class="annex-head">
+      <p class="kicker">Research · Jev performance</p>
+      <h2>A probabilistic analyst on trial</h2>
+      <p class="subtitle">Evaluating Jev as crib selector and plaintext judge in a software Bletchley pipeline</p>
+      <p class="abstract"><b>Abstract.</b> Breaking Enigma in 1940 needed two kinds of judgement that no machine supplied. Someone had to decide which probable plaintext (the crib) to set on a Bombe, and someone had to decide whether a Bombe stop's trial decryption was German. We study whether Jev, a hosted model that answers only typed probabilistic questions, can take both roles. We reconstruct <span class="v" data-v="candidateLevel|calls" data-f="int"></span> judge calls and <span class="v" data-v="cribSelection|calls" data-f="int"></span> crib-ranking calls from an audit log and label each against the known plaintext. Jev's probability that a candidate is correct separates right from wrong decryptions almost perfectly (AUC <span class="v" data-v="candidateLevel|jev|auc" data-f="4"></span>, <span class="v" data-v="candidateLevel|n" data-f="int"></span> candidates from <span class="v" data-v="candidateLevel|messages" data-f="int"></span> messages), but it is systematically underconfident (ECE <span class="v" data-v="candidateLevel|jev|ece" data-f="3"></span>). A monotone recalibration, fitted leave-one-message-out, lowers the Brier score from <span class="v" data-v="candidateLevel|jev|brier" data-f="3"></span> to <span class="v" data-v="candidateLevel|jevRecalibrated|brier" data-f="3"></span>. That beats the project's trigram judge calibrated the same way (<span class="v" data-v="candidateLevel|ngram|brier" data-f="3"></span>). Against the standard alternatives run on the same candidates, the picture splits. Quadgram and Kneser–Ney fitness, logistic regression and XGBoost match recalibrated Jev when trained and tested on the same kind of traffic. Trained on synthetic traffic and tested on real intercepts, XGBoost's decisions fall to <span class="v" data-v="shiftBy|XGBoost on synthetic|decisions|accuracy" data-f="pct"></span>, while zero-shot Jev keeps <span class="v" data-v="shiftBy|Jev, zero-shot|decisions|accuracy" data-f="pct"></span>. A two-condition decision rule makes the right call in <span class="v" data-v="decisions|Jev, decision rule|eval|accuracy" data-f="pct1"></span> of cases. The answers are stable on repetition and unaffected by candidate order. As a crib selector, however, Jev shows no skill over a fixed list. We discuss why, and what the division of labour between computation and judgement implies.</p>
+      <p class="meta" id="paperMeta">Research note · Enigma × Jev</p>
+      <section class="glance" aria-label="At a glance">
+        <div class="tile jev"><span class="big"><span class="v" data-v="candidateLevel|jev|auc" data-f="4"></span></span><span class="lbl">AUC: Jev separating correct from wrong decryptions</span><span class="sub">n-gram judge <span class="v" data-v="candidateLevel|ngram|auc" data-f="3"></span></span></div>
+        <div class="tile jev"><span class="big"><span class="v" data-v="decisions|Jev, decision rule|eval|acceptCorrect|+rejectRight" data-f="int"></span><span class="of">/<span class="v" data-v="decisions|Jev, decision rule|eval|n" data-f="int"></span></span></span><span class="lbl">right accept/reject decisions under the rule</span><span class="sub">raw top choice <span class="v" data-v="decisions|Jev, top choice|eval|accuracy" data-f="pct"></span></span></div>
+        <div class="tile jev"><span class="big"><span class="v" data-v="candidateLevel|jevRecalibrated|brier" data-f="3"></span></span><span class="lbl">Brier score, Jev recalibrated</span><span class="sub">raw <span class="v" data-v="candidateLevel|jev|brier" data-f="3"></span> · n-gram <span class="v" data-v="candidateLevel|ngram|brier" data-f="3"></span></span></div>
+        <div class="tile"><span class="big"><span class="v" data-v="experiments|retest|decisionAgreement" data-f="pct"></span></span><span class="lbl">same decision when asked again</span><span class="sub"><span class="v" data-v="experiments|position|decisionAgreement" data-f="pct"></span> with candidates reversed</span></div>
+        <div class="tile"><span class="big"><span class="v" data-v="cribSelection|meanRank|jev" data-f="1"></span></span><span class="lbl">mean rank of the true crib in Jev's order</span><span class="sub">fixed list <span class="v" data-v="cribSelection|meanRank|static" data-f="1"></span> · no skill</span></div>
+        <div class="tile"><span class="big"><span class="v" data-v="latency|judge|p50" data-f="int"></span><span class="of"> ms</span></span><span class="lbl">median latency of a judge call</span><span class="sub">~<span class="v" data-v="latency|judge|inTok" data-f="int"></span> tokens in, ~<span class="v" data-v="latency|judge|outTok" data-f="int"></span> out</span></div>
+      </section>
+    </header>
+
+    <section id="s1">
+      <h3>1. Introduction</h3>
+      <p>The electromechanical Bombe answered a narrow question: which rotor settings are consistent with this crib? Everything around that question was human judgement. Hut 6 chose which crib to run from traffic analysis and habit. Once a stop came back, an analyst decided whether the trial decryption was genuinely German before a key was declared broken (Welchman 1982). Turing and Good formalised that judgement as the accumulation of evidence in logarithmic units, bans and decibans (Good 1979). It was the first sustained use of sequential Bayesian inference.</p>
+      <p>The <a href="/">Enigma × Jev</a> system rebuilds the computational parts faithfully (see the <a href="/research">research paper</a>) and hands the two judgements to Jev. Jev is a hosted model reached through TypeSafe's System One interface. It returns probabilities and choices, never prose. This paper asks how good those judgements are, how they compare with the obvious statistical alternative, and whether they are trustworthy enough to act on. The contributions:</p>
+      <ol class="tight">
+        <li><b>A labelled evaluation of Jev's behaviour</b>, reconstructed from the complete audit log and scored against known plaintexts. The quantities are discrimination (AUC), accuracy of probabilities (Brier, log loss and Murphy's decomposition), calibration (reliability diagrams, ECE) and decision quality, each with cluster-bootstrap confidence intervals.</li>
+        <li><b>A like-for-like comparison with an n-gram judge.</b> The n-gram judge is given every advantage: it is the search's own language model, calibrated on labelled data. Jev receives no labels.</li>
+        <li><b>Two controlled experiments</b> on the instrument itself: test–retest reliability, and sensitivity to the order in which candidates are presented.</li>
+        <li><b>An account of the one role Jev did not fill</b>, crib selection, and why.</li>
+      </ol>
+    </section>
+
+    <section id="s2">
+      <h3>2. How Jev is used</h3>
+
+      <h4>2.1 The interface: a state and typed questions</h4>
+      <p>Each call sends a plain-text <em>state</em> and a set of named <em>questions</em>, each of one of three types. A <code>noul</code> question returns one probability in [0, 1]. A <code>choice</code> question returns a probability for every named option, the argmax and a confidence. A <code>score</code> question returns a distribution over an ordered scale. Before anything downstream sees an answer, the client (<code>src/jev/client.ts</code>) checks five things:</p>
+      <ul class="tight">
+        <li>every question is answered, with the requested type;</li>
+        <li>each <code>choice</code> distribution covers exactly the offered options and sums to one within 10⁻⁵;</li>
+        <li>the chosen option has the highest probability;</li>
+        <li>the reported model revision matches the one requested (<code>jev-1.13.0</code>);</li>
+        <li>token usage is reported.</li>
+      </ul>
+      <p>A malformed answer is rejected rather than repaired. Jev cannot produce a key or a decryption, so it cannot hallucinate one either; every quantity it influences is a probability over options the software enumerated.</p>
+      <figure class="figure" id="figCall">
+        <div class="callgrid">
+          <div><p class="cg-h">State <span class="fine">(sent)</span></p><pre class="cg-pre" id="exState"></pre></div>
+          <div><p class="cg-h">Questions <span class="fine">(sent)</span></p><pre class="cg-pre" id="exQuestions"></pre><p class="cg-h">Answers <span class="fine">(returned, <span id="exLatency"></span>)</span></p><pre class="cg-pre ans" id="exAnswers"></pre></div>
+        </div>
+        <figcaption><b>Figure 1.</b> A real judge call from the main run (<span id="exCase"></span>), reproduced from the audit log with candidate texts shortened. The first candidate is the correct decryption. Its first letters were the crib, and the state says so.</figcaption>
+      </figure>
+
+      <h4>2.2 Two roles: a prior and a posterior</h4>
+      <p><b>Crib selection (prior).</b> After crib dragging removes every listed phrase that would place a letter over itself, Jev receives the traffic type, date, message length, the surviving and eliminated phrases, and the first forty cipher letters. It answers one <code>choice</code> over the survivors plus “none of these”. The Bombe then runs the cribs in Jev's order.</p>
+      <p><b>Plaintext judgement (posterior).</b> After a Bombe run, Jev receives the ciphertext and up to three distinct candidate decryptions. It answers a <code>choice</code> (which candidate is correct, or none) and one <code>noul</code> per candidate, P(correct). Two design decisions make this an independent judgement rather than an echo of the search. First, the search's own n-gram scores are withheld. Second, letters that were <em>assumed</em> as a crib are marked, so a wrong key cannot borrow credibility from German that was typed in by construction.</p>
+
+      <h4>2.3 The decision rule</h4>
+      <p>A candidate is accepted only when Jev's choice falls on it with probability at least 0.5 <em>and</em> its own P(correct) is at least 0.5: more likely than not on both questions. The rule was adopted after the pilot run (§4.4), which showed that Jev's argmax over sets of wrong candidates often lands on one of them at low confidence. The main and holdout runs evaluate the rule after it was fixed.</p>
+
+      <h4>2.4 What is not claimed</h4>
+      <p>We treat Jev as a black box. Its architecture, training data and inference procedure are not examined here, and none of our conclusions depends on them. We evaluate behaviour at one pinned revision, on one task family, through the interface above.</p>
+    </section>
+
+    <section id="s3">
+      <h3>3. Evaluation design</h3>
+
+      <h4>3.1 Data and labels</h4>
+      <p>Every request and answer is appended to an audit log (<code>~/.enigma-jev/jev-calls.jsonl</code>). Each judge state contains the ciphertext, and each crib state contains the ciphertext's opening, so every call can be matched to a message whose plaintext is known. The messages are nine historical intercepts with published keys and sixteen synthetic messages under two independent sets of random keys. A candidate is labelled <em>correct</em> when it matches at least 90% of the known plaintext over the letters shown. A crib is <em>true</em> when the plaintext begins with it.</p>
+      <p>The machine slept during the main run, which invalidates the report's elapsed-time field. Run boundaries are therefore taken from the burst of crib calls with which every run begins. Calls from the interactive page that match no run's messages are excluded.</p>
+      <div class="tablewrap"><table class="atable" id="phaseTable"><caption>Table 1. Calls by phase. The evaluation set pools <i>main</i> and <i>holdout</i>.</caption></table></div>
+
+      <h4>3.2 Baselines</h4>
+      <ul class="tight">
+        <li><b>n-gram, fixed bar.</b> The German-ness statistic the search itself uses: normalised trigram log-probability, 0 for random letters and 1 for typical German, computed outside any crib. It accepts the most German candidate at ≥ 0.4.</li>
+        <li><b>n-gram, calibrated.</b> The same statistic mapped to a probability by logistic regression (Platt 1999). The regression is fitted <em>leave-one-message-out</em>, so each message is scored by a model that never saw it. It accepts at ≥ 0.5. This baseline uses labels; Jev does not.</li>
+        <li><b>Accept the search's top candidate.</b> What the pipeline would do with no judge at all.</li>
+        <li><b>For cribs:</b> the fixed list order, a uniform distribution over the options, and a random order.</li>
+      </ul>
+
+      <h4>3.3 Metrics</h4>
+      <p><b>Discrimination.</b> The area under the ROC curve: the probability that a randomly chosen correct candidate is scored above a randomly chosen wrong one (Hanley and McNeil 1982). <b>Accuracy of probabilities.</b> The Brier score (Brier 1950) and log loss, both strictly proper scoring rules (Gneiting and Raftery 2007). The Brier score is decomposed as <i>reliability</i> − <i>resolution</i> + <i>uncertainty</i> (Murphy 1973). <b>Calibration.</b> Reliability diagrams (DeGroot and Fienberg 1983), and the expected calibration error over ten equal-width bins (Naeini, Cooper and Hauskrecht 2015). <b>Decisions.</b> Accuracy, precision and recall of each accept/reject rule.</p>
+      <p>Intervals are 95% percentile bootstraps with 2,000 resamples (Efron and Tibshirani 1993). They resample <em>calls</em>, not candidates, because the candidates in one call share a message and are not independent.</p>
+    </section>
+
+    <section id="s4">
+      <h3>4. Results</h3>
+
+      <h4>4.1 Discrimination</h4>
+      <p>Over the evaluation set of <span class="v" data-v="candidateLevel|n" data-f="int"></span> candidates, of which <span class="v" data-v="candidateLevel|positives" data-f="int"></span> were correct (base rate <span class="v" data-v="candidateLevel|baseRate" data-f="pct"></span>), Jev's P(correct) achieves an AUC of <span class="v" data-v="candidateLevel|jev|auc" data-f="4"></span> (95% CI <span class="v" data-v="candidateLevel|jev|aucCI" data-f="ci4"></span>). The calibrated n-gram judge reaches <span class="v" data-v="candidateLevel|ngram|auc" data-f="3"></span> (<span class="v" data-v="candidateLevel|ngram|aucCI" data-f="ci3"></span>). Figure 2 shows why the difference, though small in AUC, matters. Apart from one near-miss, every correct candidate receives a higher P(correct) from Jev than every wrong one, with a clear gap around 0.5. The exception is the <i>Scharnhorst</i> decryption: it is 89% right, so the 90% rule labels it wrong, and Jev scores it 0.58. The n-gram statistic's two populations overlap near its threshold, because trigram hill-climbing can manufacture German-looking fragments from a wrong key.</p>
+      <figure class="figure"><div class="chart" id="chStrips"></div>
+        <figcaption><b>Figure 2.</b> Every evaluated candidate, by judge and by truth. Left: Jev's P(correct). Right: the n-gram German-ness statistic. Dashed lines mark each judge's acceptance bar. Hover a point for its value.</figcaption>
+        <details class="dtable"><summary>Data table</summary><div id="tStrips"></div></details></figure>
+      <figure class="figure narrow"><div class="chart" id="chRoc"></div>
+        <figcaption><b>Figure 3.</b> ROC curves. Both judges hug the top-left corner. Jev reaches full recall at a single false positive, the <i>Scharnhorst</i> near-miss. The n-gram judge needs several more false positives to reach full recall.</figcaption></figure>
+
+      <h4>4.2 Calibration</h4>
+      <p>Discrimination is not calibration. Jev's probabilities are <em>underconfident</em>. No candidate it scored below 0.5 was correct, and every candidate it scored above 0.6 was correct, yet its probabilities for correct decryptions average about <span class="v" data-v="ablation|cribWrong|evalCorrect" data-f="2"></span>, where 1 would be warranted. Its expected calibration error is <span class="v" data-v="candidateLevel|jev|ece" data-f="3"></span>, against <span class="v" data-v="candidateLevel|ngram|ece" data-f="3"></span> for the calibrated n-gram judge, and its Brier score is <span class="v" data-v="candidateLevel|jev|brier" data-f="3"></span> (<span class="v" data-v="candidateLevel|jev|brierCI" data-f="ci3"></span>) against <span class="v" data-v="candidateLevel|ngram|brier" data-f="3"></span>. Murphy's decomposition (Table 2) locates the difference. Jev has the <em>higher resolution</em>, <span class="v" data-v="candidateLevel|jev|murphy|resolution" data-f="3"></span> against <span class="v" data-v="candidateLevel|ngram|murphy|resolution" data-f="3"></span>, so it carries more information about which candidate is right. It loses entirely on the reliability term, the penalty for miscalibration.</p>
+      <p>Because Jev's errors are monotone, a one-parameter-pair logistic map, fitted leave-one-message-out exactly as for the n-gram judge, repairs them. The recalibrated Jev scores a Brier of <span class="v" data-v="candidateLevel|jevRecalibrated|brier" data-f="3"></span> (<span class="v" data-v="candidateLevel|jevRecalibrated|brierCI" data-f="ci3"></span>) and an ECE of <span class="v" data-v="candidateLevel|jevRecalibrated|ece" data-f="3"></span>. It is better calibrated than the trigram judge, and its ranking is untouched; §4.8 shows that trained classifiers given enough labels can match it. This mirrors findings on modern neural models, whose confidence is informative but miscalibrated in a correctable way (Guo et al. 2017; Kadavath et al. 2022).</p>
+      <figure class="figure narrow"><div class="chart" id="chRel"></div>
+        <figcaption><b>Figure 4.</b> Reliability diagram. Each point is a bin of candidates: mean predicted P(correct) against the observed share correct. Point area shows the bin's size. A calibrated judge lies on the diagonal. Raw Jev bends away from it at both ends. Recalibrated Jev and the n-gram judge lie close to it where their bins hold most candidates; the sparse middle bins are noisy (see the data table).</figcaption>
+        <details class="dtable"><summary>Data table</summary><div id="tRel"></div></details></figure>
+      <div class="tablewrap"><table class="atable" id="murphyTable"><caption>Table 2. Proper scores and the Murphy decomposition (Brier = reliability − resolution + uncertainty). Lower is better except resolution.</caption></table></div>
+
+      <h4>4.3 Decisions</h4>
+      <p>The rule of §2.3 made the right call in <span class="v" data-v="decisions|Jev, decision rule|eval|acceptCorrect|+rejectRight" data-f="int"></span> of <span class="v" data-v="decisions|Jev, decision rule|eval|n" data-f="int"></span> judged calls (<span class="v" data-v="decisions|Jev, decision rule|eval|accuracy" data-f="pct1"></span>, CI <span class="v" data-v="decisions|Jev, decision rule|eval|accuracyCI" data-f="cipct"></span>). It never rejected a correct decryption. Its single error was an acceptance: the <i>Scharnhorst</i> message, whose accepted decryption matched <span class="v" data-v="wrongAccepts|0|accuracy" data-f="pct1"></span> of the published plaintext, just below the 90% bar. That is a near miss rather than a wrong key. The alternatives in Figure 5 fare worse:</p>
+      <ul class="tight">
+        <li><b>Jev's raw top choice</b> accepts a wrong candidate <span class="v" data-v="decisions|Jev, top choice|eval|acceptWrong" data-f="int"></span> times.</li>
+        <li><b>The search's fixed n-gram bar</b> accepts one <span class="v" data-v="decisions|n-gram, German-ness ≥ 0.4|eval|acceptWrong" data-f="int"></span> times.</li>
+        <li><b>The calibrated n-gram judge</b> is precise but misses <span class="v" data-v="decisions|n-gram, calibrated (leave-one-message-out)|eval|rejectMissed" data-f="int"></span> correct decryptions.</li>
+        <li><b>With no judge at all</b>, the pipeline would be right <span class="v" data-v="decisions|Accept the search's top candidate|eval|accuracy" data-f="pct"></span> of the time.</li>
+      </ul>
+      <figure class="figure"><div class="chart" id="chDec"></div>
+        <figcaption><b>Figure 5.</b> Accuracy of each accept/reject rule on the evaluation set, with 95% bootstrap intervals. Colour follows the judge: blue for Jev, orange for the n-gram statistic, aqua for no judge.</figcaption>
+        <details class="dtable" open><summary>Confusion counts</summary><div id="tDec"></div></details></figure>
+      <p>Jev's two answers agree with each other. P(pick) alone separates right from wrong picks with AUC <span class="v" data-v="choice|pick|auc" data-f="3"></span>. The probability of “none” separates calls with no correct candidate from the rest with AUC <span class="v" data-v="choice|none|auc" data-f="3"></span>, though, like P(correct), it is too cautious in magnitude (Brier <span class="v" data-v="choice|none|brier" data-f="3"></span>).</p>
+
+      <h4>4.4 The question matters: a prompt ablation</h4>
+      <p>The pilot run used the first version of the judge state, which did not mark crib letters, and applied no decision rule. On the <span class="v" data-v="ablation|pilot|calls" data-f="int"></span> pilot calls, Jev's top choice was right <span class="v" data-v="ablation|pilot|topChoice|accuracy" data-f="pct"></span> of the time, against <span class="v" data-v="ablation|eval|topChoice|accuracy" data-f="pct"></span> after the change. Its mean P(correct) on wrong candidates fell from <span class="v" data-v="ablation|cribWrong|pilotBombeWrong" data-f="2"></span> to <span class="v" data-v="ablation|cribWrong|evalAllWrong" data-f="2"></span>, and on correct ones rose from <span class="v" data-v="ablation|cribWrong|pilotCorrect" data-f="2"></span> to <span class="v" data-v="ablation|cribWrong|evalCorrect" data-f="2"></span>. Applied after the fact, the decision rule would have raised the pilot's decision accuracy from <span class="v" data-v="ablation|pilot|topChoice|accuracy" data-f="pct"></span> to <span class="v" data-v="ablation|pilot|rule|accuracy" data-f="pct"></span>. The comparison is observational: the pilot covered an earlier and smaller subset of messages. It nonetheless indicates that telling the judge what was assumed, and not only what was found, sharpens its judgement.</p>
+
+      <h4>4.5 Crib selection: no skill</h4>
+      <p>Jev's ranking of cribs was evaluated on the <span class="v" data-v="cribSelection|withTrueCrib" data-f="int"></span> calls whose message opens with a listed phrase. The results:</p>
+      <ul class="tight">
+        <li><b>Mean rank.</b> The true crib's mean rank was <span class="v" data-v="cribSelection|meanRank|jev" data-f="2"></span> in Jev's order, <span class="v" data-v="cribSelection|meanRank|static" data-f="2"></span> in the fixed list, and <span class="v" data-v="cribSelection|meanRank|random" data-f="2"></span> in expectation for a random order.</li>
+        <li><b>Top three.</b> Both Jev and the list put the true crib in the top three <span class="v" data-v="cribSelection|top3|jev" data-f="int"></span> times.</li>
+        <li><b>Log score.</b> Jev's log score on the true crib, <span class="v" data-v="cribSelection|logScore|jev" data-f="2"></span>, was <em>worse</em> than a uniform guess, <span class="v" data-v="cribSelection|logScore|uniform" data-f="2"></span>. Its distribution is concentrated, with a top option averaging <span class="v" data-v="cribSelection|concentration|meanTopP" data-f="pct"></span>, and usually on generic phrases such as <i>KEINEBESONDERENEREIGNISSE</i> or <i>TAGESMELDUNG</i>.</li>
+        <li><b>“None of these”.</b> Its probability was indistinguishable whether or not a listed crib was present (<span class="v" data-v="cribSelection|none|whenAbsent" data-f="3"></span> against <span class="v" data-v="cribSelection|none|whenPresent" data-f="3"></span>; AUC <span class="v" data-v="cribSelection|none|auc" data-f="2"></span>).</li>
+      </ul>
+      <figure class="figure"><div class="chart" id="chCrib"></div>
+        <figcaption><b>Figure 6.</b> Rank of the true opening crib for each call, in Jev's order and in the fixed list (lower is better). The grey track spans all the phrases on offer.</figcaption></figure>
+      <p>The contrast with §4.1 is instructive. Judging a decryption is a problem of <em>recognition</em>, and all the evidence is in the state. Choosing a crib is a problem of <em>prediction from context</em>, and the state supplied little: traffic type, date, length. Hut 6's crib-writers worked from call signs, time of transmission, routing, the previous day's traffic and the habits of individual operators (Welchman 1982). A prior can only be as informative as the context it conditions on. The negative result is a statement about the question asked as much as about the model.</p>
+
+      <h4>4.6 Reliability of the instrument</h4>
+      <p>Two experiments re-asked <span class="v" data-v="experiments|sample|n" data-f="int"></span> logged judge questions, drawn half from calls in which Jev had accepted a candidate and half from calls in which it had accepted none.</p>
+      <ul class="tight">
+        <li><b>Test–retest.</b> The identical state and questions, sent again, gave the same decision <span class="v" data-v="experiments|retest|decisionAgreement" data-f="pct"></span> of the time. P(correct) moved by <span class="v" data-v="experiments|retest|meanAbsDelta" data-f="3"></span> on average, with a correlation of <span class="v" data-v="experiments|retest|pearson" data-f="3"></span> between the two runs.</li>
+        <li><b>Position.</b> The same candidates in reversed order gave the same decision <span class="v" data-v="experiments|position|decisionAgreement" data-f="pct"></span> of the time, and the picks moved with the content. Across the evaluation set Jev's top choice fell on the first slot <span class="v" data-v="positions|picks|0" data-f="int"></span> times, where the correct candidate sat <span class="v" data-v="positions|correctAt|0" data-f="int"></span> times. The experiment shows that surplus is deference to the search's best-scoring candidate, which is listed first, and not a preference for the slot.</li>
+      </ul>
+      <p>Position bias is a documented failure of language models used as judges (Zheng et al. 2023; Wang et al. 2024). Its absence here matters for trusting the decisions. A third test re-asked <span class="v" data-v="experiments|cribRetest|n" data-f="int"></span> crib rankings: Jev returned the same top crib <span class="v" data-v="experiments|cribRetest|topAgreement" data-f="pct"></span> of the time, with a rank correlation of <span class="v" data-v="experiments|cribRetest|spearman" data-f="2"></span>. Its crib priors are stable, merely uninformative.</p>
+      <figure class="figure"><div class="chart" id="chRetest"></div>
+        <figcaption><b>Figure 7.</b> P(correct) for the same candidate on two askings. Left: identical prompt. Right: candidates reversed. Points on the diagonal are perfectly consistent; the dashed lines mark the 0.5 acceptance bar.</figcaption></figure>
+
+      <h4>4.7 Cost and latency</h4>
+      <p>A judge call took a median of <span class="v" data-v="latency|judge|p50" data-f="int"></span> ms (90th percentile <span class="v" data-v="latency|judge|p90" data-f="int"></span> ms), and a crib call <span class="v" data-v="latency|crib|p50" data-f="int"></span> ms. Calls averaged about <span class="v" data-v="latency|judge|inTok" data-f="int"></span> input and <span class="v" data-v="latency|judge|outTok" data-f="int"></span> output tokens. A full break on the page costs one crib call plus one judge call per Bombe run: for a successful break, typically two to five calls, well under a second of the analyst's time. For comparison, the Bombe itself takes seconds per run even on eight cores.</p>
+      <figure class="figure"><div class="chart" id="chLat"></div>
+        <figcaption><b>Figure 8.</b> Latency of every logged call, by question type. The tick marks the median.</figcaption></figure>
+
+      <h4>4.8 Against the state of the art: n-gram fitness and XGBoost</h4>
+      <p><b>What a practitioner would use instead.</b> Since Gillogly, Enigma breakers have scored trial decryptions with the index of coincidence in early stages and with <i>n</i>-gram log-likelihood, trigrams up to hexagrams, in the final ones. Lasry's thesis made that the standard toolkit for classical ciphers, and modern breaks still use it (Gillogly 1995; Weierud and Sullivan 2005; Ostwald and Weierud 2017; Lasry 2018). In machine learning, the default for a small tabular problem is gradient-boosted trees, with XGBoost as the reference implementation (Chen and Guestrin 2016). The research frontier for decipherment replaces <i>n</i>-gram models with neural language models (Kambhatla, Mansouri Bigvand and Sarkar 2018). Jev is itself a pretrained model used zero-shot; training a neural character model would need a far larger German corpus than this project has, so that variant is left to future work.</p>
+      <p><b>Protocol.</b> Nine judges score the same <span class="v" data-v="cmp|data|candidates" data-f="int"></span> candidates against the same 90% label:</p>
+      <ul class="tight">
+        <li>the index of coincidence;</li>
+        <li>this project's trigram German-ness;</li>
+        <li>quadgram fitness, the usual hill-climbing score;</li>
+        <li>an interpolated Kneser–Ney character 5-gram model (Kneser and Ney 1995);</li>
+        <li>logistic regression and XGBoost on twelve text features;</li>
+        <li>Jev, raw and recalibrated.</li>
+      </ul>
+      <p>The language models learn from the project's German corpus (<span class="v" data-v="cmp|data|lmTrainingLetters" data-f="int"></span> training letters). The features are:</p>
+      <ul class="tight">
+        <li>the three <i>n</i>-gram scores;</li>
+        <li>coincidence, χ² against German letter frequencies, entropy, and vowel and common-letter shares;</li>
+        <li>unseen trigrams and the X rate;</li>
+        <li>dictionary coverage and the longest covered run, against <span class="v" data-v="cmp|data|vocabulary" data-f="int"></span> corpus words.</li>
+      </ul>
+      <p>All are computed, as for the <i>n</i>-gram judge, on the letters outside the assumed crib. Every judge but raw Jev turns its score into a probability by learning from labels. Evaluation is leave-one-text-out: all runs of a plaintext, which recurs in main and holdout under new keys, are held out together, so no trained judge ever sees the text it is scored on. Intervals come from a cluster bootstrap over calls. The code is <code>analysis/judges.py</code>, on scikit-learn and XGBoost <span class="v" data-v="cmp|versions|xgboost"></span> (Pedregosa et al. 2011).</p>
+      <div id="tJudges"></div>
+      <p class="fine">Table 4. Candidate-level scores (AUC, Brier, log loss, ECE) and call-level decisions: accept the top-scoring candidate when its probability reaches 0.5, otherwise accept none. The last row is Jev's two-condition rule (§2.3). Best values in bold.</p>
+      <p><b>Given labels from the same traffic, the field closes.</b> XGBoost reaches a Brier score of <span class="v" data-v="judge|XGBoost|brier" data-f="4"></span> and plain quadgram fitness <span class="v" data-v="judge|Quadgram fitness|brier" data-f="4"></span>, against <span class="v" data-v="judge|Jev, recalibrated|brier" data-f="4"></span> for recalibrated Jev. The paired difference between XGBoost and recalibrated Jev is <span class="v" data-v="cmp|contrasts|brier_xgb_minus_jevcal|diff" data-f="4"></span>, with a 95% interval from <span class="v" data-v="cmp|contrasts|brier_xgb_minus_jevcal|ci|0" data-f="3"></span> to <span class="v" data-v="cmp|contrasts|brier_xgb_minus_jevcal|ci|1" data-f="3"></span>, which is no difference at all. Zero-shot Jev still ranks best: AUC <span class="v" data-v="judge|Jev, zero-shot|auc" data-f="4"></span>, against <span class="v" data-v="judge|XGBoost|auc" data-f="3"></span> for XGBoost, whose trees misorder a few candidates that logistic regression on the same features does not (<span class="v" data-v="judge|Logistic regression|auc" data-f="4"></span>). What XGBoost leans on most is <span class="v" data-v="cmp|xgboost|importance|0|feature"></span>, then <span class="v" data-v="cmp|xgboost|importance|1|feature"></span> and <span class="v" data-v="cmp|xgboost|importance|2|feature"></span>. In effect it learns to be a dictionary-and-<i>n</i>-gram judge. On decisions, Jev's own rule is the only judge with a single error (<span class="v" data-v="cmp|jevDecisionRule|accuracy" data-f="pct1"></span>).</p>
+      <figure class="figure"><div class="chart" id="chCurve"></div>
+        <figcaption><b>Figure 9.</b> What labels buy. Each judge is trained on <i>k</i> randomly chosen texts and scored on the rest, 40 draws per <i>k</i>; lines are mean Brier scores, plotted to <i>k</i> = 20 (the table adds 24, where one held-out text decides the score). The dashed line is zero-shot Jev, which uses no labels.</figcaption>
+        <details class="tview"><summary>Table view</summary><div id="tCurve"></div></details></figure>
+      <p><b>Labels are the price.</b> Given one labelled text (about <span class="v" data-v="lc|1|labelled" data-f="int"></span> candidates), XGBoost's Brier score is <span class="v" data-v="lc|1|xgb" data-f="3"></span>, twice as bad as uncalibrated Jev's <span class="v" data-v="lc|1|jev" data-f="3"></span>. It overtakes raw Jev at two texts (<span class="v" data-v="lc|2|labelled" data-f="int"></span> labelled candidates, Brier <span class="v" data-v="lc|2|xgb" data-f="3"></span>). Only at about twelve (<span class="v" data-v="lc|12|labelled" data-f="int"></span> candidates, <span class="v" data-v="lc|12|xgb" data-f="4"></span>) does it approach recalibrated Jev. Recalibrated Jev reaches <span class="v" data-v="lc|1|jevcal" data-f="4"></span> from a single text, because it fits two numbers and inherits everything else. The Kneser–Ney model behaves similarly for the same reason: its knowledge of German comes from its corpus, not from the labels.</p>
+      <div id="tShift"></div>
+      <p class="fine">Table 5. Distribution shift. Every trained judge learns from the synthetic traffic alone (<span class="v" data-v="cmp|shiftMeta|trainRows" data-f="int"></span> candidates) and is scored on the real intercepts (<span class="v" data-v="cmp|shiftMeta|testCalls" data-f="int"></span> calls, <span class="v" data-v="cmp|shiftMeta|testRows" data-f="int"></span> candidates, <span class="v" data-v="cmp|shiftMeta|testPositives" data-f="int"></span> correct).</p>
+      <p><b>The decisive test is traffic the judge has not seen.</b> Taught only on the synthetic messages and asked about the real ones, XGBoost still ranks well, but its probabilities no longer mean what they meant. It accepts nothing wrong, yet it rejects <span class="v" data-v="shiftBy|XGBoost on synthetic|decisions|rejectMissed" data-f="int"></span> of <span class="v" data-v="cmp|shiftMeta|testPositives" data-f="int"></span> correct decryptions, and its decisions fall to <span class="v" data-v="shiftBy|XGBoost on synthetic|decisions|accuracy" data-f="pct"></span>. Logistic regression falls to <span class="v" data-v="shiftBy|Logistic regression on synthetic|decisions|accuracy" data-f="pct"></span> and the Kneser–Ney judge to <span class="v" data-v="shiftBy|Kneser-Ney 5-gram on synthetic|decisions|accuracy" data-f="pct"></span>. Zero-shot Jev decides <span class="v" data-v="shiftBy|Jev, zero-shot|decisions|accuracy" data-f="pct"></span> correctly, as it does everywhere else. Real naval and army traffic, with its numbers, abbreviations and garbles, lies outside anything learned from one author's clean synthetic German. A model that has read vastly more German than <span class="v" data-v="cmp|data|lmTrainingLetters" data-f="int"></span> letters does not have that problem. Note too that Jev recalibrated on synthetic traffic alone decides worse than raw Jev (<span class="v" data-v="shiftBy|Jev, recalibrated on synthetic|decisions|accuracy" data-f="pct"></span>). Calibration learned on one kind of traffic carries that traffic's bias.</p>
+      <p><b>Cost.</b> The classical judges win by orders of magnitude. The features take <span class="v" data-v="cmp|xgboost|featureMilliseconds" data-f="2"></span> ms a candidate and a tree prediction <span class="v" data-v="cmp|xgboost|predictMicroseconds" data-f="1"></span> µs, against <span class="v" data-v="latency|judge|p50" data-f="int"></span> ms and a network call for Jev. In a pipeline that asks for two to five verdicts per break, behind a Bombe that runs for seconds, the difference does not matter.</p>
+    </section>
+
+    <section id="s5">
+      <h3>5. Discussion</h3>
+      <p><b>What Jev contributes.</b> Three results stand out. First, as a reader of trial decryptions Jev ranks candidates better than the search's own statistic, and does so <em>without labels</em>. The n-gram judge that rivals it had to be calibrated on labelled messages, and it shares its model with the search whose output it judges, so it is not an independent check. Second, Jev's miscalibration is monotone and cheap to repair. With a single labelled text its probabilities become about as well calibrated as a gradient-boosted classifier's, which needs roughly ten times the labels to get there (§4.8). Third, its capacity to <em>abstain</em> is what makes the pipeline safe. Without a judge, the system accepts a wrong key in more than half of all calls; with Jev under the rule, it did so once, on a near-correct decryption.</p>
+      <p><b>How it compares.</b> Against the project's own trigram judge, Jev is better at ranking (AUC <span class="v" data-v="candidateLevel|jev|auc" data-f="4"></span> against <span class="v" data-v="candidateLevel|ngram|auc" data-f="3"></span>). Out of the box it is worse calibrated; recalibrated, it is better. Against the state of the art (§4.8) the honest summary has two halves. Where labelled traffic of the same kind is plentiful, quadgram fitness or XGBoost is as good as recalibrated Jev, about three hundred times faster, and needs no network. Where it is not, and in real codebreaking it never is, the trained judges' probabilities break: on real intercepts, after training on synthetic ones, XGBoost rejected <span class="v" data-v="shiftBy|XGBoost on synthetic|decisions|rejectMissed" data-f="int"></span> of <span class="v" data-v="cmp|shiftMeta|testPositives" data-f="int"></span> correct decryptions and Jev none. Against the historical analyst we can say less: Hut 6 left no forecast records to score. The division of labour, though, is the same. The machine enumerates and the judge decides, and the judge's value lies in knowing when <em>not</em> to accept.</p>
+      <p><b>The checking problem, then and now.</b> A Bombe stop was <em>an</em> answer, not <em>the</em> answer. Each had to be tried on an Enigma analogue at something like a quarter of an hour apiece, so a hundred stops were more than a day's work, and the key changed at midnight (Veritasium n.d.). Welchman's diagonal board mattered because it cut the stops to a handful (Welchman 1982). The <a href="/research#bombeLab">live Bombe in the research paper</a> reproduces the effect on a real menu: a 14-letter crib gives 85 stops with the board and 724 without, and the full 23 letters give 1 against 2. In this pipeline Jev is the checker. At a median of <span class="v" data-v="latency|judge|p50" data-f="int"></span> ms a verdict, a hundred stops are checked in <span id="chk100">–</span>, against more than a day in 1940. The step that once throttled the whole operation now costs less than the search it follows. The diagonal board, the consecutive-stecker switch and the Jumbo Bombes' “machine gun” all removed stops before anyone had to read them (Weinbaum 2025). Jev reads the stops that remain, and says “none of these” when none is German. In Turing's units the acceptance bar of 0.5 is 0 decibans, even odds, and a verdict of 0.99 is +20: 40 hubdubs in the half-decibans of the Banburists' scoring sheets. The machine page now prints each verdict in decibans.</p>
+      <p><b>Where it fails.</b> Crib selection. The fault is at least partly in the question: a prior conditioned on so little context cannot be sharp. The obvious next experiment gives Jev richer traffic context and scores the change with the same log score.</p>
+    </section>
+
+    <section id="s6">
+      <h3>6. Limitations</h3>
+      <ol class="tight">
+        <li><b>Small, correlated sample.</b> <span class="v" data-v="candidateLevel|messages" data-f="int"></span> message-runs from 25 distinct texts. The synthetic texts reappear in the holdout under new keys, so candidates are not independent across runs. The call-level bootstrap addresses correlation within a message, not this reuse.</li>
+        <li><b>Easy negatives.</b> Most wrong candidates are clearly wrong. The hard cases, near-correct keys with one wrong plug or ring, are rare in this set, and they are where a judge is most tested.</li>
+        <li><b>Post hoc rule.</b> The decision rule was chosen after the pilot. Main and holdout evaluate it prospectively, but on messages from the same distribution.</li>
+        <li><b>In-sample recalibration.</b> Recalibration is leave-one-message-out, yet fitted within the same study. Its advantage should be confirmed on fresh traffic.</li>
+        <li><b>One revision, one domain.</b> The results describe <code>jev-1.13.0</code> on this task, through this state wording. §4.4 shows the wording matters.</li>
+        <li><b>A small shift test, and one home-grown corpus.</b> The distribution-shift result (Table 5) rests on <span class="v" data-v="cmp|shiftMeta|testCalls" data-f="int"></span> calls from nine intercepts. The classical judges' language models and dictionary come from the same author as the synthetic messages, which flatters them in-distribution and may exaggerate their fall on real traffic. A judge trained on a large, independent German corpus would narrow the gap; a neural character model in the style of Kambhatla et al. was not tried.</li>
+        <li><b>Labels at 90%.</b> The threshold makes an 89% decryption “wrong”. A different threshold would move the single wrong acceptance into the correct column.</li>
+      </ol>
+    </section>
+
+    <section id="s7">
+      <h3>7. Conclusion: can it decrypt Enigma?</h3>
+
+      <aside class="verdict">
+        <p class="verdict-k">The short answer</p>
+        <p class="verdict-a">Yes, the way Bletchley did: given a crib.</p>
+        <p>The workflow recovers the complete key (rotor order, rings, start position and plugboard) and the plaintext of wartime ten-plug traffic whenever it has a probable phrase to anchor the search, or the day's settings. Without either, it stalls, exactly where Bletchley stalled. Jev does not decrypt anything. It is the judge that says, with near-perfect reliability, when a decryption is real.</p>
+      </aside>
+
+      <p>The evidence divides cleanly by what the codebreaker knows in advance:</p>
+      <div class="tablewrap"><table class="atable verdict-t">
+        <caption>Table 3. What the workflow achieves, by prior knowledge (main backtest; historical and synthetic messages).</caption>
+        <thead><tr><th>The codebreaker has…</th><th>Outcome</th><th class="fig">Historical</th><th class="fig">Synthetic</th></tr></thead>
+        <tbody>
+          <tr><td>the day's key sheet (rotors, rings, plugs)</td><td><span class="yes">✓ always broken</span>: the message key falls in a single scan</td><td class="fig"><span class="v" data-v="report|main|summaries|historical|byTier|key|broken" data-f="int"></span>/<span class="v" data-v="report|main|summaries|historical|byTier|key|cases" data-f="int"></span></td><td class="fig"><span class="v" data-v="report|main|summaries|synthetic|byTier|key|broken" data-f="int"></span>/<span class="v" data-v="report|main|summaries|synthetic|byTier|key|cases" data-f="int"></span></td></tr>
+          <tr><td>a crib: the message's first 14 letters</td><td><span class="yes">✓ broken</span>: the full key, in seconds to minutes</td><td class="fig"><span class="v" data-v="report|main|summaries|historical|byTier|crib|broken" data-f="int"></span>/<span class="v" data-v="report|main|summaries|historical|byTier|crib|cases" data-f="int"></span></td><td class="fig"><span class="v" data-v="report|main|summaries|synthetic|byTier|crib|broken" data-f="int"></span>/<span class="v" data-v="report|main|summaries|synthetic|byTier|crib|cases" data-f="int"></span></td></tr>
+          <tr><td>only Jev's guess at a crib, top three tried</td><td><span class="no">✗ not broken</span>: the guess is rarely right</td><td class="fig"><span class="v" data-v="report|main|summaries|historical|byTier|bombe|broken" data-f="int"></span>/<span class="v" data-v="report|main|summaries|historical|byTier|bombe|cases" data-f="int"></span></td><td class="fig"><span class="v" data-v="report|main|summaries|synthetic|byTier|bombe|broken" data-f="int"></span>/<span class="v" data-v="report|main|summaries|synthetic|byTier|bombe|cases" data-f="int"></span></td></tr>
+          <tr><td>nothing but the ciphertext</td><td><span class="no">✗ not broken</span>: ten plugs hide the statistical signal</td><td class="fig"><span class="v" data-v="report|main|summaries|historical|byTier|climb|broken" data-f="int"></span>/<span class="v" data-v="report|main|summaries|historical|byTier|climb|cases" data-f="int"></span></td><td class="fig"><span class="v" data-v="report|main|summaries|synthetic|byTier|climb|broken" data-f="int"></span>/<span class="v" data-v="report|main|summaries|synthetic|byTier|climb|cases" data-f="int"></span></td></tr>
+        </tbody>
+      </table></div>
+
+      <p><b>The machine decrypts; Jev decides.</b> The key is recovered by computation: the software Bombe and the plugboard hill-climb. Jev only answers questions of probability, so it cannot produce a key or a plaintext, and it cannot invent one either. Its contribution is the verdict, and there it is superb. It separates real decryptions from impostors with an AUC of <span class="v" data-v="candidateLevel|jev|auc" data-f="4"></span>. Under a simple more-likely-than-not rule it made <span class="v" data-v="decisions|Jev, decision rule|eval|acceptCorrect|+rejectRight" data-f="int"></span> of <span class="v" data-v="decisions|Jev, decision rule|eval|n" data-f="int"></span> accept/reject decisions correctly. Its single error was the <i>Scharnhorst</i> decryption, <span class="v" data-v="wrongAccepts|0|accuracy" data-f="pct"></span> right against a 90% bar: a near-miss, not a wrong key. It gave the same verdict <span class="v" data-v="experiments|retest|decisionAgreement" data-f="pct"></span> of the time when asked again, and <span class="v" data-v="experiments|position|decisionAgreement" data-f="pct"></span> when the candidates were shuffled.</p>
+      <p><b>Why Jev and not a classifier.</b> Standard tools can do Jev's job where they have been taught. Quadgram fitness and XGBoost, given labelled breaks of the same kind of traffic, match recalibrated Jev (Brier <span class="v" data-v="judge|XGBoost|brier" data-f="4"></span> against <span class="v" data-v="judge|Jev, recalibrated|brier" data-f="4"></span>). But codebreaking is the business of traffic nobody has labelled yet. Taught on synthetic messages and shown real intercepts, XGBoost's decisions fell to <span class="v" data-v="shiftBy|XGBoost on synthetic|decisions|accuracy" data-f="pct"></span>, while Jev, taught nothing, stayed at <span class="v" data-v="shiftBy|Jev, zero-shot|decisions|accuracy" data-f="pct"></span>.</p>
+      <p><b>Why the judge matters.</b> Remove Jev and trust the search's best guess, and the pipeline accepts a wrong answer in <span class="v" data-v="decisions|Accept the search's top candidate|eval|acceptWrong" data-f="int"></span> of <span class="v" data-v="decisions|Accept the search's top candidate|eval|n" data-f="int"></span> calls. Wrong keys still produce German-looking fragments, because the plugboard search tunes them towards German. A judge that can say “none of these” is the difference between a codebreaker and a generator of plausible nonsense. Jev's one weakness here is modesty. It says 0.7 when it could say 0.99, and a two-parameter recalibration fixes that (Brier <span class="v" data-v="candidateLevel|jev|brier" data-f="3"></span> → <span class="v" data-v="candidateLevel|jevRecalibrated|brier" data-f="3"></span>).</p>
+      <p><b>Where it stalls: the crib.</b> Every break above began with a probable phrase. Asked to choose that phrase from the traffic type, date and length, Jev did no better than a fixed list: the true crib's mean rank was <span class="v" data-v="cribSelection|meanRank|jev" data-f="2"></span> in Jev's order against <span class="v" data-v="cribSelection|meanRank|static" data-f="2"></span> in the list. A message whose opening is on the list still breaks, because the page tries every listed crib, typically within 5–25 seconds. A message whose opening is not on the list, and for which the user supplies no guess, usually does not break. The bottleneck of 1940 remains the bottleneck: not computation, but knowing what the enemy is likely to have said.</p>
+      <p class="coda">Let the machine enumerate, let the judge decide, and give the judge the evidence it needs. That division of labour broke Enigma in 1940, and it breaks it here.</p>
+
+      <p class="fine">Reproduce: <code>bun run src/analysis/jev-eval.ts</code> rebuilds every Jev figure on this page from the audit log; <code>bun run src/analysis/jev-experiments.ts</code> reruns §4.6 (about 58 calls). Table 3 is read from the newest backtest report. The 5–25 second range is from timed runs on the codebreaker page. Analysis generated <span class="v" data-v="generatedAt" data-f="date"></span>.</p>
+    </section>
+
+    <section id="refs" class="refs">
+      <h3>References</h3>
+      <ul>
+        <li>Brier, G. W. (1950) ‘Verification of forecasts expressed in terms of probability’, <i>Monthly Weather Review</i>, 78(1), pp. 1–3.</li>
+        <li>Chen, T. and Guestrin, C. (2016) ‘XGBoost: A scalable tree boosting system’, <i>Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining</i>, pp. 785–794.</li>
+        <li>DeGroot, M. H. and Fienberg, S. E. (1983) ‘The comparison and evaluation of forecasters’, <i>Journal of the Royal Statistical Society, Series D (The Statistician)</i>, 32(1/2), pp. 12–22.</li>
+        <li>Efron, B. and Tibshirani, R. J. (1993) <i>An Introduction to the Bootstrap</i>. New York: Chapman &amp; Hall.</li>
+        <li>Gillogly, J. J. (1995) ‘Ciphertext-only cryptanalysis of Enigma’, <i>Cryptologia</i>, 19(4), pp. 405–413.</li>
+        <li>Gneiting, T. and Raftery, A. E. (2007) ‘Strictly proper scoring rules, prediction, and estimation’, <i>Journal of the American Statistical Association</i>, 102(477), pp. 359–378.</li>
+        <li>Good, I. J. (1979) ‘Studies in the history of probability and statistics XXXVII: A. M. Turing's statistical work in World War II’, <i>Biometrika</i>, 66(2), pp. 393–396.</li>
+        <li>Guo, C., Pleiss, G., Sun, Y. and Weinberger, K. Q. (2017) ‘On calibration of modern neural networks’, <i>Proceedings of the 34th International Conference on Machine Learning</i>, PMLR 70, pp. 1321–1330.</li>
+        <li>Hanley, J. A. and McNeil, B. J. (1982) ‘The meaning and use of the area under a receiver operating characteristic (ROC) curve’, <i>Radiology</i>, 143(1), pp. 29–36.</li>
+        <li>Kadavath, S. et al. (2022) ‘Language models (mostly) know what they know’, arXiv:2207.05221.</li>
+        <li>Kambhatla, N., Mansouri Bigvand, A. and Sarkar, A. (2018) ‘Decipherment of substitution ciphers with neural language models’, <i>Proceedings of the 2018 Conference on Empirical Methods in Natural Language Processing</i>, pp. 869–874.</li>
+        <li>Kneser, R. and Ney, H. (1995) ‘Improved backing-off for M-gram language modeling’, <i>Proceedings of ICASSP-95</i>, vol. 1, pp. 181–184.</li>
+        <li>Lasry, G. (2018) <i>A Methodology for the Cryptanalysis of Classical Ciphers with Search Metaheuristics</i>. Kassel: Kassel University Press.</li>
+        <li>Murphy, A. H. (1973) ‘A new vector partition of the probability score’, <i>Journal of Applied Meteorology</i>, 12(4), pp. 595–600.</li>
+        <li>Naeini, M. P., Cooper, G. F. and Hauskrecht, M. (2015) ‘Obtaining well calibrated probabilities using Bayesian binning’, <i>Proceedings of the AAAI Conference on Artificial Intelligence</i>, 29(1), pp. 2901–2907.</li>
+        <li>Ostwald, O. and Weierud, F. (2017) ‘Modern breaking of Enigma ciphertexts’, <i>Cryptologia</i>, 41(5), pp. 395–421.</li>
+        <li>Pedregosa, F. et al. (2011) ‘Scikit-learn: Machine learning in Python’, <i>Journal of Machine Learning Research</i>, 12, pp. 2825–2830.</li>
+        <li>Platt, J. C. (1999) ‘Probabilistic outputs for support vector machines and comparisons to regularized likelihood methods’, in Smola, A. J. et al. (eds) <i>Advances in Large Margin Classifiers</i>. Cambridge, MA: MIT Press, pp. 61–74.</li>
+        <li>Veritasium (n.d.) [Documentary on the breaking of Enigma, with Sir Dermot Turing and Jonah Weinbaum, filmed at Bletchley Park and The National Museum of Computing]. YouTube. Transcript consulted 27 September 2026.</li>
+        <li>Wang, P. et al. (2024) ‘Large language models are not fair evaluators’, <i>Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics</i>.</li>
+        <li>Weierud, F. and Sullivan, G. (2005) ‘Breaking German Army ciphers’, <i>Cryptologia</i>, 29(3), pp. 193–232.</li>
+        <li>Weinbaum, J. (2025) <i>Action This Day: The Mathematics and Machinations that Bested the German Enigma</i>. MS thesis. Dartmouth College. Available at: https://digitalcommons.dartmouth.edu/masters_theses/247.</li>
+        <li>Welchman, G. (1982) <i>The Hut Six Story: Breaking the Enigma Codes</i>. New York: McGraw-Hill.</li>
+        <li>Zheng, L. et al. (2023) ‘Judging LLM-as-a-judge with MT-Bench and Chatbot Arena’, <i>Advances in Neural Information Processing Systems</i>, 36.</li>
+      </ul>
+    </section>
+  </article>
+  </div>
+  <footer class="fine research-foot"><a class="annexlink" href="/">← Send a message and watch it broken</a> · <a class="annexlink" href="/research">Research &amp; history</a><p class="indep">An independent open-source project (MIT), not affiliated with or endorsed by TypeSafe.</p></footer>
+  <div class="tip" id="tip" role="tooltip"></div>
+  <script type="module" src="../jev/main.ts"></script>
+</body>
+</html>

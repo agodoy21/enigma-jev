@@ -1,0 +1,225 @@
+{
+  "generatedAt": "2026-09-28T17:06:20.120Z",
+  "seconds": 29,
+  "source": "Weinbaum, J. (2025) Action This Day, Dartmouth College MS thesis, ch. 4",
+  "singleLoop": [
+    {
+      "length": 2,
+      "ours": {
+        "n": 4,
+        "mean": 17576,
+        "ci95": 0
+      },
+      "weinbaum": {
+        "mean": 17576,
+        "ci95": 0
+      },
+      "turing": 17576
+    },
+    {
+      "length": 3,
+      "ours": {
+        "n": 24,
+        "mean": 16251.5,
+        "ci95": 19.2
+      },
+      "weinbaum": {
+        "mean": 16243.78,
+        "ci95": 6.91
+      },
+      "turing": 17576
+    },
+    {
+      "length": 4,
+      "ours": {
+        "n": 4,
+        "mean": 17576,
+        "ci95": 0
+      },
+      "weinbaum": {
+        "mean": 17576,
+        "ci95": 0
+      },
+      "turing": 17576
+    },
+    {
+      "length": 5,
+      "ours": {
+        "n": 24,
+        "mean": 16206.9,
+        "ci95": 16.9
+      },
+      "weinbaum": {
+        "mean": 16220.57,
+        "ci95": 6.66
+      },
+      "turing": 17576
+    },
+    {
+      "length": 6,
+      "ours": {
+        "n": 4,
+        "mean": 17576,
+        "ci95": 0
+      },
+      "weinbaum": {
+        "mean": 17576,
+        "ci95": 0
+      },
+      "turing": 17576
+    },
+    {
+      "length": 7,
+      "ours": {
+        "n": 24,
+        "mean": 16221.7,
+        "ci95": 11.9
+      },
+      "weinbaum": {
+        "mean": 16224.37,
+        "ci95": 6.63
+      },
+      "turing": 17576
+    }
+  ],
+  "twoLoops": [
+    {
+      "lengths": [
+        2,
+        2
+      ],
+      "ours": {
+        "n": 24,
+        "mean": 776,
+        "ci95": 20.7
+      },
+      "weinbaum": {
+        "mean": 781.08,
+        "ci95": 4.99
+      },
+      "turing": 676,
+      "withDiagonalBoard": {
+        "n": 24,
+        "mean": 592.1,
+        "ci95": 17.1
+      }
+    },
+    {
+      "lengths": [
+        2,
+        3
+      ],
+      "ours": {
+        "n": 24,
+        "mean": 737.3,
+        "ci95": 21.7
+      },
+      "weinbaum": {
+        "mean": 749.89,
+        "ci95": 3.58
+      },
+      "turing": 676,
+      "withDiagonalBoard": {
+        "n": 24,
+        "mean": 445.8,
+        "ci95": 10.1
+      }
+    },
+    {
+      "lengths": [
+        3,
+        3
+      ],
+      "ours": {
+        "n": 24,
+        "mean": 709.8,
+        "ci95": 10.8
+      },
+      "weinbaum": {
+        "mean": 704.02,
+        "ci95": 1.73
+      },
+      "turing": 676,
+      "withDiagonalBoard": {
+        "n": 24,
+        "mean": 296.3,
+        "ci95": 5.5
+      }
+    },
+    {
+      "lengths": [
+        3,
+        5
+      ],
+      "ours": {
+        "n": 24,
+        "mean": 703.9,
+        "ci95": 11.5
+      },
+      "weinbaum": {
+        "mean": 706.84,
+        "ci95": 1.69
+      },
+      "turing": 676,
+      "withDiagonalBoard": {
+        "n": 24,
+        "mean": 107.6,
+        "ci95": 4.1
+      }
+    }
+  ],
+  "female": {
+    "model": 0.4052,
+    "measured": 0.4059,
+    "min": 0.375,
+    "max": 0.4334,
+    "orders": 60,
+    "sheetsFor1Hole": 7.227035449268612
+  },
+  "dday": {
+    "ciphertext": "QFZWRWIVTYRESXBFOGKUHQBAISEZ",
+    "crib": "WETTERVORHERSAGEBISKAYA",
+    "alignments": [
+      {
+        "at": 0,
+        "clashes": [
+          "S"
+        ]
+      },
+      {
+        "at": 1,
+        "clashes": [
+          "V",
+          "E",
+          "A"
+        ]
+      },
+      {
+        "at": 2,
+        "clashes": [
+          "R"
+        ]
+      },
+      {
+        "at": 3,
+        "clashes": [
+          "W",
+          "G",
+          "A"
+        ]
+      },
+      {
+        "at": 4,
+        "clashes": []
+      },
+      {
+        "at": 5,
+        "clashes": [
+          "W",
+          "T",
+          "R"
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,34 @@
+# One message per paragraph, prefixed with the sending service. Held out of the language model: nothing here appears in data/corpus.
+# Converted with operator conventions before enciphering (see src/lang/normalize.ts).
+
+Heer: Feindliche Panzer vor dem Brückenkopf. Erbitten Artillerieunterstützung.
+
+Heer: Munition für leichte Feldhaubitzen dringend benötigt. Bestand nur noch zweihundert Schuss.
+
+Luftwaffe: Nachtjäger melden starke Bomberverbände im Anflug über der Küste, Richtung Südost, Höhe sechstausend Meter.
+
+Kriegsmarine: Boot hat zwei Dampfer versenkt, zusammen zwölftausend Tonnen. Ein Torpedo Versager. Wasserbombenverfolgung über sechs Stunden, leichte Schäden an der Tiefenruderanlage. Rückmarsch angetreten.
+
+Heer: Das zweite Bataillon meldet: Ortschaft am Flussknie besetzt, schwacher Feindwiderstand. Zehn Gefangene eingebracht, darunter ein Offizier. Eigene Verluste zwei Verwundete. Vormarsch wird nach Auffüllung der Munition fortgesetzt.
+
+Luftwaffe: Wettermeldung Flughafen. Nebel seit vier Uhr, Sicht fünfzig Meter, keine Besserung vor Mittag zu erwarten. Start der Aufklärer verschoben. Ausweichplatz im Norden meldet Sicht drei Kilometer, Wolkenuntergrenze vierhundert Meter.
+
+Heer: Vom Heeresgruppenkommando. Die Umgruppierung der schnellen Verbände ist bis übermorgen früh abzuschließen. Der Feind darf keine Kenntnis von der Verschiebung erhalten. Alle Märsche nur bei Nacht, Funkverkehr nur im bisherigen Umfang weiterführen, damit beim Gegner kein Verdacht entsteht. Die Führer der Verbände melden den Abschluss der Bewegungen persönlich.
+
+Kriegsmarine: Hafenkommandant an Seekriegsleitung. Luftangriff auf den Hafen in der vergangenen Nacht. Ein Frachter im Becken gesunken, zwei Lagerhallen ausgebrannt. Die Schleuse ist beschädigt, Reparatur dauert voraussichtlich acht Tage. Einlaufende Schiffe sind bis dahin auf die Außenreede umzuleiten.
+
+Heer: Der Gegner hat in den Morgenstunden nach heftigem Trommelfeuer mit etwa zwei Divisionen und starker Panzerunterstützung beiderseits der Rollbahn angegriffen. Der Angriff konnte vor der Hauptkampflinie zum Stehen gebracht werden. Nur im Abschnitt des linken Regiments gelang ein Einbruch in einer Breite von achthundert Metern, der durch sofortigen Gegenangriff der Reserve abgeriegelt wurde. Dreiundzwanzig Feindpanzer wurden abgeschossen. Die eigenen Verluste sind hoch, genaue Zahlen folgen. Die Division bittet um Zuführung von Panzerabwehrwaffen und Ersatzmannschaften, da ein erneuter Angriff für morgen erwartet wird.
+
+Kriegsmarine: Geleitzugmeldung. Um vierzehn Uhr dreißig Rauchfahnen am Horizont gesichtet, Peilung zweihundertzwanzig Grad. Nähere mich unter Wasser. Etwa dreißig Schiffe in sechs Kolonnen, Sicherung durch vier Zerstörer und eine Anzahl Korvetten, Flugzeug über dem Geleit. Kurs des Geleitzuges null neun null, Fahrt sieben Seemeilen. Halte Fühlung und sende Peilzeichen. Brennstoff reicht für fünf Tage Operation, alle Torpedos an Bord.
+
+Heer: An den Kommandeur des Pionierbataillons. Der Brückenschlag über den Strom ist in der kommenden Nacht durchzuführen. Das Brückengerät steht im Wald südlich der Straßengabel bereit. Zwei Kompanien Infanterie setzen vorher in Sturmbooten über und bilden einen Brückenkopf. Die Artillerie ist ab zwei Uhr feuerbereit und schießt nur auf Anforderung. Nach Fertigstellung der Brücke rollt als erstes die Panzerabteilung über. Meldung über den Fortschritt stündlich an den Divisionsgefechtsstand.
+
+Heer: Aufklärung meldet Bereitstellung feindlicher Kräfte im Waldstück östlich der Höhe. Stärke etwa ein Regiment mit Artillerie.
+
+Heer: Eigener Stoßtrupp hat in der Nacht das feindliche Vorfeld aufgeklärt und einen Gefangenen eingebracht. Nach seiner Aussage steht gegenüber eine neue Schützendivision, die erst vor drei Tagen aus dem Hinterland herangeführt wurde. Die Division soll den Auftrag haben, in den nächsten Tagen anzugreifen. Die Aussage deckt sich mit der Beobachtung starker Fahrzeugbewegungen.
+
+Luftwaffe: Befehl an alle Kampfgeschwader. Der für morgen befohlene Großangriff auf die Industrieanlagen im Westen wird wegen der Wetterlage um vierundzwanzig Stunden verschoben. Die Verbände bleiben in erhöhter Bereitschaft. Die Beladung der Flugzeuge wird nicht geändert. Neuer Angriffsbefehl folgt bis achtzehn Uhr. Die Jagdführer stimmen den Begleitschutz mit den Kampfverbänden unmittelbar ab.
+
+Heer: Versorgungsbericht der Armee für die vergangene Woche. Eingetroffen sind vierzehn Züge mit Munition, neun Züge mit Betriebsstoff und sechs Züge mit Verpflegung. Ausgefallen sind durch Partisanen drei Züge, die Strecke war jeweils für mehrere Stunden gesperrt. Der Bedarf der Truppe ist durch die Zuführungen nicht gedeckt, insbesondere fehlt es an Winterbekleidung und an Frostschutzmitteln für die Fahrzeuge. Die Armee beantragt, die Zahl der Züge für die nächste Woche auf mindestens vierzig zu erhöhen und die Sicherung der Bahnlinie durch zusätzliche Kräfte zu verstärken.
+
+Kriegsmarine: Zerstörerflottille läuft heute Abend aus, um das Minenfeld vor der feindlichen Küste zu verstärken. Rückkehr morgen früh vor Hellwerden.

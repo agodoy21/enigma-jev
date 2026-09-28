@@ -1,0 +1,974 @@
+{
+ "generatedAt": "2026-09-28T17:18:10Z",
+ "data": {
+  "candidates": 478,
+  "positives": 76,
+  "calls": 160,
+  "texts": 25,
+  "historicalRows": 96,
+  "lmTrainingLetters": 53728,
+  "vocabulary": 1121
+ },
+ "protocol": "leave-one-text-out cross-validation; 95% intervals from a cluster bootstrap over judge calls (2,000 resamples)",
+ "features": [
+  "kn5",
+  "quadgram",
+  "trigram_germanness",
+  "ioc",
+  "chi2",
+  "entropy",
+  "vowels",
+  "common8",
+  "unseen_trigrams",
+  "dict_coverage",
+  "dict_run",
+  "x_rate"
+ ],
+ "judges": [
+  {
+   "name": "Jev, zero-shot",
+   "trained": false,
+   "auc": 0.9999018067556952,
+   "aucCI": [
+    0.9995662090869307,
+    1.0
+   ],
+   "brier": 0.04216297071129707,
+   "brierCI": [
+    0.03791861692358511,
+    0.04672850418410041
+   ],
+   "logLoss": 0.1888004415188179,
+   "ece": 0.15725941422594145,
+   "decisions": {
+    "acceptCorrect": 76,
+    "acceptWrong": 2,
+    "rejectMissed": 0,
+    "rejectRight": 82,
+    "n": 160,
+    "accuracy": 0.9875
+   },
+   "decisionCI": [
+    0.96875,
+    1.0
+   ]
+  },
+  {
+   "name": "Index of coincidence",
+   "trained": true,
+   "auc": 0.9876440167583137,
+   "aucCI": [
+    0.9775238823675565,
+    0.9956303992498022
+   ],
+   "brier": 0.0323189385372037,
+   "brierCI": [
+    0.019471098998490127,
+    0.04725130422565762
+   ],
+   "logLoss": 0.10603541874566479,
+   "ece": 0.024172968174489103,
+   "decisions": {
+    "acceptCorrect": 65,
+    "acceptWrong": 7,
+    "rejectMissed": 11,
+    "rejectRight": 77,
+    "n": 160,
+    "accuracy": 0.8875
+   },
+   "decisionCI": [
+    0.8375,
+    0.9375
+   ]
+  },
+  {
+   "name": "Trigram German-ness",
+   "trained": true,
+   "auc": 0.9932901283058392,
+   "aucCI": [
+    0.9855096764510415,
+    0.998230670513715
+   ],
+   "brier": 0.018549241539217626,
+   "brierCI": [
+    0.009346845430844629,
+    0.02934898473424744
+   ],
+   "logLoss": 0.06360186260556855,
+   "ece": 0.015000744285415412,
+   "decisions": {
+    "acceptCorrect": 68,
+    "acceptWrong": 2,
+    "rejectMissed": 8,
+    "rejectRight": 82,
+    "n": 160,
+    "accuracy": 0.9375
+   },
+   "decisionCI": [
+    0.9,
+    0.975
+   ]
+  },
+  {
+   "name": "Quadgram fitness",
+   "trained": true,
+   "auc": 0.999541764859911,
+   "aucCI": [
+    0.9985427936238548,
+    1.0
+   ],
+   "brier": 0.00446505965371411,
+   "brierCI": [
+    0.00033154254228401727,
+    0.010279542354886402
+   ],
+   "logLoss": 0.024009964164634762,
+   "ece": 0.004898187698216642,
+   "decisions": {
+    "acceptCorrect": 75,
+    "acceptWrong": 1,
+    "rejectMissed": 1,
+    "rejectRight": 83,
+    "n": 160,
+    "accuracy": 0.9875
+   },
+   "decisionCI": [
+    0.96875,
+    1.0
+   ]
+  },
+  {
+   "name": "Kneser-Ney 5-gram",
+   "trained": true,
+   "auc": 0.9985271013354281,
+   "aucCI": [
+    0.9950029910447445,
+    1.0
+   ],
+   "brier": 0.004771518579386566,
+   "brierCI": [
+    0.0005899865772263612,
+    0.01053392917732199
+   ],
+   "logLoss": 0.024427666251914195,
+   "ece": 0.0067010584691425765,
+   "decisions": {
+    "acceptCorrect": 75,
+    "acceptWrong": 1,
+    "rejectMissed": 1,
+    "rejectRight": 83,
+    "n": 160,
+    "accuracy": 0.9875
+   },
+   "decisionCI": [
+    0.96875,
+    1.0
+   ]
+  },
+  {
+   "name": "Logistic regression",
+   "trained": true,
+   "auc": 0.9996399581042158,
+   "aucCI": [
+    0.9989130908860285,
+    1.0
+   ],
+   "brier": 0.005534282516948677,
+   "brierCI": [
+    0.0013555935460033508,
+    0.01086143542207195
+   ],
+   "logLoss": 0.01994240577173005,
+   "ece": 0.0064653173438111245,
+   "decisions": {
+    "acceptCorrect": 73,
+    "acceptWrong": 1,
+    "rejectMissed": 3,
+    "rejectRight": 83,
+    "n": 160,
+    "accuracy": 0.975
+   },
+   "decisionCI": [
+    0.95,
+    0.99375
+   ]
+  },
+  {
+   "name": "XGBoost",
+   "trained": true,
+   "auc": 0.9929137208693375,
+   "aucCI": [
+    0.9774270149376847,
+    1.0
+   ],
+   "brier": 0.0044275493098833,
+   "brierCI": [
+    0.0001188705243693837,
+    0.010685540421008438
+   ],
+   "logLoss": 0.02704041794315949,
+   "ece": 0.0022212847349794996,
+   "decisions": {
+    "acceptCorrect": 75,
+    "acceptWrong": 1,
+    "rejectMissed": 1,
+    "rejectRight": 83,
+    "n": 160,
+    "accuracy": 0.9875
+   },
+   "decisionCI": [
+    0.96875,
+    1.0
+   ]
+  },
+  {
+   "name": "Jev, recalibrated",
+   "trained": true,
+   "auc": 0.9996399581042158,
+   "aucCI": [
+    0.9988386788735721,
+    1.0
+   ],
+   "brier": 0.004554554833692765,
+   "brierCI": [
+    0.000322026079366172,
+    0.010741381160522858
+   ],
+   "logLoss": 0.019633796647357395,
+   "ece": 0.005555434525597803,
+   "decisions": {
+    "acceptCorrect": 75,
+    "acceptWrong": 1,
+    "rejectMissed": 1,
+    "rejectRight": 83,
+    "n": 160,
+    "accuracy": 0.9875
+   },
+   "decisionCI": [
+    0.96875,
+    1.0
+   ]
+  }
+ ],
+ "jevDecisionRule": {
+  "acceptCorrect": 76,
+  "acceptWrong": 1,
+  "rejectMissed": 0,
+  "rejectRight": 83,
+  "n": 160,
+  "accuracy": 0.99375,
+  "ci": [
+   0.98125,
+   1.0
+  ]
+ },
+ "contrasts": {
+  "brier_xgb_minus_jevcal": {
+   "a": "XGBoost",
+   "b": "Jev, recalibrated",
+   "diff": -0.0001270055238094649,
+   "ci": [
+    -0.005568873262539136,
+    0.0056708221513269265
+   ]
+  },
+  "brier_xgb_minus_jevraw": {
+   "a": "XGBoost",
+   "b": "Jev, zero-shot",
+   "diff": -0.03773542140141377,
+   "ci": [
+    -0.043971779812220724,
+    -0.030893598308780038
+   ]
+  },
+  "auc_jevraw_minus_xgb": {
+   "a": "Jev, zero-shot",
+   "b": "XGBoost",
+   "diff": 0.006988085886357687,
+   "ci": [
+    -7.138790582678078e-05,
+    0.022488995835132534
+   ]
+  },
+  "brier_kn5_minus_jevcal": {
+   "a": "Kneser-Ney 5-gram",
+   "b": "Jev, recalibrated",
+   "diff": 0.00021696374569380155,
+   "ci": [
+    -0.004808692998380462,
+    0.005891189984688445
+   ]
+  }
+ },
+ "learningCurve": [
+  {
+   "texts": 1,
+   "reps": 40,
+   "labelledCandidates": 20.925,
+   "XGBoost|auc": {
+    "mean": 0.8774058936762585,
+    "sd": 0.2035236252242935
+   },
+   "XGBoost|brier": {
+    "mean": 0.08370087409434689,
+    "sd": 0.03260293392356312
+   },
+   "Logistic regression|auc": {
+    "mean": 0.998233071348651,
+    "sd": 0.0008044985923453115
+   },
+   "Logistic regression|brier": {
+    "mean": 0.017966695226573248,
+    "sd": 0.013873060595728496
+   },
+   "Kneser-Ney 5-gram|auc": {
+    "mean": 0.9998671849243376,
+    "sd": 2.7845951085268672e-05
+   },
+   "Kneser-Ney 5-gram|brier": {
+    "mean": 0.011426393303657554,
+    "sd": 0.007806523698618524
+   },
+   "Jev, recalibrated|auc": {
+    "mean": 0.99990121847304,
+    "sd": 2.1709658240311665e-05
+   },
+   "Jev, recalibrated|brier": {
+    "mean": 0.006607912260901569,
+    "sd": 0.008007816425320186
+   },
+   "Jev, zero-shot|auc": {
+    "mean": 0.99990121847304,
+    "sd": 2.1709658240311665e-05
+   },
+   "Jev, zero-shot|brier": {
+    "mean": 0.04222903242674851,
+    "sd": 0.0005925761200155348
+   }
+  },
+  {
+   "texts": 2,
+   "reps": 40,
+   "labelledCandidates": 37.675,
+   "XGBoost|auc": {
+    "mean": 0.9923806464687359,
+    "sd": 0.013769153393825683
+   },
+   "XGBoost|brier": {
+    "mean": 0.036463485356919366,
+    "sd": 0.0243979897474817
+   },
+   "Logistic regression|auc": {
+    "mean": 0.998594594494304,
+    "sd": 0.0008661728557179409
+   },
+   "Logistic regression|brier": {
+    "mean": 0.014974031798214443,
+    "sd": 0.007388080880068051
+   },
+   "Kneser-Ney 5-gram|auc": {
+    "mean": 0.9998709105870909,
+    "sd": 4.2119504399517164e-05
+   },
+   "Kneser-Ney 5-gram|brier": {
+    "mean": 0.012150647432752308,
+    "sd": 0.009794627157516106
+   },
+   "Jev, recalibrated|auc": {
+    "mean": 0.9999076470584232,
+    "sd": 3.46996200984341e-05
+   },
+   "Jev, recalibrated|brier": {
+    "mean": 0.006487600438610247,
+    "sd": 0.004390012815641493
+   },
+   "Jev, zero-shot|auc": {
+    "mean": 0.9999076470584232,
+    "sd": 3.46996200984341e-05
+   },
+   "Jev, zero-shot|brier": {
+    "mean": 0.042067426733879976,
+    "sd": 0.0007154336685627612
+   }
+  },
+  {
+   "texts": 3,
+   "reps": 40,
+   "labelledCandidates": 57.05,
+   "XGBoost|auc": {
+    "mean": 0.9958024601656452,
+    "sd": 0.004418177144863455
+   },
+   "XGBoost|brier": {
+    "mean": 0.024281874538783766,
+    "sd": 0.02073610618784426
+   },
+   "Logistic regression|auc": {
+    "mean": 0.9988139932887721,
+    "sd": 0.0007855979613771174
+   },
+   "Logistic regression|brier": {
+    "mean": 0.011171106793911544,
+    "sd": 0.003606449637027659
+   },
+   "Kneser-Ney 5-gram|auc": {
+    "mean": 0.9998688165171284,
+    "sd": 4.841068430665639e-05
+   },
+   "Kneser-Ney 5-gram|brier": {
+    "mean": 0.009079092639552606,
+    "sd": 0.005331552824927511
+   },
+   "Jev, recalibrated|auc": {
+    "mean": 0.9999084951526257,
+    "sd": 3.795298619974503e-05
+   },
+   "Jev, recalibrated|brier": {
+    "mean": 0.005955389504380694,
+    "sd": 0.002744156442926921
+   },
+   "Jev, zero-shot|auc": {
+    "mean": 0.9999084951526257,
+    "sd": 3.795298619974503e-05
+   },
+   "Jev, zero-shot|brier": {
+    "mean": 0.041908687826118486,
+    "sd": 0.0007963342817263856
+   }
+  },
+  {
+   "texts": 4,
+   "reps": 40,
+   "labelledCandidates": 75.6,
+   "XGBoost|auc": {
+    "mean": 0.9965305173052386,
+    "sd": 0.005963078976407477
+   },
+   "XGBoost|brier": {
+    "mean": 0.01853082953849366,
+    "sd": 0.013507498442495876
+   },
+   "Logistic regression|auc": {
+    "mean": 0.9989687595433064,
+    "sd": 0.001058595190085679
+   },
+   "Logistic regression|brier": {
+    "mean": 0.011187387079836412,
+    "sd": 0.005341318549746148
+   },
+   "Kneser-Ney 5-gram|auc": {
+    "mean": 0.9998815612643985,
+    "sd": 6.860790175852946e-05
+   },
+   "Kneser-Ney 5-gram|brier": {
+    "mean": 0.010680955982341629,
+    "sd": 0.00863407274351973
+   },
+   "Jev, recalibrated|auc": {
+    "mean": 0.9998976827432531,
+    "sd": 4.099353622343907e-05
+   },
+   "Jev, recalibrated|brier": {
+    "mean": 0.005628392429358884,
+    "sd": 0.002310304851560471
+   },
+   "Jev, zero-shot|auc": {
+    "mean": 0.9998976827432531,
+    "sd": 4.099353622343907e-05
+   },
+   "Jev, zero-shot|brier": {
+    "mean": 0.041987183679069846,
+    "sd": 0.0012416035486919595
+   }
+  },
+  {
+   "texts": 6,
+   "reps": 40,
+   "labelledCandidates": 116.2,
+   "XGBoost|auc": {
+    "mean": 0.9971746678954039,
+    "sd": 0.003650713282905167
+   },
+   "XGBoost|brier": {
+    "mean": 0.013783568790081557,
+    "sd": 0.01133959353491748
+   },
+   "Logistic regression|auc": {
+    "mean": 0.9988778692923639,
+    "sd": 0.0008969562954111391
+   },
+   "Logistic regression|brier": {
+    "mean": 0.011794816922960463,
+    "sd": 0.004994158789582003
+   },
+   "Kneser-Ney 5-gram|auc": {
+    "mean": 0.9998566625775058,
+    "sd": 8.113158233091384e-05
+   },
+   "Kneser-Ney 5-gram|brier": {
+    "mean": 0.008088308276964495,
+    "sd": 0.006347075039472394
+   },
+   "Jev, recalibrated|auc": {
+    "mean": 0.9999175980800109,
+    "sd": 6.237353227646346e-05
+   },
+   "Jev, recalibrated|brier": {
+    "mean": 0.0056012663879495325,
+    "sd": 0.002442305816314979
+   },
+   "Jev, zero-shot|auc": {
+    "mean": 0.9999175980800109,
+    "sd": 6.237353227646346e-05
+   },
+   "Jev, zero-shot|brier": {
+    "mean": 0.041808514715134984,
+    "sd": 0.0011023114641073254
+   }
+  },
+  {
+   "texts": 8,
+   "reps": 40,
+   "labelledCandidates": 155.525,
+   "XGBoost|auc": {
+    "mean": 0.9960275477013368,
+    "sd": 0.005775603798604281
+   },
+   "XGBoost|brier": {
+    "mean": 0.012201810449937707,
+    "sd": 0.013334260737408812
+   },
+   "Logistic regression|auc": {
+    "mean": 0.9992655134121027,
+    "sd": 0.0007351194564659106
+   },
+   "Logistic regression|brier": {
+    "mean": 0.009531206182155496,
+    "sd": 0.004403519632378791
+   },
+   "Kneser-Ney 5-gram|auc": {
+    "mean": 0.9998578063172413,
+    "sd": 9.932082176266394e-05
+   },
+   "Kneser-Ney 5-gram|brier": {
+    "mean": 0.008526925427215485,
+    "sd": 0.0067353932833244465
+   },
+   "Jev, recalibrated|auc": {
+    "mean": 0.9998893438664517,
+    "sd": 8.618572527832491e-05
+   },
+   "Jev, recalibrated|brier": {
+    "mean": 0.005664095112343802,
+    "sd": 0.002812371956800562
+   },
+   "Jev, zero-shot|auc": {
+    "mean": 0.9998893438664517,
+    "sd": 8.618572527832491e-05
+   },
+   "Jev, zero-shot|brier": {
+    "mean": 0.04216518193139914,
+    "sd": 0.0016075734056842095
+   }
+  },
+  {
+   "texts": 12,
+   "reps": 40,
+   "labelledCandidates": 233.15,
+   "XGBoost|auc": {
+    "mean": 0.9961323765189771,
+    "sd": 0.006090503477176699
+   },
+   "XGBoost|brier": {
+    "mean": 0.007881933902307788,
+    "sd": 0.006264280498343982
+   },
+   "Logistic regression|auc": {
+    "mean": 0.9992194419806608,
+    "sd": 0.001162495074552035
+   },
+   "Logistic regression|brier": {
+    "mean": 0.008415066901696317,
+    "sd": 0.004871008982143131
+   },
+   "Kneser-Ney 5-gram|auc": {
+    "mean": 0.9998405091096277,
+    "sd": 0.00017823722741125333
+   },
+   "Kneser-Ney 5-gram|brier": {
+    "mean": 0.006351941247964281,
+    "sd": 0.004365871326083776
+   },
+   "Jev, recalibrated|auc": {
+    "mean": 0.9998837327644138,
+    "sd": 0.00012239288356146087
+   },
+   "Jev, recalibrated|brier": {
+    "mean": 0.005586827836798613,
+    "sd": 0.003033887933418424
+   },
+   "Jev, zero-shot|auc": {
+    "mean": 0.9998837327644138,
+    "sd": 0.00012239288356146087
+   },
+   "Jev, zero-shot|brier": {
+    "mean": 0.04291525142853501,
+    "sd": 0.0023760113816971556
+   }
+  },
+  {
+   "texts": 16,
+   "reps": 40,
+   "labelledCandidates": 304.2,
+   "XGBoost|auc": {
+    "mean": 0.9955257624923044,
+    "sd": 0.008031342840074281
+   },
+   "XGBoost|brier": {
+    "mean": 0.00690772221579648,
+    "sd": 0.006769824531306941
+   },
+   "Logistic regression|auc": {
+    "mean": 0.9995946959187378,
+    "sd": 0.0007663664318040115
+   },
+   "Logistic regression|brier": {
+    "mean": 0.007358067594350879,
+    "sd": 0.005350553131400948
+   },
+   "Kneser-Ney 5-gram|auc": {
+    "mean": 0.9998605596598396,
+    "sd": 0.000249664369560952
+   },
+   "Kneser-Ney 5-gram|brier": {
+    "mean": 0.005829524116051069,
+    "sd": 0.0059388456079823605
+   },
+   "Jev, recalibrated|auc": {
+    "mean": 0.9998631455519036,
+    "sd": 0.00019996155434767575
+   },
+   "Jev, recalibrated|brier": {
+    "mean": 0.00531477243156017,
+    "sd": 0.003983306241770812
+   },
+   "Jev, zero-shot|auc": {
+    "mean": 0.9998631455519036,
+    "sd": 0.00019996155434767575
+   },
+   "Jev, zero-shot|brier": {
+    "mean": 0.04214221291104567,
+    "sd": 0.003422047620500878
+   }
+  },
+  {
+   "texts": 20,
+   "reps": 40,
+   "labelledCandidates": 379.05,
+   "XGBoost|auc": {
+    "mean": 0.9967794512974208,
+    "sd": 0.006777119856233898
+   },
+   "XGBoost|brier": {
+    "mean": 0.0077934816874952444,
+    "sd": 0.008472598436654384
+   },
+   "Logistic regression|auc": {
+    "mean": 0.9993235146356619,
+    "sd": 0.001177725932809822
+   },
+   "Logistic regression|brier": {
+    "mean": 0.006404511549887676,
+    "sd": 0.006892518800714095
+   },
+   "Kneser-Ney 5-gram|auc": {
+    "mean": 0.9997328977661825,
+    "sd": 0.0005163114582531209
+   },
+   "Kneser-Ney 5-gram|brier": {
+    "mean": 0.006589043284563273,
+    "sd": 0.007825804482322498
+   },
+   "Jev, recalibrated|auc": {
+    "mean": 0.9998460393772893,
+    "sd": 0.0005450446130457746
+   },
+   "Jev, recalibrated|brier": {
+    "mean": 0.005243066428430164,
+    "sd": 0.006503129039567556
+   },
+   "Jev, zero-shot|auc": {
+    "mean": 0.9998460393772893,
+    "sd": 0.0005450446130457746
+   },
+   "Jev, zero-shot|brier": {
+    "mean": 0.04242089317720675,
+    "sd": 0.0046190200689908405
+   }
+  },
+  {
+   "texts": 24,
+   "reps": 40,
+   "labelledCandidates": 458.75,
+   "XGBoost|auc": {
+    "mean": 0.9613636363636363,
+    "sd": 0.11234493445420965
+   },
+   "XGBoost|brier": {
+    "mean": 0.01399323382126141,
+    "sd": 0.03470096316005056
+   },
+   "Logistic regression|auc": {
+    "mean": 1.0,
+    "sd": 0.0
+   },
+   "Logistic regression|brier": {
+    "mean": 0.01326520659338008,
+    "sd": 0.030021209774141053
+   },
+   "Kneser-Ney 5-gram|auc": {
+    "mean": 1.0,
+    "sd": 0.0
+   },
+   "Kneser-Ney 5-gram|brier": {
+    "mean": 0.014948869972414468,
+    "sd": 0.033968272544340615
+   },
+   "Jev, recalibrated|auc": {
+    "mean": 1.0,
+    "sd": 0.0
+   },
+   "Jev, recalibrated|brier": {
+    "mean": 0.010989773481974541,
+    "sd": 0.02852346682610035
+   },
+   "Jev, zero-shot|auc": {
+    "mean": 1.0,
+    "sd": 0.0
+   },
+   "Jev, zero-shot|brier": {
+    "mean": 0.04226278381642512,
+    "sd": 0.01214012389795676
+   }
+  }
+ ],
+ "shift": [
+  {
+   "name": "Jev, zero-shot",
+   "auc": 0.9984375,
+   "brier": 0.05158125,
+   "logLoss": 0.2077183954185784,
+   "decisions": {
+    "acceptCorrect": 16,
+    "acceptWrong": 1,
+    "rejectMissed": 0,
+    "rejectRight": 15,
+    "n": 32,
+    "accuracy": 0.96875
+   }
+  },
+  {
+   "name": "Jev, recalibrated on synthetic",
+   "auc": 0.9984375,
+   "brier": 0.019572942950886518,
+   "logLoss": 0.06440382166450768,
+   "decisions": {
+    "acceptCorrect": 14,
+    "acceptWrong": 1,
+    "rejectMissed": 2,
+    "rejectRight": 15,
+    "n": 32,
+    "accuracy": 0.90625
+   }
+  },
+  {
+   "name": "XGBoost on synthetic",
+   "auc": 0.993359375,
+   "brier": 0.15406168810322043,
+   "logLoss": 0.8070313824694798,
+   "decisions": {
+    "acceptCorrect": 1,
+    "acceptWrong": 0,
+    "rejectMissed": 15,
+    "rejectRight": 16,
+    "n": 32,
+    "accuracy": 0.53125
+   }
+  },
+  {
+   "name": "Logistic regression on synthetic",
+   "auc": 0.99453125,
+   "brier": 0.04990596855857186,
+   "logLoss": 0.17213360812192172,
+   "decisions": {
+    "acceptCorrect": 9,
+    "acceptWrong": 0,
+    "rejectMissed": 7,
+    "rejectRight": 16,
+    "n": 32,
+    "accuracy": 0.78125
+   }
+  },
+  {
+   "name": "Kneser-Ney 5-gram on synthetic",
+   "auc": 0.9984375,
+   "brier": 0.06763194776006301,
+   "logLoss": 0.26120902107027183,
+   "decisions": {
+    "acceptCorrect": 8,
+    "acceptWrong": 0,
+    "rejectMissed": 8,
+    "rejectRight": 16,
+    "n": 32,
+    "accuracy": 0.75
+   }
+  },
+  {
+   "name": "Trigram German-ness on synthetic",
+   "auc": 0.971875,
+   "brier": 0.08359603709414971,
+   "logLoss": 0.5023588288714459,
+   "decisions": {
+    "acceptCorrect": 8,
+    "acceptWrong": 0,
+    "rejectMissed": 8,
+    "rejectRight": 16,
+    "n": 32,
+    "accuracy": 0.75
+   }
+  }
+ ],
+ "shiftMeta": {
+  "trainRows": 382,
+  "testRows": 96,
+  "testPositives": 16,
+  "testCalls": 32,
+  "jevRule": {
+   "acceptCorrect": 16,
+   "acceptWrong": 1,
+   "rejectMissed": 0,
+   "rejectRight": 15,
+   "n": 32,
+   "accuracy": 0.96875
+  }
+ },
+ "xgboost": {
+  "params": {
+   "objective": "binary:logistic",
+   "base_score": null,
+   "booster": null,
+   "callbacks": null,
+   "colsample_bylevel": null,
+   "colsample_bynode": null,
+   "colsample_bytree": 0.9,
+   "device": null,
+   "early_stopping_rounds": null,
+   "enable_categorical": true,
+   "eval_metric": "logloss",
+   "feature_types": null,
+   "feature_weights": null,
+   "gamma": null,
+   "grow_policy": null,
+   "importance_type": null,
+   "interaction_constraints": null,
+   "learning_rate": 0.05,
+   "max_bin": null,
+   "max_cat_threshold": null,
+   "max_cat_to_onehot": null,
+   "max_delta_step": null,
+   "max_depth": 3,
+   "max_leaves": null,
+   "min_child_weight": 1,
+   "missing": null,
+   "monotone_constraints": null,
+   "multi_strategy": null,
+   "n_estimators": 300,
+   "n_jobs": 4,
+   "num_parallel_tree": null,
+   "random_state": 1941,
+   "reg_alpha": null,
+   "reg_lambda": 1.0,
+   "sampling_method": null,
+   "scale_pos_weight": null,
+   "subsample": 0.9,
+   "tree_method": null,
+   "validate_parameters": null,
+   "verbosity": null
+  },
+  "importance": [
+   {
+    "feature": "dict_coverage",
+    "gain": 36.85597229003906
+   },
+   {
+    "feature": "kn5",
+    "gain": 22.698925018310547
+   },
+   {
+    "feature": "quadgram",
+    "gain": 13.980997085571289
+   },
+   {
+    "feature": "ioc",
+    "gain": 1.7324272394180298
+   },
+   {
+    "feature": "vowels",
+    "gain": 0.6305235028266907
+   },
+   {
+    "feature": "unseen_trigrams",
+    "gain": 0.2652750611305237
+   },
+   {
+    "feature": "chi2",
+    "gain": 0.23048679530620575
+   },
+   {
+    "feature": "dict_run",
+    "gain": 0.20662182569503784
+   },
+   {
+    "feature": "x_rate",
+    "gain": 0.12775403261184692
+   },
+   {
+    "feature": "entropy",
+    "gain": 0.09004130959510803
+   },
+   {
+    "feature": "trigram_germanness",
+    "gain": 0.008803308010101318
+   },
+   {
+    "feature": "common8",
+    "gain": 0.0035673570819199085
+   }
+  ],
+  "predictMicroseconds": 0.7651891183326309,
+  "featureMilliseconds": 1.0051841883643464
+ },
+ "disagreements": [
+  {
+   "text": "m4-project-3-rasch-u106",
+   "acc": 1,
+   "y": 1,
+   "jev": 0.7,
+   "xgb": 0.001814492279663682,
+   "sample": "BOOTKLARXBEIJSCHNOORBETWAZWOSIBENXNOVXSECHSNULCBMXPROVIANTBI"
+  },
+  {
+   "text": "synthetic-03",
+   "acc": 0.09009009009009009,
+   "y": 0,
+   "jev": 0.51,
+   "xgb": 0.002471053507179022,
+   "sample": "WELHPGVMXKENGEOSEINWIFCEZMCSKEITXETABENHJWECRXSPREXEIPKUFSKO"
+  }
+ ],
+ "versions": {
+  "xgboost": "3.4.1",
+  "sklearn": "1.9.1",
+  "numpy": "2.5.3"
+ }
+}

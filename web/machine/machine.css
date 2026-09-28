@@ -1,0 +1,815 @@
+/* ═════════════ The 3D Enigma (CSS 3D; geometry in web/machine/machine3d.ts) ═════════════ */
+.em-scene {
+  --rx: -22deg;
+  --ry: -24deg;
+  --cy: 40px;
+  --cs: 0.86;
+  --lid-a: 0deg;
+  --flap-a: 0deg;
+  position: relative;
+  height: calc(730px * var(--fit, 1));
+  perspective: 2200px;
+  perspective-origin: 50% 30%;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+.em-scene.is-open {
+  --lid-a: 101deg;
+}
+.em-scene.flap-open {
+  --flap-a: -97deg;
+}
+.em-scene[data-camera='hero'] {
+  --rx: -17deg;
+  --ry: -32deg;
+  --cy: -40px;
+  --cs: 0.86;
+}
+.em-scene[data-camera='closed'] {
+  --rx: -20deg;
+  --ry: -28deg;
+  --cy: 20px;
+  --cs: 0.84;
+}
+.em-scene[data-camera='overview'] {
+  --rx: -34deg;
+  --ry: -16deg;
+  --cy: 150px;
+  --cs: 0.62;
+}
+.em-scene[data-camera='deck'] {
+  --rx: -54deg;
+  --ry: 0deg;
+  --cy: 10px;
+  --cs: 1.15;
+}
+.em-scene[data-camera='plugboard'] {
+  --rx: -12deg;
+  --ry: 0deg;
+  --cy: -135px;
+  --cs: 1;
+}
+.em-scene[data-camera='bombe'] {
+  --rx: -44deg;
+  --ry: 16deg;
+  --cy: 100px;
+  --cs: 1.05;
+}
+
+.em-rig {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  transform-style: preserve-3d;
+  transform: scale(var(--fit, 1)) translateY(var(--cy)) scale(var(--cs)) rotateX(calc(var(--rx) + var(--py, 0) * 1deg))
+    rotateY(calc(var(--ry) + var(--px, 0) * 1deg));
+  transition: transform 1.25s cubic-bezier(0.22, 0.9, 0.24, 1);
+}
+.em-box,
+.em-lidbox,
+.em-flap,
+.em-key,
+.em-cyl,
+.em-post,
+.em-wheel {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-style: preserve-3d;
+}
+.em-f {
+  position: absolute;
+  backface-visibility: hidden;
+  box-sizing: border-box;
+}
+.em-deck,
+.em-terrace {
+  transform-style: preserve-3d;
+}
+.em-deck > *,
+.em-terrace > * {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+/* Honey oak with a grain, and darker end-grain on the edges */
+.em-wood {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(60, 30, 8, 0.28),
+      rgba(255, 235, 190, 0.07) 30%,
+      rgba(60, 30, 8, 0.1) 60%,
+      rgba(60, 30, 8, 0.3)
+    ),
+    repeating-linear-gradient(
+      1.2deg,
+      rgba(90, 50, 18, 0) 0 5px,
+      rgba(90, 50, 18, 0.2) 5px 6px,
+      rgba(90, 50, 18, 0) 6px 13px,
+      rgba(120, 70, 28, 0.16) 13px 15px
+    ),
+    repeating-linear-gradient(-0.8deg, #c08448 0 19px, #b5783f 19px 31px, #c68d52 31px 44px, #ae723a 44px 57px);
+  box-shadow:
+    inset 0 0 0 1px rgba(40, 20, 5, 0.45),
+    inset 0 0 14px rgba(40, 20, 5, 0.25);
+}
+.em-side {
+  filter: brightness(0.78);
+}
+.em-under {
+  filter: brightness(0.4);
+}
+.em-rim {
+  filter: brightness(1.12);
+}
+.em-inner {
+  filter: brightness(0.55);
+}
+.em-ledge {
+  filter: brightness(0.7);
+}
+.em-shadow {
+  position: absolute;
+  width: 1100px;
+  height: 900px;
+  left: -550px;
+  top: -450px;
+  transform: translate3d(0, 119px, 0) rotateX(90deg);
+  background: radial-gradient(closest-side, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.28) 50%, transparent);
+  pointer-events: none;
+}
+.em-rail .em-hinge {
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  top: 0;
+  height: 7px;
+  border-radius: 0 0 3px 3px;
+  background: linear-gradient(#e2e0da, #8f8c84);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Black crinkle-finish metal */
+.em-metal {
+  background:
+    radial-gradient(circle at 30% 40%, rgba(255, 255, 255, 0.07) 0 0.6px, transparent 1.2px) 0 0 / 4px 4px,
+    radial-gradient(circle at 70% 70%, rgba(0, 0, 0, 0.5) 0 0.7px, transparent 1.3px) 0 0 / 5px 5px,
+    radial-gradient(120% 90% at 50% 10%, #2b2a27, #141312 75%);
+  box-shadow:
+    inset 0 0 0 1px #070707,
+    inset 0 10px 20px rgba(0, 0, 0, 0.35);
+}
+.em-riser {
+  background: linear-gradient(#0b0b0a, #1f1e1b);
+}
+
+/* Rotor cover, slits and the three knurled thumbwheels */
+.em-cover {
+  width: 392px;
+  height: 118px;
+  border-radius: 10px;
+  background: linear-gradient(#232220, #151412);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 0 1px #050505,
+    0 6px 14px rgba(0, 0, 0, 0.45);
+}
+.em-slot {
+  width: 30px;
+  height: 70px;
+  border-radius: 5px;
+  background: #030303;
+  box-shadow:
+    inset 0 3px 8px #000,
+    0 0 0 2px #2c2a26;
+}
+.em-wheel {
+  width: 0;
+  height: 0;
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+.em-facet {
+  position: absolute;
+  left: -11px;
+  width: 22px;
+  backface-visibility: hidden;
+  background: linear-gradient(90deg, #0d0c0b, #4d473d 45%, #6d6557 55%, #1a1816);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+.em-facet.alt {
+  background: linear-gradient(90deg, #070707, #2c2823 45%, #3d372f 55%, #0e0d0c);
+}
+.spinning .em-wheel {
+  transition-duration: 0.08s;
+}
+.em-win {
+  width: 38px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  padding: 0;
+  cursor: default;
+  border: 3px solid #9d9a92;
+  border-radius: 6px;
+  background: linear-gradient(#b9b2a0, #f5efdf 30%, #f5efdf 70%, #b9b2a0);
+  box-shadow:
+    inset 0 6px 8px rgba(0, 0, 0, 0.35),
+    inset 0 -6px 8px rgba(0, 0, 0, 0.35),
+    0 0 0 2px #050505;
+}
+.em-win span {
+  font:
+    700 24px 'IBM Plex Mono',
+    monospace;
+  color: #15130f;
+  display: block;
+}
+.em-win span.roll {
+  animation: em-roll 0.16s ease-out;
+}
+@keyframes em-roll {
+  from {
+    transform: translateY(-70%);
+    opacity: 0.15;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+.em-rlabel {
+  width: 38px;
+  text-align: center;
+  font:
+    600 11px 'IBM Plex Mono',
+    monospace;
+  color: #d7cfbd;
+  letter-spacing: 0.08em;
+}
+.rotors-live .em-win,
+.rotors-live .em-wheel {
+  cursor: ns-resize;
+}
+.rotors-live .em-win:hover {
+  border-color: #e2c26f;
+}
+.rotors-live .em-wheel:hover .em-facet {
+  filter: brightness(1.35);
+}
+.spinning .em-win span {
+  filter: blur(0.4px);
+}
+.em-ukw {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  padding: 6px 0;
+  border-radius: 5px;
+  background: linear-gradient(#e0ddd4, #8d8a82);
+  color: #1a1917;
+  font:
+    600 10px 'IBM Plex Mono',
+    monospace;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+.em-ukw b {
+  font-size: 18px;
+}
+.em-dial {
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #1b1a18 55%, #2e2c28 56%, #1b1a18 70%);
+  box-shadow: 0 0 0 1px #050505;
+  font:
+    600 9px 'IBM Plex Mono',
+    monospace;
+  color: #cfc7b3;
+}
+.em-dial i {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 16px;
+  height: 40px;
+  margin: -20px 0 0 -8px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #0a0a09, #3b3833, #0a0a09);
+  transform: rotate(-35deg);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.6);
+}
+.em-dial span {
+  position: absolute;
+}
+.em-dial .a {
+  left: 10px;
+  top: 14px;
+}
+.em-dial .b {
+  right: 10px;
+  top: 14px;
+}
+.em-dial .c {
+  left: 10px;
+  bottom: 12px;
+}
+.em-dial .d {
+  right: 10px;
+  bottom: 12px;
+}
+.em-clip {
+  width: 34px;
+  height: 14px;
+  border-radius: 7px;
+  background: linear-gradient(#dcd9d1, #7e7b74);
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.6);
+}
+
+/* Cylinders: discs stacked into a short solid (keys, bolts, knobs) */
+.em-cyl {
+  width: 0;
+  height: 0;
+}
+.em-disc {
+  position: absolute;
+  border-radius: 50%;
+  backface-visibility: hidden;
+  background: #4a4843;
+}
+.em-knob .em-disc {
+  background: radial-gradient(circle at 40% 35%, #d9d6cf, #6f6c66);
+}
+.em-bolt .em-disc {
+  background: radial-gradient(circle at 40% 35%, #f0ede6, #8d8a83 70%);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35);
+}
+.em-bolt .em-disc.cap {
+  background: radial-gradient(circle at 40% 35%, #fff, #b8b4ab 60%, #6f6c66);
+}
+
+/* Lamps: glass windows over the bulbs */
+.em-lamp {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font:
+    700 15px 'IBM Plex Sans',
+    sans-serif;
+  color: #7c7466;
+  background:
+    radial-gradient(circle at 42% 34%, rgba(255, 255, 255, 0.12), transparent 40%),
+    radial-gradient(circle, #24221f, #0f0e0d 70%);
+  box-shadow:
+    0 0 0 3px #0a0a09,
+    0 0 0 4px #34322d,
+    inset 0 2px 6px rgba(0, 0, 0, 0.8);
+  transition:
+    background 0.06s,
+    box-shadow 0.06s,
+    color 0.06s;
+}
+.em-lamp.lit {
+  color: #3a2500;
+  background: radial-gradient(circle at 45% 40%, #fffbe8, #ffd76a 45%, #e8a21a 78%);
+  box-shadow:
+    0 0 0 3px #0a0a09,
+    0 0 0 4px #7a6230,
+    0 0 22px 8px rgba(255, 196, 64, 0.72),
+    0 0 70px 20px rgba(255, 170, 40, 0.3);
+  transition: none;
+}
+
+/* Keys: a nickel-rimmed celluloid cap on a stem, on stepped terraces */
+.em-key {
+  width: 0;
+  height: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: default;
+  transition: transform 0.07s ease-out;
+}
+.em-key.down {
+  --lift: -13px;
+}
+.em-post-s {
+  position: absolute;
+  backface-visibility: visible;
+  background: linear-gradient(90deg, #5d5b56, #d8d6d0 45%, #7a7872);
+}
+.em-cap .em-disc {
+  background: linear-gradient(135deg, #e5e3dd, #77746d);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4);
+}
+.em-cap .em-disc:first-child {
+  background: #1c1b19;
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.55);
+}
+.em-cap .em-disc.cap {
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 50% 50%, #f7f3e8 0 58%, #cfcbc2 60%, #fafaf7 66%, #8f8c85 88%, #5f5c56);
+  box-shadow:
+    inset 0 2px 3px rgba(255, 255, 255, 0.7),
+    inset 0 -3px 5px rgba(0, 0, 0, 0.25);
+}
+.em-cap .em-disc.cap span {
+  font:
+    700 16px 'IBM Plex Sans',
+    sans-serif;
+  color: #121110;
+}
+.keys-live .em-key {
+  cursor: pointer;
+}
+.keys-live .em-key:hover .em-disc.cap {
+  box-shadow:
+    inset 0 2px 3px rgba(255, 255, 255, 0.7),
+    0 0 0 2px #d8b765,
+    0 0 16px rgba(230, 180, 70, 0.45);
+}
+.em-key:focus-visible {
+  outline: none;
+}
+.em-key:focus-visible .em-disc.cap {
+  box-shadow: 0 0 0 3px #d6a94a;
+}
+
+/* Plugboard, behind the front flap */
+.em-plugpanel {
+  overflow: visible;
+}
+.em-plugboard {
+  position: absolute;
+  left: 30px;
+  right: 30px;
+  top: 10px;
+  display: grid;
+  gap: 1px;
+}
+.em-prow {
+  display: flex;
+  justify-content: center;
+  gap: 13px;
+}
+.em-socket {
+  width: 52px;
+  padding: 0;
+  background: none;
+  border: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  color: #e2dac6;
+  font:
+    600 10px 'IBM Plex Mono',
+    monospace;
+  cursor: default;
+}
+.em-socket i {
+  font-style: normal;
+}
+.em-socket .holes {
+  display: flex;
+  gap: 7px;
+  padding: 5px 7px;
+  background: radial-gradient(circle at 50% 30%, #3b3935, #151412);
+  border-radius: 9px;
+  box-shadow:
+    0 0 0 1px #050505,
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 3px 4px rgba(0, 0, 0, 0.6);
+}
+.em-socket .holes b {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(#000 45%, #4a463e);
+}
+.em-socket.plugged .holes {
+  background: radial-gradient(circle at 50% 30%, #5a4a33, #221a10);
+}
+.em-socket.pending .holes {
+  box-shadow:
+    0 0 0 2px #ffd76a,
+    0 0 16px rgba(255, 200, 80, 0.65);
+}
+.sockets-live .em-socket {
+  cursor: pointer;
+}
+.sockets-live .em-socket:hover .holes {
+  box-shadow:
+    0 0 0 2px #cfae62,
+    0 3px 4px rgba(0, 0, 0, 0.6);
+}
+.em-cables {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+.em-cables .cable {
+  fill: none;
+  stroke: #1c1814;
+  stroke-width: 6;
+  stroke-linecap: round;
+}
+.em-cables .cable-shadow {
+  fill: none;
+  stroke: rgba(0, 0, 0, 0.5);
+  stroke-width: 9;
+  stroke-linecap: round;
+  transform: translate(0, 4px);
+}
+.em-cables .plug {
+  fill: url(#emPlug);
+  stroke: #0a0806;
+  stroke-width: 1.5;
+}
+.em-frontplate {
+  position: absolute;
+  right: 16px;
+  bottom: 7px;
+  font:
+    600 9px 'IBM Plex Mono',
+    monospace;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #8a816e;
+}
+.em-serial {
+  position: absolute;
+  left: 50%;
+  top: -1px;
+  transform: translateX(-50%);
+  padding: 1px 10px;
+  border-radius: 0 0 3px 3px;
+  font:
+    600 8px 'IBM Plex Mono',
+    monospace;
+  letter-spacing: 0.15em;
+  color: #2a2823;
+  background: linear-gradient(#e9e6de, #a5a29a);
+}
+
+/* Front flap: closed while operating, down for the plugs */
+.em-flap {
+  transition: transform 0.95s cubic-bezier(0.34, 0.1, 0.2, 1);
+  cursor: pointer;
+}
+.is-open .em-flap {
+  cursor: default;
+}
+.em-flap-in {
+  filter: brightness(0.9);
+  display: grid;
+  place-items: center;
+}
+.em-flap-in span {
+  font:
+    600 10px 'IBM Plex Mono',
+    monospace;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(60, 30, 8, 0.55);
+  transform: rotate(180deg);
+}
+.em-caselock {
+  position: absolute;
+  left: 50%;
+  top: 34px;
+  width: 46px;
+  height: 32px;
+  margin-left: -23px;
+  border-radius: 4px;
+  background: linear-gradient(#ecebe6, #9b988f);
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
+}
+.em-caselock::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 9px;
+  width: 6px;
+  height: 12px;
+  margin-left: -3px;
+  border-radius: 3px;
+  background: #1c1b19;
+}
+.em-flaplatch {
+  position: absolute;
+  top: 60px;
+  width: 12px;
+  height: 34px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #cfccc4, #8a877f);
+}
+.em-flaplatch.l {
+  left: 8px;
+}
+.em-flaplatch.r {
+  right: 8px;
+}
+
+/* Lid: shallow oak box; inside, the contents of the real lid */
+.em-lidbox {
+  transition: transform 1.2s cubic-bezier(0.35, 0.1, 0.2, 1);
+  cursor: pointer;
+}
+.is-open .em-lidbox {
+  cursor: default;
+}
+.em-scene:not(.is-open) .em-lidbox:hover .em-lid-top {
+  filter: brightness(1.07);
+}
+.em-lid-top {
+  display: grid;
+  place-items: center;
+}
+.em-lid-plate {
+  padding: 8px 22px;
+  border-radius: 40px / 18px;
+  font:
+    700 20px 'IBM Plex Mono',
+    monospace;
+  letter-spacing: 0.3em;
+  color: #2b2a26;
+  background: linear-gradient(135deg, #f1f0eb, #9d9a92 50%, #e3e1da);
+  box-shadow:
+    0 2px 3px rgba(40, 20, 5, 0.5),
+    inset 0 1px 0 #fff;
+  opacity: 0.92;
+}
+.em-lid-lip {
+  filter: brightness(0.82);
+}
+.em-lid-lipin {
+  filter: brightness(0.62);
+}
+.em-hasp {
+  position: absolute;
+  left: 50%;
+  bottom: 4px;
+  width: 40px;
+  height: 22px;
+  margin-left: -20px;
+  border-radius: 3px;
+  background: linear-gradient(#ecebe6, #8f8c84);
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
+}
+.em-lid-under {
+  filter: none;
+}
+.em-lid-under::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  box-shadow:
+    inset 0 0 0 16px rgba(120, 70, 28, 0.35),
+    inset 0 0 60px rgba(40, 20, 5, 0.45);
+  pointer-events: none;
+}
+.em-bulbs {
+  position: absolute;
+  left: 90px;
+  right: 90px;
+  top: 20px;
+  height: 34px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 18px;
+  border-radius: 6px;
+  background: linear-gradient(#d9d6ce, #8e8b83);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.45);
+}
+.em-bulbs i {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #fff, #bdb8ac 55%, #6f6b63);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+.em-filter {
+  position: absolute;
+  left: 150px;
+  right: 150px;
+  top: 70px;
+  height: 92px;
+  border-radius: 4px;
+  background: linear-gradient(135deg, #1f6d3f, #145430 60%, #1d6a3c);
+  box-shadow:
+    0 2px 5px rgba(0, 0, 0, 0.45),
+    inset 0 0 0 2px rgba(255, 255, 255, 0.08);
+  display: grid;
+  place-items: center;
+}
+.em-filter span {
+  font:
+    600 10px 'IBM Plex Mono',
+    monospace;
+  color: #bfe5c9;
+  border: 1px solid #bfe5c9;
+  padding: 1px 6px;
+  transform: rotate(-4deg);
+  opacity: 0.8;
+}
+.em-sheet {
+  position: absolute;
+  left: 170px;
+  right: 170px;
+  top: 176px;
+  height: 196px;
+  padding: 10px 14px;
+  background: #f7f3e8;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.45);
+  color: #1b1a17;
+  text-align: center;
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+.em-sheet b {
+  display: block;
+  font-size: 15px;
+}
+.em-sheet small {
+  display: block;
+  font-size: 7.5px;
+  margin: 2px 0 6px;
+  color: #3b3934;
+}
+.em-sheet p {
+  height: 118px;
+  margin: 0;
+  background: repeating-linear-gradient(#f7f3e8 0 5px, #9d9990 5px 6px);
+  opacity: 0.55;
+}
+.em-sheet em {
+  display: block;
+  font:
+    7px 'IBM Plex Mono',
+    monospace;
+  letter-spacing: 0.15em;
+  margin-top: 6px;
+}
+.em-spare {
+  position: absolute;
+  left: 40px;
+  right: 40px;
+  top: 392px;
+  width: calc(100% - 80px);
+  height: 70px;
+  overflow: visible;
+}
+.em-spare path {
+  fill: none;
+  stroke: #1a1714;
+  stroke-width: 5;
+  stroke-linecap: round;
+}
+.em-holder {
+  position: absolute;
+  width: 30px;
+  height: 24px;
+  border-radius: 4px;
+  background: linear-gradient(#2a2622, #0b0a09);
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
+}
+.em-holder.l1 {
+  left: 60px;
+  top: 396px;
+}
+.em-holder.l2 {
+  left: 60px;
+  top: 432px;
+}
+.em-holder.r1 {
+  right: 60px;
+  top: 396px;
+}
+.em-holder.r2 {
+  right: 60px;
+  top: 432px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .em-rig,
+  .em-lidbox,
+  .em-flap,
+  .em-wheel {
+    transition-duration: 0.01s;
+  }
+  .em-win span.roll {
+    animation: none;
+  }
+}

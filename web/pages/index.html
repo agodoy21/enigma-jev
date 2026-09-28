@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Enigma × Jev</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles/tokens.css" />
+  <link rel="stylesheet" href="../styles/base.css" />
+  <link rel="stylesheet" href="../styles/bletchley.css" />
+  <link rel="stylesheet" href="../machine/machine.css" />
+  <link rel="stylesheet" href="../styles/app.css" />
+</head>
+<body class="app-body locked">
+  <header class="app-top">
+    <a class="brand" href="/">Enigma <span class="x">×</span> Jev</a>
+    <nav class="steps" aria-label="Steps"><ol id="steps"></ol></nav>
+    <div class="app-right">
+      <nav class="pagenav" aria-label="Pages"><a class="annexlink" href="/research">Research</a><a class="annexlink" href="/jev">Jev performance</a></nav>
+      <button class="iconbtn" id="sound" type="button" aria-pressed="true" title="Key sounds">♪</button>
+      <div id="status" class="pill lockstate"><svg viewBox="0 0 16 18" aria-hidden="true"><path d="M4.5 8V5.5a3.5 3.5 0 0 1 7 0V8" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="2" y="8" width="12" height="9" rx="2.2" fill="currentColor"/></svg>Locked</div>
+      <button id="lockBtn" class="lockpill" type="button" hidden title="Lock the machine and forget the key"><span class="dot" aria-hidden="true"></span><span id="lockModel">Jev</span><span class="lk"><svg viewBox="0 0 16 18" aria-hidden="true"><path d="M4.5 8V5.5a3.5 3.5 0 0 1 7 0V8" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="2" y="8" width="12" height="9" rx="2.2" fill="currentColor"/></svg>Lock</span></button>
+    </div>
+  </header>
+
+  <main class="app">
+    <section class="stagearea" aria-label="The machine">
+      <div id="machineHost" class="machine-host"></div>
+      <div class="gate" id="gate" role="dialog" aria-labelledby="gateTitle" aria-describedby="gateLede">
+        <div class="gate-card">
+          <svg class="padlock" viewBox="0 0 48 58" aria-hidden="true">
+            <path class="shackle" d="M13 27 V17 a11 11 0 0 1 22 0 V27" />
+            <rect class="lock-body" x="6" y="26" width="36" height="28" rx="7" />
+            <circle class="keyhole" cx="24" cy="38" r="3.4" /><rect class="keyhole" x="22.5" y="39" width="3" height="7.5" rx="1.5" />
+          </svg>
+          <p class="gate-k"><span data-tr-de="Schlüssel" data-tr-en="Key" data-tr-shown="de">Schlüssel</span> · Access</p>
+          <h1 class="gate-h" id="gateTitle">Unlock the Enigma</h1>
+          <p class="gate-p" id="gateLede">Jev is the analyst that breaks the traffic. Enter your TypeSafe key and the machine opens.</p>
+          <form class="gate-form" id="gateForm" autocomplete="off" novalidate>
+            <div class="gate-field">
+              <input id="gateKey" name="typesafe-key" type="password" inputmode="text" placeholder="TypeSafe API key" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="TypeSafe API key" aria-describedby="gateMsg" />
+              <button type="button" class="gate-eye" id="gateEye" aria-label="Show key" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/><path class="slash" d="M4 4l16 16"/></svg></button>
+              <button type="submit" class="gate-go" id="gateGo" aria-label="Unlock"><span class="arrow" aria-hidden="true">→</span><span class="spin" aria-hidden="true"></span></button>
+            </div>
+            <div class="gate-row">
+              <label class="gate-remember"><input type="checkbox" id="gateRemember" /> <span>Remember on this device</span></label>
+              <span class="gate-kbd"><kbd>↵</kbd> to unlock</span>
+            </div>
+            <p class="gate-msg" id="gateMsg" aria-live="polite">Checked once with a single Jev question, then held on this server for your session. Never shown again, never logged.</p>
+            <p class="gate-indep">Independent open-source project · not affiliated with TypeSafe</p>
+          </form>
+        </div>
+      </div>
+      <p class="hint" id="hint" aria-live="polite"></p>
+      <div class="tape" id="tape" aria-label="Paper tape">
+        <div class="tape-row"><span class="tape-l" id="tapeInL">Keys</span><div class="tape-t" id="tapeIn"></div></div>
+        <div class="tape-row lamps"><span class="tape-l" id="tapeOutL">Lamps</span><div class="tape-t" id="tapeOut"></div></div>
+      </div>
+    </section>
+    <aside class="inspector" id="panel" aria-live="polite"></aside>
+  </main>
+  <script type="module" src="../app/main.ts"></script>
+</body>
+</html>

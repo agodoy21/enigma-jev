@@ -1,0 +1,53 @@
+/* Design tokens: colours for the dark theme (default) and the light theme, fonts, chart series. */
+:root {
+  --bg: #16130f;
+  --panel: #1f1b16;
+  --card: #29241d;
+  --line: #3d362c;
+  --ink: #efe6d4;
+  --muted: #a89c86;
+  --brass: #d6a94a;
+  --brass-dim: #8a6d2f;
+  --lamp: #ffd66b;
+  --lamp-glow: rgba(255, 200, 80, 0.55);
+  --good: #7fc47a;
+  --bad: #e0705f;
+  --jev: #7fb2ff;
+  --jev-dim: rgba(127, 178, 255, 0.18);
+  --mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+  --sans: 'IBM Plex Sans', system-ui, sans-serif;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme='dark']) {
+    --bg: #f3eee3;
+    --panel: #ebe4d5;
+    --card: #fbf8f1;
+    --line: #d8cdb8;
+    --ink: #2a241b;
+    --muted: #75694f;
+    --brass: #9a6f14;
+    --brass-dim: #c9a65a;
+    --lamp: #c98a00;
+    --lamp-glow: rgba(230, 160, 20, 0.35);
+    --good: #2f8a2a;
+    --bad: #b2412f;
+    --jev: #2f64c8;
+    --jev-dim: rgba(47, 100, 200, 0.12);
+  }
+}
+
+/* Chart series (validated categorical order: blue, orange, aqua, yellow). */
+:root {
+  --s-jev: #3987e5;
+  --s-ngram: #d95926;
+  --s-base: #199e70;
+  --s-4: #c98500;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme='dark']) {
+    --s-jev: #2a78d6;
+    --s-ngram: #eb6834;
+    --s-base: #1baf7a;
+    --s-4: #eda100;
+  }
+}

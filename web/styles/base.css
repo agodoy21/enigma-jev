@@ -1,0 +1,179 @@
+/* Base: resets, typography and shared controls for all three pages. */
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 15px;
+}
+.mono {
+  font-family: var(--mono);
+}
+.fine {
+  color: var(--muted);
+  font-size: 12.5px;
+  line-height: 1.45;
+}
+small {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 22px 28px 8px;
+  max-width: 1480px;
+  margin: 0 auto;
+}
+h1 {
+  margin: 0;
+  font-family: var(--mono);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 22px;
+}
+h1 .x {
+  color: var(--brass);
+}
+.lede {
+  margin: 6px 0 0;
+  color: var(--muted);
+  max-width: 760px;
+}
+.pill {
+  font-family: var(--mono);
+  font-size: 12px;
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  padding: 5px 12px;
+  white-space: nowrap;
+}
+.pill.on {
+  border-color: var(--jev);
+  color: var(--jev);
+}
+
+main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  gap: 20px;
+  padding: 12px 28px 28px;
+  max-width: 1480px;
+  margin: 0 auto;
+}
+@media (max-width: 1100px) {
+  main {
+    grid-template-columns: 1fr;
+    padding: 12px 16px;
+  }
+  .top {
+    padding: 18px 16px 6px;
+  }
+}
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px;
+  min-width: 0;
+}
+h2 {
+  margin: 0 0 12px;
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+h3 {
+  margin: 0 0 10px;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px;
+  min-width: 0;
+}
+
+select,
+input,
+textarea,
+button {
+  font: inherit;
+  color: var(--ink);
+}
+select,
+input,
+textarea {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 6px 8px;
+}
+textarea {
+  width: 100%;
+  resize: vertical;
+  line-height: 1.5;
+}
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid var(--brass-dim);
+  outline-offset: 0;
+}
+.cipher {
+  color: var(--brass);
+}
+
+/* Page navigation, shared by all three pages */
+h1 a.home {
+  color: inherit;
+  text-decoration: none;
+}
+.topright {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.annexlink {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--brass);
+  text-decoration: none;
+}
+.annexlink:hover {
+  text-decoration: underline;
+}
+.pagenav {
+  gap: 4px;
+}
+.pagenav .annexlink {
+  padding: 5px 10px;
+  border-radius: 99px;
+  border: 1px solid transparent;
+}
+.pagenav .annexlink.here {
+  border-color: var(--line);
+  color: var(--ink);
+  background: var(--card);
+  text-decoration: none;
+}
+.topright .annexlink + .annexlink {
+  margin-left: 2px;
+}
