@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-09-28T17:18:10Z",
+ "generatedAt": "2026-09-28T17:49:54Z",
  "data": {
   "candidates": 478,
   "positives": 76,
@@ -945,8 +945,8 @@
     "gain": 0.0035673570819199085
    }
   ],
-  "predictMicroseconds": 0.7651891183326309,
-  "featureMilliseconds": 1.0051841883643464
+  "predictMicroseconds": 0.4851028165355263,
+  "featureMilliseconds": 0.5034161444215658
  },
  "disagreements": [
   {
@@ -969,6 +969,7 @@
  "versions": {
   "xgboost": "3.4.1",
   "sklearn": "1.9.1",
-  "numpy": "2.5.3"
+  "numpy": "2.5.3",
+  "platform": "Darwin arm64"
  }
 }

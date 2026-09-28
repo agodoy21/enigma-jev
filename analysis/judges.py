@@ -28,6 +28,7 @@ from __future__ import annotations
 
 import json
 import math
+import platform
 import time
 from collections import defaultdict
 from pathlib import Path
@@ -266,7 +267,13 @@ def main() -> None:
             'featureMilliseconds': feature_ms,
         },
         'disagreements': disagree,
-        'versions': {'xgboost': xgboost.__version__, 'sklearn': sklearn.__version__, 'numpy': np.__version__},
+        'versions': {
+            'xgboost': xgboost.__version__,
+            'sklearn': sklearn.__version__,
+            'numpy': np.__version__,
+            # XGBoost's scores differ between arm64 and x86-64 builds; its decisions do not.
+            'platform': f'{platform.system()} {platform.machine()}',
+        },
     }
     finite = lambda o: None if isinstance(o, float) and not math.isfinite(o) else str(o)  # noqa: E731
     OUT.write_text(json.dumps(out, indent=1, default=finite))

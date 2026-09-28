@@ -121,7 +121,7 @@ The n-gram models are trained on the same German text as the project's own langu
 2. **Learning curve.** Trained judges are fitted on 1, 2, 3, 4, 6 … 24 randomly chosen texts, 40 draws each. This shows how much labelled traffic they need to catch up with zero-shot Jev.
 3. **Distribution shift.** The judges are trained on synthetic traffic only and tested on the historical intercepts. This is the realistic case: in 1940 no one had labelled wartime traffic to train on.
 
-The output is `reports/judge-comparison.json`. The library versions are recorded in the file, and CI reruns the script and checks that every number is unchanged to six decimal places, apart from timings.
+The output is `reports/judge-comparison.json`. The library versions are recorded in the file, and CI reruns the script on Linux (`analysis/check_reproduced.py`). Every count must match exactly, and every score within floating-point noise, except XGBoost's scores. Those differ between arm64 and x86-64 builds (AUC 0.993 on macOS arm64, 0.988 on Linux x86-64), so they are reported but not enforced. XGBoost's decisions are identical on both.
 
 ## 4. The Bombe against Weinbaum (`src/analysis/bombe-stops.ts`)
 
