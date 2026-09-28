@@ -1,8 +1,11 @@
 import { afterAll, beforeAll, describe, expect, test } from 'bun:test';
 import { historicalCases } from '../src/backtest/cases.js';
+import { handleApi } from '../src/web/api.js';
 import { breakStream } from '../src/web/break-stream.js';
 import type { BreakEvent } from '../src/web/events.js';
+import { WorkerPool } from '../src/web/pool.js';
 import { startServer } from '../src/web/server.js';
+import { open, seal } from '../src/web/session.js';
 
 const realFetch = globalThis.fetch;
 /** TypeSafe answers: a stub standing in for the network; everything else goes to the real fetch. */
@@ -64,7 +67,7 @@ describe('web API', () => {
     expect(r.status).toBe(401);
   });
 
-  test('unlock verifies the key with TypeSafe, sets an HttpOnly cookie, and lock forgets it', async () => {
+  test('unlock verifies the key with TypeSafe, seals it into an HttpOnly cookie, and lock clears it', async () => {
     typesafe = () => new Response('unauthorized', { status: 401 });
     const bad = await realFetch(url('/api/unlock'), { method: 'POST', body: JSON.stringify({ key: 'wrong-key-123' }) });
     expect(bad.status).toBe(401);
@@ -86,10 +89,57 @@ describe('web API', () => {
       unlocked: true,
       hint: 'abcd',
     });
-    await realFetch(url('/api/lock'), { method: 'POST', headers: { cookie: session } });
-    expect(await realFetch(url('/api/status'), { headers: { cookie: session } }).then(r => r.json())).toMatchObject({
-      unlocked: false,
-    });
+    // The key travels only sealed: the cookie never contains it in the clear.
+    expect(cookie).not.toContain('test-key-abcd');
+    const cleared = await realFetch(url('/api/lock'), { method: 'POST', headers: { cookie: session } });
+    expect(cleared.headers.get('set-cookie')).toContain('Max-Age=0');
+    expect(await realFetch(url('/api/status')).then(r => r.json())).toMatchObject({ unlocked: false });
+  });
+
+  test('a sealed session opens only unaltered and unexpired', async () => {
+    const token = await seal({ k: 'test-key-abcd', m: 'jev-1.13.0', e: Date.now() + 60_000 });
+    expect(await open(token)).toMatchObject({ k: 'test-key-abcd' });
+    const [iv, ct] = token.split('.');
+    const flipped = ct.slice(0, -2) + (ct.at(-2) === 'A' ? 'B' : 'A') + ct.at(-1);
+    expect(await open(`${iv}.${flipped}`)).toBeNull();
+    expect(await open('not-a-token')).toBeNull();
+    expect(await open(await seal({ k: 'test-key-abcd', m: 'jev-1.13.0', e: Date.now() - 1 }))).toBeNull();
+  });
+
+  test('one function can serve every route: the original path arrives as ?route=', async () => {
+    const status = await handleApi(new Request('http://x/api?route=status'));
+    expect(await status.json()).toMatchObject({ unlocked: false });
+    expect((await handleApi(new Request('http://x/api/presets'))).status).toBe(200);
+    expect((await handleApi(new Request('http://x/api?route=nope'))).status).toBe(404);
+    expect((await handleApi(new Request('http://x/api?route=unlock'))).status).toBe(405);
+  });
+});
+
+describe('worker pool', () => {
+  test('runs a Bombe step in process, in chunks, when workers are unavailable', async () => {
+    process.env.ENIGMA_JEV_INLINE = '1';
+    const pool = new WorkerPool();
+    delete process.env.ENIGMA_JEV_INLINE;
+    expect(pool.inline).toBe(true);
+    const c = historicalCases().find(x => x.id === 'barbarossa-1941-part1')!;
+    const seen: number[] = [];
+    const r = await pool.spread(
+      12,
+      slice => ({
+        op: 'bombe',
+        ciphertext: c.ciphertext,
+        machine: 'I',
+        date: c.date,
+        crib: c.plaintext.slice(0, 14),
+        at: 0,
+        turnovers: 'none',
+        slice,
+      }),
+      p => seen.push(p.done),
+    );
+    expect(r.stops).toBeGreaterThanOrEqual(0);
+    expect(Array.isArray(r.candidates)).toBe(true);
+    pool.terminate();
   });
 });
 

@@ -16,6 +16,11 @@ docs/internal/
 *.log
 coverage/
 
+# build output and Vercel's local link
+dist/
+.vercel/
+
 # scratch runs (canonical reports in reports/ are committed)
 reports/runs/
 .ruff_cache/
+.vercel

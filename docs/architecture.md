@@ -90,7 +90,7 @@ The browser imports the same module, so the lamps light exactly what the real ma
   - `run.ts` scores every tier;
   - `worker.ts` runs cases in parallel;
   - `report.ts` writes `reports/backtest-<time>.{md,json}`.
-- **`src/web/`:** the server and its API. [web.md](web.md) covers it.
+- **`src/web/`:** the server (`server.ts`), the API shared with the Vercel function (`api.ts`, `api/index.ts`), sessions, the break stream and the worker pool. [web.md](web.md) covers it.
 - **`src/analysis/`:** rebuilds the Jev paper from the audit log (`jev-eval.ts`), runs the reliability experiments (`jev-experiments.ts`) and counts Bombe stops (`bombe-stops.ts`).
 - **`analysis/` (Python):** the judge comparison. See [evaluation.md](evaluation.md).
 

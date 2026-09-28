@@ -10,6 +10,7 @@ import { clean, type EnigmaKey, encrypt, parseSetting } from '../enigma/machine.
 import { ROTOR_SETS } from '../enigma/wiring.js';
 import type { Service } from '../jev/cribs.js';
 import { paragraphs, toOperatorText } from '../lang/normalize.js';
+import { DATA } from '../paths.js';
 import type { Machine } from '../pipeline/tiers.js';
 
 export interface Case {
@@ -25,8 +26,6 @@ export interface Case {
   readonly plugs: number;
   readonly notes?: string;
 }
-
-const DATA = join(import.meta.dir, '..', '..', 'data');
 
 /** Entries left out of scoring, and why. */
 export const EXCLUDED: Record<string, string> = {

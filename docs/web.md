@@ -4,7 +4,9 @@
 bun run web
 ```
 
-This serves <http://localhost:5199>; set `PORT` to change the port. `src/web/server.ts` defines every route.
+This serves <http://localhost:5199>; set `PORT` to change the port. `src/web/server.ts` serves the pages, and `src/web/api.ts` defines the API.
+
+On Vercel (`vercel.json`), the pages are static files built by `bun run build`. Every `/api/*` request is rewritten to one Bun function (`api/index.ts`), which passes the original path as `?route=`.
 
 ## Pages
 
@@ -16,13 +18,13 @@ This serves <http://localhost:5199>; set `PORT` to change the port. `src/web/ser
 
 ## The key gate
 
-The machine page opens locked. When a key is entered, the page sends it once to `POST /api/unlock`. The server verifies it with one small Jev question, then holds it in memory against a random session token (`src/web/session.ts`). The token is set as an `HttpOnly; SameSite=Strict` cookie named `ej_session`.
+The machine page opens locked. When a key is entered, the page sends it once to `POST /api/unlock`. The server verifies it with one small Jev question, then seals it into a cookie named `ej_session` (`src/web/session.ts`). The cookie is `HttpOnly; SameSite=Strict`, and also `Secure` over HTTPS. Its contents (the key, the model and an expiry) are encrypted with AES-256-GCM under `SESSION_SECRET`. The server keeps no state, so any instance of a deployment can open it.
 
-- The key is never sent back to the page, never written to disk and never logged. The verification call skips the audit log.
+- The page's scripts cannot read the cookie, and nobody without the secret can open it. The key is never written to disk and never logged. The verification call skips the audit log, and on Vercel there is no audit log at all.
 - Unlock attempts are limited to 8 a minute per server.
-- Sessions expire after 12 idle hours, and a server restart forgets all of them.
+- Sessions expire 12 hours after unlocking. Locally, without `SESSION_SECRET`, a random secret is drawn at start-up, so a restart ends every session. A deployment must set one; without it, unlocking returns 503.
 - *Remember on this device* is an opt-in. It keeps the key in the browser's local storage so the page can unlock again on the next visit. Leave it off on shared machines.
-- **Lock** calls `POST /api/lock`, which drops the session.
+- **Lock** calls `POST /api/lock`, which clears the cookie. A copied cookie stays valid until it expires; rotate `SESSION_SECRET` to end every session.
 
 The CLI and the backtests read the key from the environment instead (see [jev.md](jev.md)).
 
@@ -76,7 +78,7 @@ The response is one `data: {json}` line per event, in this order:
 | `result` | last | the chosen index, a verdict sentence, the candidate, the number of Jev calls |
 | `error` | on failure | a message |
 
-CPU work runs on a worker pool (`src/web/pool.ts`: one worker per core, minus one, and at most eight). Each Bombe or climb run is split into slices of wheel orders across the workers, and progress is throttled to about eight updates a second.
+CPU work runs on a worker pool (`src/web/pool.ts`: one worker per core, minus one, and at most eight). Where the worker script is not available, or `ENIGMA_JEV_INLINE=1` is set, the steps run in process instead (`src/web/steps.ts`), with a yield between chunks of wheel orders so progress still streams. Each Bombe or climb run is split into slices of wheel orders across the workers, and progress is throttled to about eight updates a second.
 
 ## Rules on the live page
 

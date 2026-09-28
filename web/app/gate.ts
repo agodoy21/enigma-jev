@@ -16,7 +16,7 @@ export const gate = $('gate'),
   gateMsg = $('gateMsg'),
   gateGo = $<HTMLButtonElement>('gateGo');
 const GATE_NOTE =
-  'Checked once with a single Jev question, then held on this server for your session. Never shown again, never logged.';
+  'Checked once with a single Jev question, then sealed in an encrypted cookie only the server can open. Never shown again, never logged.';
 export const remembered = {
   get: () => {
     try {

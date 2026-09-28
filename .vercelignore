@@ -1,0 +1,10 @@
+# Only the pages, the API function and what it reads at run time are deployed.
+.venv/
+.github/
+analysis/
+docs/
+scripts/
+test/
+coverage/
+*.md
+!README.md

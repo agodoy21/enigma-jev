@@ -1,0 +1,21 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "bunVersion": "1.x",
+  "installCommand": "bun install --frozen-lockfile",
+  "buildCommand": "bun run build",
+  "outputDirectory": "dist",
+  "cleanUrls": true,
+  "functions": {
+    "api/index.ts": {
+      "maxDuration": 300,
+      "includeFiles": "{package.json,data/**/*.{json,txt},reports/*.json,src/web/break-worker.ts}"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/:path(.+)",
+      "destination": "/api?route=:path"
+    }
+  ]
+}

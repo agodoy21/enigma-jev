@@ -2,9 +2,16 @@
  * A fixed pool of break workers (./break-worker.ts). A Bombe or climb run is
  * split across the pool by wheel order; progress is summed and candidates are
  * merged, best first and without duplicates.
+ *
+ * Where the worker script is not on disk beside this module (a bundled
+ * deployment) or ENIGMA_JEV_INLINE=1, the pool runs each step in process
+ * instead, yielding between wheel orders so progress still streams.
  */
+import { existsSync } from 'node:fs';
 import { availableParallelism } from 'node:os';
+import { fileURLToPath } from 'node:url';
 import type { CandidateView, Step, WorkerMessage } from './events.js';
+import { runStep } from './steps.js';
 
 /** Workers a break is spread across: one per core, leaving one for the server, at most eight. */
 export const POOL_SIZE = Math.max(1, Math.min(8, availableParallelism() - 1));
@@ -31,18 +38,22 @@ export function mergeCandidates(cands: CandidateView[], keep = 3): CandidateView
 
 export class WorkerPool {
   private readonly workers: Worker[];
+  /** True when steps run in this process rather than on workers. */
+  readonly inline: boolean;
 
   constructor(size = POOL_SIZE) {
-    const url = new URL('./break-worker.ts', import.meta.url).href;
-    this.workers = Array.from({ length: size }, () => new Worker(url));
+    const url = new URL('./break-worker.ts', import.meta.url);
+    this.inline = process.env.ENIGMA_JEV_INLINE === '1' || !existsSync(fileURLToPath(url));
+    this.workers = this.inline ? [] : Array.from({ length: size }, () => new Worker(url.href));
   }
 
   get size(): number {
-    return this.workers.length;
+    return this.inline ? 1 : this.workers.length;
   }
 
   /** Run one step on one worker. */
   call<R extends Result = Result>(step: Step, onProgress: (p: Progress) => void = () => {}, index = 0): Promise<R> {
+    if (this.inline) return runInline<R>(step, onProgress);
     const w = this.workers[index];
     return new Promise<R>((resolve, reject) => {
       w.onmessage = (e: MessageEvent<WorkerMessage>) => {
@@ -65,9 +76,10 @@ export class WorkerPool {
     onProgress: (p: SpreadProgress) => void,
   ): Promise<{ candidates: CandidateView[]; stops: number }> {
     const share = Math.ceil(orders / this.size);
-    const slices = this.workers
-      .map((_, i) => [i * share, Math.min(orders, (i + 1) * share)] as [number, number])
-      .filter(([a, b]) => a < b);
+    const slices = Array.from(
+      { length: this.size },
+      (_, i) => [i * share, Math.min(orders, (i + 1) * share)] as [number, number],
+    ).filter(([a, b]) => a < b);
     const seen = slices.map(() => ({ done: 0, stops: 0 }));
     let last = 0;
     let order = '';
@@ -105,4 +117,41 @@ export class WorkerPool {
   terminate(): void {
     for (const w of this.workers) w.terminate();
   }
+}
+
+/** Wheel orders per in-process Bombe chunk: about one worker's share on an eight-core machine. */
+const INLINE_CHUNK = 8;
+
+/**
+ * One step in this process. A Bombe step runs in chunks of wheel orders with a yield between
+ * them, so the event stream can flush progress while the search runs. The climb ranks its
+ * candidates across all its orders at once, so it runs whole.
+ */
+async function runInline<R extends Result>(step: Step, onProgress: (p: Progress) => void): Promise<R> {
+  const tick = () => new Promise<void>(r => setTimeout(r, 0));
+  if (step.op !== 'bombe') {
+    await tick();
+    return check<R>(runStep(step, m => m.type === 'progress' && onProgress(m)));
+  }
+  const [from, to] = step.slice;
+  const parts: Extract<Result, { candidates: CandidateView[] }>[] = [];
+  let stops = 0;
+  for (let a = from; a < to; a += INLINE_CHUNK) {
+    const b = Math.min(to, a + INLINE_CHUNK);
+    await tick();
+    const r = check<Extract<Result, { candidates: CandidateView[] }>>(runStep({ ...step, slice: [a, b] }, () => {}));
+    parts.push(r);
+    stops += r.stops ?? 0;
+    onProgress({ type: 'progress', done: b - from, total: to - from, stops });
+  }
+  return {
+    ms: parts.reduce((n, r) => n + r.ms, 0),
+    stops,
+    candidates: mergeCandidates(parts.flatMap(r => r.candidates)),
+  } as R;
+}
+
+function check<R>(r: ReturnType<typeof runStep>): R {
+  if ('error' in r) throw new Error(r.error);
+  return r as R;
 }

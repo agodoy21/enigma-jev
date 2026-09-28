@@ -4,8 +4,9 @@
  */
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { REPORTS } from '../paths.js';
 
-export const REPORTS = join(import.meta.dir, '..', '..', 'reports');
+export { REPORTS };
 
 /** A GET handler that serves reports/<file>, or says which command writes it. */
 export function reportRoute(file: string, command: string) {

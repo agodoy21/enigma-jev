@@ -21,6 +21,7 @@ jobs:
       - run: bunx tsc --noEmit
       - run: bunx biome ci .
       - run: bun test --coverage
+      - run: bun run build
 
   analysis:
     name: Python analysis

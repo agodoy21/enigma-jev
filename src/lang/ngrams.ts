@@ -9,6 +9,7 @@
  */
 import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { DATA } from '../paths.js';
 import { paragraphs, toOperatorText } from './normalize.js';
 
 export interface LanguageModel {
@@ -23,7 +24,7 @@ export interface LanguageModel {
   readonly trainingLetters: number;
 }
 
-const CORPUS_DIR = join(import.meta.dir, '..', '..', 'data', 'corpus');
+const CORPUS_DIR = join(DATA, 'corpus');
 
 export function trainingText(dir = CORPUS_DIR): string[] {
   const texts: string[] = [];
@@ -125,7 +126,7 @@ export function languageModel(lang: Lang = 'de'): LanguageModel {
   if (lang === 'de') return german();
   let m = models.get(lang);
   if (!m) {
-    m = buildModel(trainingText(join(import.meta.dir, '..', '..', 'data', `corpus-${lang}`)));
+    m = buildModel(trainingText(join(DATA, `corpus-${lang}`)));
     models.set(lang, m);
   }
   return m;

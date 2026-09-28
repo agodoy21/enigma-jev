@@ -30,6 +30,7 @@
   },
   "scripts": {
     "web": "bun run src/web/server.ts",
+    "build": "bun build ./web/pages/index.html ./web/pages/research.html ./web/pages/jev.html --outdir dist --minify",
     "cli": "bun run src/cli.ts",
     "backtest": "bun run src/cli.ts backtest",
     "test": "bun test",

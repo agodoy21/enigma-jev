@@ -38,7 +38,7 @@ type Payload<T extends BreakEvent['type']> = Omit<Extract<BreakEvent, { type: T 
 export function breakStream(body: BreakRequest, jev: JevClient | null, model: string | null): Response {
   let pool: WorkerPool | null = null;
   const stream = new ReadableStream({
-    async start(controller) {
+    async start(controller: ReadableStreamDefaultController<string>) {
       const send = <T extends BreakEvent['type']>(type: T, data: Payload<T>) => {
         try {
           controller.enqueue(`data: ${JSON.stringify({ type, ...data })}\n\n`);

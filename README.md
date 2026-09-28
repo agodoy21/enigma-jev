@@ -6,7 +6,7 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Bun](https://img.shields.io/badge/bun-%E2%89%A51.3-black?logo=bun)](https://bun.sh)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178c6?logo=typescript&logoColor=white)](tsconfig.json)
-[![Tests](https://img.shields.io/badge/tests-49%20passing-2ea44f)](test/)
+[![Tests](https://img.shields.io/badge/tests-52%20passing-2ea44f)](test/)
 
 ![The Enigma I in its oak case, locked until a key is entered](docs/media/machine.png)
 
@@ -32,7 +32,7 @@ bun install
 bun run web
 ```
 
-Open <http://localhost:5199>. The machine stays closed until you enter a TypeSafe key. The server checks it with one Jev question and holds it in memory for your session. The key is never sent back to the page, never written to disk and never logged. The Research and Jev pages need no key.
+Open <http://localhost:5199>. The machine stays closed until you enter a TypeSafe key. The server checks it with one Jev question, then seals it into an encrypted, HttpOnly session cookie that the page's scripts can't read and only the server can open. The key is never written to disk and never logged. The Research and Jev pages need no key.
 
 On the command line, put the key in `.env` (see [`.env.example`](.env.example)):
 
@@ -49,6 +49,20 @@ That is the test message from the 1930 Enigma I manual. The Bombe runs your crib
 ```bash
 bun run cli encrypt "ANGRIFF IM MORGENGRAUEN" --rotors II,IV,V --rings BUL --start BLA --plugs "AV BS"
 ```
+
+## Deploy to Vercel
+
+The repository deploys to Vercel as it is:
+
+- **Pages:** the three pages are built into static files (`bun run build` → `dist/`).
+- **API:** every `/api/*` route runs in one Bun function (`api/index.ts`), with up to 300 seconds for a break.
+
+`vercel.json` holds the configuration. The project needs two settings:
+
+1. **Root Directory:** the repository root (leave it empty). **Framework Preset:** Other. `vercel.json` sets the build.
+2. **Environment variable `SESSION_SECRET`:** any long random string, for example from `openssl rand -base64 32`. It encrypts the session cookie, so every function instance can read it. Without it, unlocking is refused.
+
+A break on Vercel runs on the function's CPU, and its duration is capped at 300 seconds on the Hobby plan. That is ample for a break from your own crib; a long search through the crib list can hit the cap. For those, run the server locally.
 
 ## Results at a glance
 
@@ -159,6 +173,7 @@ src/
   analysis/    Jev evaluation, reliability experiments, Bombe stop counts
   web/         server, session gate, streamed break (SSE), worker pool
   cli.ts       break | backtest | encrypt | decrypt | doctor
+api/           the Vercel function: every /api/* route (shares src/web/api.ts)
 web/
   pages/       index, research, jev
   app/         the machine page: steps, gate, Bletchley panel
@@ -170,7 +185,7 @@ analysis/      Python: n-gram and XGBoost judges, metrics, bootstrap
 data/          historical intercepts, synthetic plaintexts, language corpora
 reports/       every number the papers show
 scripts/       reproduce.ts
-test/          49 tests
+test/          52 tests
 ```
 
 ## Jev and TypeSafe
