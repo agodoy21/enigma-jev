@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Enigma × Jev · Research</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../styles/tokens.css" />
   <link rel="stylesheet" href="../styles/base.css" />
   <link rel="stylesheet" href="../styles/paper.css" />
@@ -30,7 +30,12 @@
       <p class="kicker">Research</p>
       <h2>Enigma, the Bombe, and a probabilistic analyst</h2>
       <p class="subtitle">Historical context, method of construction, and evaluation of the <a href="/">Enigma × Jev</a> system</p>
-      <p class="abstract"><b>Abstract.</b> The German Enigma was not broken by brute force. It was broken by structural observations about the machine, by exploiting how operators actually used it, and by pairing electromechanical search with human judgement about probable plaintext. This paper reviews that history from the Polish Cipher Bureau (1932–39) through Bletchley Park and the naval four-rotor problem, and summarises the modern computational literature. It then documents how the present system rebuilds the codebreakers' pipeline in software: a verified machine simulator; a Turing–Welchman Bombe with the diagonal board; a Gillogly and Weierud–Sullivan ciphertext-only hill-climber; and German <i>n</i>-gram statistics. Here a language model with typed probabilistic outputs (Jev) makes the two judgements a Hut 6 analyst made: which crib to try, and whether a trial decryption is German. We describe two algorithmic refinements that proved necessary, a ring-independent ranking of Bombe stops and a ring-aware reconstruction of message settings. Its test register reproduces, within their confidence intervals, the stop counts Weinbaum (2025) published for one- and two-loop menus. We report a tiered backtest on nine historical intercepts with published keys and on synthetic traffic, and state the threats to its validity.</p>
+      <div class="abstract">
+        <p class="abstract-label">Abstract</p>
+        <p class="lede">The German Enigma was not broken by brute force. It was broken by structural observations about the machine, by exploiting how operators actually used it, and by pairing electromechanical search with human judgement about probable plaintext.</p>
+        <p>This paper reviews that history from the Polish Cipher Bureau (1932–39) through Bletchley Park and the naval four-rotor problem, and summarises the modern computational literature. It then documents how the present system rebuilds the codebreakers' pipeline in software: a verified machine simulator; a Turing–Welchman Bombe with the diagonal board; a Gillogly and Weierud–Sullivan ciphertext-only hill-climber; and German <i>n</i>-gram statistics. Here a language model with typed probabilistic outputs (Jev) makes the two judgements a Hut&nbsp;6 analyst made: which crib to try, and whether a trial decryption is German.</p>
+        <p>We describe two algorithmic refinements that proved necessary, a ring-independent ranking of Bombe stops and a ring-aware reconstruction of message settings. Its test register reproduces, within their confidence intervals, the stop counts Weinbaum (2025) published for one- and two-loop menus. We report a tiered backtest on nine historical intercepts with published keys and on synthetic traffic, and state the threats to its validity.</p>
+      </div>
       <p class="meta" id="paperMeta">Research note · Enigma × Jev</p>
       <section class="glance" id="glance" aria-label="At a glance">
         <div class="tile"><span class="big">2<sup>76.5</sup></span><span class="lbl">key space of the wartime Enigma I</span><span class="sub">but a Bombe searched only 1,054,560 rotor settings</span></div>

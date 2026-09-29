@@ -5,6 +5,10 @@
   --card: #29241d;
   --line: #3d362c;
   --ink: #efe6d4;
+  /* Long-form reading ink: a step down from --ink to cut glare on the dark ground (12.4:1, still AAA). */
+  --ink-read: #ddd2bd;
+  /* Light-on-dark serif reads thin; a touch of weight restores its colour. */
+  --read-weight: 430;
   --muted: #a89c86;
   --brass: #d6a94a;
   --brass-dim: #8a6d2f;
@@ -24,6 +28,8 @@
     --card: #fbf8f1;
     --line: #d8cdb8;
     --ink: #2a241b;
+    --ink-read: #2a241b;
+    --read-weight: 400;
     --muted: #75694f;
     --brass: #9a6f14;
     --brass-dim: #c9a65a;

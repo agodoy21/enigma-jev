@@ -50,10 +50,48 @@
   margin: 0 0 20px;
 }
 .annex .abstract {
-  font-size: 15.5px;
-  border-left: 3px solid var(--brass-dim);
-  padding: 2px 0 2px 16px;
+  /* A reading measure: about 68 characters a line, whatever the column width. */
+  max-width: 34em;
+  font-size: 18px;
+  line-height: 1.62;
+  font-weight: var(--read-weight);
+  color: var(--ink-read);
+  border-left: 2px solid var(--brass-dim);
+  padding: 2px 0 4px 22px;
+  hyphens: manual;
+  text-wrap: pretty;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+.annex .abstract p {
+  margin: 0 0 0.8em;
+  hyphens: manual;
+}
+.annex .abstract p:last-child {
+  margin-bottom: 0;
+}
+.annex .abstract .abstract-label {
+  margin: 0 0 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--brass);
+}
+/* The opening sentences carry the argument: a size up, in full ink. */
+.annex .abstract .lede {
+  font-size: 1.1em;
+  line-height: 1.5;
   color: var(--ink);
+}
+/* Findings read as pencil marks on a decrypt sheet: full ink, semibold, a faint brass underline. */
+.annex .abstract .v,
+.annex .abstract .fig {
+  color: var(--ink);
+  font-weight: 600;
+  white-space: nowrap;
+  background: linear-gradient(transparent 70%, color-mix(in oklab, var(--brass) 28%, transparent) 70%);
+  padding: 0 0.06em;
 }
 .annex h3 {
   font-family: var(--serif);
